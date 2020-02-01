@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+  <title>【ZigBee】获取网络的拓扑结构 | Stefan&#39;s Blog</title>
+  
+  <meta name="keywords" content="Life,Learn.">
+  
+  
+  <meta name="description" content="Record learning tutorials and life insights.">
+  
+
+  
+
+  <meta name="HandheldFriendly" content="True">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <!-- meta -->
+  
+
+  <!-- link -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.css">
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.6.3/css/all.min.css">
+  
+
+  
+  <link rel="shortcut icon" type="image/x-icon" href="https://cdn.jsdelivr.net/gh/xaoxuu/assets@master/favicon/favicon.ico">
+  
+
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-material-x@19.5/css/style.css">
+  
+
+  <script>
+    function setLoadingBarProgress(num) {
+      document.getElementById('loading-bar').style.width=num+"%";
+    }
+  </script>
+
+  
+  
+</head>
+
+<body>
+  
+  
+  <div class="cover-wrapper">
+    <cover class='cover post half'>
+      
+        
+  <h1 class='title'>Stefan's Blog</h1>
+
+
+  <div class="m_search">
+    <form name="searchform" class="form u-search-form">
+      <input type="text" class="input u-search-input" placeholder="" />
+      <i class="icon fas fa-search fa-fw"></i>
+    </form>
+  </div>
+
+<div class='menu navgation'>
+  <ul class='h-list'>
+    
+      
+        <li>
+          <a class="nav home" href="/"
+            
+            
+            id="home">
+            <i class='fas fa-rss fa-fw'></i>&nbsp;博文
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home" href="/projects/"
+            
+            
+            id="projects">
+            <i class='fas fa-code-branch fa-fw'></i>&nbsp;项目
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home" href="/friends/"
+            
+              rel="nofollow"
+            
+            
+            id="friends">
+            <i class='fas fa-link fa-fw'></i>&nbsp;友链
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home" href="/about/"
+            
+              rel="nofollow"
+            
+            
+            id="about">
+            <i class='fas fa-info-circle fa-fw'></i>&nbsp;关于
+          </a>
+        </li>
+      
+    
+  </ul>
+</div>
+
+      
+    </cover>
+    <header class="l_header pure">
+  <div id="loading-bar-wrapper">
+    <div id="loading-bar" class="pure"></div>
+  </div>
+
+	<div class='wrapper'>
+		<div class="nav-main container container--flex">
+      <a class="logo flat-box" href='/' >
+        
+          Stefan's Blog
+        
+      </a>
+			<div class='menu navgation'>
+				<ul class='h-list'>
+          
+  					
+  						<li>
+								<a class="nav flat-box" href="/"
+                  
+                  
+                  id="home">
+									<i class='fas fa-grin fa-fw'></i>&nbsp;示例
+								</a>
+							</li>
+      			
+  						<li>
+								<a class="nav flat-box" href="/blog/categories/"
+                  
+                    rel="nofollow"
+                  
+                  
+                  id="blogcategories">
+									<i class='fas fa-folder-open fa-fw'></i>&nbsp;分类
+								</a>
+							</li>
+      			
+  						<li>
+								<a class="nav flat-box" href="/blog/tags/"
+                  
+                    rel="nofollow"
+                  
+                  
+                  id="blogtags">
+									<i class='fas fa-hashtag fa-fw'></i>&nbsp;标签
+								</a>
+							</li>
+      			
+  						<li>
+								<a class="nav flat-box" href="/blog/archives/"
+                  
+                    rel="nofollow"
+                  
+                  
+                  id="blogarchives">
+									<i class='fas fa-archive fa-fw'></i>&nbsp;归档
+								</a>
+							</li>
+      			
+      		
+				</ul>
+			</div>
+
+			
+				<div class="m_search">
+					<form name="searchform" class="form u-search-form">
+						<input type="text" class="input u-search-input" placeholder="搜索" />
+						<i class="icon fas fa-search fa-fw"></i>
+					</form>
+				</div>
+			
+			<ul class='switcher h-list'>
+				
+					<li class='s-search'><a class="fas fa-search fa-fw" href='javascript:void(0)'></a></li>
+				
+				<li class='s-menu'><a class="fas fa-bars fa-fw" href='javascript:void(0)'></a></li>
+			</ul>
+		</div>
+
+		<div class='nav-sub container container--flex'>
+			<a class="logo flat-box"></a>
+			<ul class='switcher h-list'>
+				<li class='s-comment'><a class="flat-btn fas fa-comments fa-fw" href='javascript:void(0)'></a></li>
+        
+          <li class='s-toc'><a class="flat-btn fas fa-list fa-fw" href='javascript:void(0)'></a></li>
+        
+			</ul>
+		</div>
+	</div>
+</header>
+	<aside class="menu-phone">
+    <header>
+		<nav class="menu navgation">
+      <ul>
+        
+          
+            <li>
+							<a class="nav flat-box" href="/"
+                
+                
+                id="home">
+								<i class='fas fa-clock fa-fw'></i>&nbsp;近期文章
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/blog/archives/"
+                
+                  rel="nofollow"
+                
+                
+                id="blogarchives">
+								<i class='fas fa-archive fa-fw'></i>&nbsp;文章归档
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/projects/"
+                
+                
+                id="projects">
+								<i class='fas fa-code-branch fa-fw'></i>&nbsp;开源项目
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/friends/"
+                
+                  rel="nofollow"
+                
+                
+                id="friends">
+								<i class='fas fa-link fa-fw'></i>&nbsp;我的友链
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="https://github.com/Stefancharles"
+                
+                  rel="nofollow"
+                
+                
+                id="https:github.comStefancharles">
+								<i class='fas fa-book fa-fw'></i>&nbsp;主题文档
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/about/"
+                
+                  rel="nofollow"
+                
+                
+                id="about">
+								<i class='fas fa-info-circle fa-fw'></i>&nbsp;关于小站
+							</a>
+            </li>
+          
+       
+      </ul>
+		</nav>
+    </header>
+	</aside>
+<script>setLoadingBarProgress(40);</script>
+
+  </div>
+
+
+  <div class="l_body">
+    <div class='body-wrapper'>
+      <div class='l_main'>
+  
+
+  
+    <article id="post" class="post white-box article-type-post" itemscope itemprop="blogPost">
+      
+
+
+  <section class='meta'>
+    
+    
+    <div class="meta" id="header-meta">
+      
+        
+  
+    <h1 class="title">
+      <a href="/2019/12/09/zigbeetasknine/">
+        【ZigBee】获取网络的拓扑结构
+      </a>
+    </h1>
+  
+
+
+      
+      <div class='new-meta-box'>
+        
+          
+        
+          
+            
+  <div class='new-meta-item author'>
+    <a href="https://Stefancharles.xyz" rel="nofollow">
+      
+        <img src="https://i.loli.net/2019/08/15/4zEt9A6LvBegWX8.jpg">
+      
+      <p>Stefan</p>
+    </a>
+  </div>
+
+
+          
+        
+          
+            <div class="new-meta-item date" itemprop="dateUpdated" datetime="2019-12-10T17:40:41+08:00">
+  <a class='notlink'>
+    <i class="fas fa-clock" aria-hidden="true"></i>
+    <p>最后更新于 2019年12月10日</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  
+    <div class="new-meta-item browse busuanzi">
+      <a class='notlink'>
+        <i class="fas fa-eye" aria-hidden="true"></i>
+        <p>
+          <span id="busuanzi_value_page_pv">
+            <i class="fas fa-spinner fa-spin fa-fw" aria-hidden="true"></i>
+          </span>
+        </p>
+      </a>
+    </div>
+  
+
+
+          
+        
+      </div>
+      
+        <hr>
+      
+    </div>
+  </section>
+
+
+      <section class="article typo">
+        <div class="article-entry" itemprop="articleBody">
+          <h2 id="实验简介"><a href="#实验简介" class="headerlink" title="实验简介"></a>实验简介</h2><p>任务9：</p>
+<p>组一个包括协调器路由器终端节点的zigbee网络，通过串口能获取它们的拓扑结构。</p>
+<a id="more"></a>
+
+
+<h2 id="实验环境"><a href="#实验环境" class="headerlink" title="实验环境"></a>实验环境</h2><ul>
+<li>Win10 2004</li>
+<li>IAR 10.30</li>
+<li>Z-Stack</li>
+<li>VScode</li>
+</ul>
+<h2 id="实验准备"><a href="#实验准备" class="headerlink" title="实验准备"></a>实验准备</h2><h3 id="1-下载基本工程文件"><a href="#1-下载基本工程文件" class="headerlink" title="1.下载基本工程文件"></a>1.下载基本工程文件</h3><p>首先下载最基本的工程文件，我们在这个的基础上进行代码修改。</p>
+<ul>
+<li>下载地址:<a href="https://www.lanzous.com/i7j1gtc" target="_blank" rel="noopener">https://www.lanzous.com/i7j1gtc</a> </li>
+<li>密码:1024</li>
+</ul>
+<h3 id="2-打开工程文件"><a href="#2-打开工程文件" class="headerlink" title="2.打开工程文件"></a>2.打开工程文件</h3><p>解压你第一步下载的基本工程的压缩包，路径是“<strong>…\Texas Instruments\ZStack-CC2530-2.3.0-1.4.0\Projects\zstack\Samples\GenericApp\CC2530DB</strong>”文件夹下的<strong>GenericApp.eww</strong>。</p>
+<p>双击使用最新版IAR打开它。刚打开的时候IAR会<strong>多次</strong>提示你版本不兼容信息，不必理会，直接一路点击Ok就行。</p>
+<h3 id="3-尝试编译"><a href="#3-尝试编译" class="headerlink" title="3.尝试编译"></a>3.尝试编译</h3><p>上一步完成后，先不改动任何地方。直接点击rebuild图标或者按下F7。也就是下图的箭头指向的图标。</p>
+<p><img src="https://i.loli.net/2019/11/23/xwdGPJACeFkg1q2.png" alt="rebuild.png"></p>
+<p>先看是否报错。如果报错，先参考这里<a href="https://stefancharles.xyz/2019/11/21/IARproblem/">【IAR-10.30.1】最新版本IAR常见编译问题总结</a>。</p>
+<p>按照这篇博客的方法解决问题即可。</p>
+<h2 id="路由器和终端节点"><a href="#路由器和终端节点" class="headerlink" title="路由器和终端节点"></a>路由器和终端节点</h2><p>要想获取网络的拓扑结构，可以设置网络中的路由器和终端节点组网成功后就向协调器发送自己的网络地址以及父节点网络地址。这样便可以知道谁是谁的父节点，网络拓扑也就可以得到。</p>
+<p>首先为了方便我们对NWK地址方便操作，我们在<strong>Coordinator.h</strong>中定义一个结构体如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//This is for task 9</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">RFTXBUF</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"> uint8 type[<span class="number">3</span>];</span><br><span class="line"> uint8 NWK[<span class="number">4</span>];</span><br><span class="line"> uint8 parentNWK[<span class="number">4</span>];</span><br><span class="line">&#125;RFTX;</span><br></pre></td></tr></table></figure>
+
+<p>type是对节点类型的描述，也就是路由器和终端节点。NWK是本设备的网络地址，parentNWK是父节点的网络地址。</p>
+<p>接下来在<strong>Enddevice.c</strong>里宏定义一个事件代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SEND_DATA_EVENT  0x01</span></span><br></pre></td></tr></table></figure>
+
+<p>然后在事件处理函数如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">UINT16 <span class="title">GenericApp_ProcessEvent</span><span class="params">( byte task_id, UINT16 events )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  afIncomingMSGPacket_t *MSGpkt;</span><br><span class="line">  <span class="keyword">if</span> ( events &amp; SYS_EVENT_MSG )</span><br><span class="line">  &#123;</span><br><span class="line">    MSGpkt = (afIncomingMSGPacket_t *)osal_msg_receive( GenericApp_TaskID );</span><br><span class="line">    <span class="keyword">while</span> ( MSGpkt )</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="keyword">switch</span> ( MSGpkt-&gt;hdr.event )</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="keyword">case</span> AF_INCOMING_MSG_CMD:</span><br><span class="line">          <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> ZDO_STATE_CHANGE:  <span class="comment">//建网后</span></span><br><span class="line">          GenericApp_NwkState=(devStates_t)(MSGpkt-&gt;hdr.status);</span><br><span class="line">          <span class="keyword">if</span>((GenericApp_NwkState == DEV_END_DEVICE)||(GenericApp_NwkState == DEV_ROUTER))&#123;</span><br><span class="line">            osal_set_event(GenericApp_TaskID,SEND_DATA_EVENT);</span><br><span class="line">          &#125;</span><br><span class="line"></span><br><span class="line">          <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">          <span class="keyword">break</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="comment">// Release the memory</span></span><br><span class="line">      osal_msg_deallocate( (uint8 *)MSGpkt );</span><br><span class="line">      <span class="comment">// Next</span></span><br><span class="line">      MSGpkt = (afIncomingMSGPacket_t *)osal_msg_receive( GenericApp_TaskID );</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// return unprocessed events</span></span><br><span class="line">    <span class="keyword">return</span> (events ^ SYS_EVENT_MSG);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span>(events&amp;SEND_DATA_EVENT)</span><br><span class="line">  &#123;</span><br><span class="line">    HalLedBlink(HAL_LED_2,<span class="number">0</span>,<span class="number">50</span>,<span class="number">1000</span>);</span><br><span class="line">    SendMsgToCood();</span><br><span class="line">   <span class="keyword">return</span> (events^SEND_DATA_EVENT);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里很简单，就是在组网后准备把自己的网络信息发给协调器，调用的是SendMsgToCood()函数。其函数参考代码可以如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//建网后发消息给协调器</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">SendMsgToCood</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  RFTX rftx;</span><br><span class="line">  uint16 nwk;</span><br><span class="line">  <span class="keyword">if</span>(GenericApp_NwkState == DEV_END_DEVICE) <span class="comment">//判断是否是终端节点</span></span><br><span class="line">  &#123;</span><br><span class="line">    osal_memcpy(rftx.type,<span class="string">"END"</span>,<span class="number">3</span>);</span><br><span class="line">  &#125;</span><br><span class="line">   <span class="keyword">if</span>(GenericApp_NwkState == DEV_ROUTER) <span class="comment">//判断是否是路由器</span></span><br><span class="line">  &#123;</span><br><span class="line">    osal_memcpy(rftx.type,<span class="string">"ROU"</span>,<span class="number">3</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  nwk = NLME_GetShortAddr();</span><br><span class="line">  To_string(rftx.NWK,(uint8 *)&amp;nwk,<span class="number">2</span>);</span><br><span class="line">   </span><br><span class="line">  nwk = NLME_GetCoordShortAddr();</span><br><span class="line">  To_string(rftx.parentNWK,(uint8 *)&amp;nwk,<span class="number">2</span>);</span><br><span class="line">    </span><br><span class="line">  afAddrType_t GenericApp_DstAddr;</span><br><span class="line">  GenericApp_DstAddr.addrMode = (afAddrMode_t)Addr16Bit;</span><br><span class="line">  GenericApp_DstAddr.endPoint =GENERICAPP_ENDPOINT;</span><br><span class="line">  GenericApp_DstAddr.addr.shortAddr = <span class="number">0x0000</span>;</span><br><span class="line"></span><br><span class="line">  AF_DataRequest( &amp;GenericApp_DstAddr, &amp;GenericApp_epDesc,</span><br><span class="line">                    GENERICAPP_CLUSTERID,</span><br><span class="line">                    <span class="number">11</span>,</span><br><span class="line">                    (uint8 *)&amp;rftx,</span><br><span class="line">                    &amp;GenericApp_TransID,</span><br><span class="line">                    AF_DISCV_ROUTE, </span><br><span class="line">                    AF_DEFAULT_RADIUS );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里用到了之前定义的结构体了。当然也需要进制转换的函数，函数如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">To_string</span><span class="params">(uint8 *dest,<span class="keyword">char</span>* src,uint8 length)</span><span class="comment">//二进制转十六进制</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  uint8* xad;</span><br><span class="line">  uint8 i=<span class="number">0</span>;</span><br><span class="line">  uint8 ch;</span><br><span class="line">  xad=src+length<span class="number">-1</span>;</span><br><span class="line">  <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;length;i++,xad--)</span><br><span class="line">  &#123;</span><br><span class="line">   ch=(*xad&gt;&gt;<span class="number">4</span>)&amp;<span class="number">0x0F</span>;  <span class="comment">//除以十六</span></span><br><span class="line">   dest[i&lt;&lt;<span class="number">1</span>]=ch+((ch&lt;<span class="number">10</span>)?<span class="string">'0'</span>:<span class="string">'7'</span>);</span><br><span class="line">   ch=*xad&amp;<span class="number">0x0F</span>;</span><br><span class="line">   dest[(i&lt;&lt;<span class="number">1</span>)+<span class="number">1</span>]=ch+((ch&lt;<span class="number">10</span>)?<span class="string">'0'</span>:<span class="string">'7'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="协调器"><a href="#协调器" class="headerlink" title="协调器"></a>协调器</h2><p>协调器主要是负责处理路由器和终端节点发来的信息，整理后打印到电脑的串口上。</p>
+<p>在<strong>Coordinator.c</strong>中的的事件处理函数如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">UINT16 <span class="title">GenericApp_ProcessEvent</span><span class="params">( byte task_id, UINT16 events )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  afIncomingMSGPacket_t *MSGpkt;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">if</span> ( events &amp; SYS_EVENT_MSG )</span><br><span class="line">  &#123;</span><br><span class="line">    MSGpkt = (afIncomingMSGPacket_t *)osal_msg_receive( GenericApp_TaskID );</span><br><span class="line">    <span class="keyword">while</span> ( MSGpkt )</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="keyword">switch</span> ( MSGpkt-&gt;hdr.event )</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="keyword">case</span> AF_INCOMING_MSG_CMD:</span><br><span class="line">          HalLedBlink(HAL_LED_2,<span class="number">0</span>,<span class="number">50</span>,<span class="number">500</span>);    <span class="comment">//LED2 闪烁 </span></span><br><span class="line">          GenericApp_MessageMSGCB( MSGpkt );</span><br><span class="line">          <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">          <span class="keyword">break</span>;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// Release the memory</span></span><br><span class="line">      osal_msg_deallocate( (uint8 *)MSGpkt );</span><br><span class="line"></span><br><span class="line">      <span class="comment">// Next</span></span><br><span class="line">      MSGpkt = (afIncomingMSGPacket_t *)osal_msg_receive( GenericApp_TaskID );</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// return unprocessed events</span></span><br><span class="line">    <span class="keyword">return</span> (events ^ SYS_EVENT_MSG);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当收到消息的时候，进入AF_INCOMING_MSG_CMD的case里，调用的消息处理函数GenericApp_MessageMSGCB()如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">RFTX nodeinfo[<span class="number">3</span>];</span><br><span class="line">uint8 nodenum = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">GenericApp_MessageMSGCB</span><span class="params">( afIncomingMSGPacket_t *pckt )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">switch</span> ( pckt-&gt;clusterId )</span><br><span class="line">  &#123;</span><br><span class="line">     <span class="keyword">case</span> GENERICAPP_CLUSTERID:</span><br><span class="line">          osal_memcpy(&amp;nodeinfo[nodenum++],pckt-&gt;cmd.Data,<span class="number">11</span>);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">     <span class="keyword">default</span>:</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对应存储在结构体中，方面我们打印。然后我们可以使用串口回调函数打印信息，当然也可以设置一个定时的事件向串口打印信息。<br>这里就展示前者的代码。</p>
+<p>首先在<strong>Coordinator.c</strong>中开串口：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">uartConfig.configured   =TRUE;</span><br><span class="line">uartConfig.baudRate     =HAL_UART_BR_115200;</span><br><span class="line">uartConfig.flowControl  =FALSE;</span><br><span class="line">uartConfig.callBackFunc =rxCB;</span><br><span class="line">HalUARTOpen(<span class="number">0</span>,&amp;uartConfig);</span><br></pre></td></tr></table></figure>
+
+<p>然后实现回调函数：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">rxCB</span><span class="params">(uint8 port,uint8 event)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  uint8 buf[<span class="number">8</span>];</span><br><span class="line">  uint8 i = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">char</span> enter[<span class="number">2</span>] = &#123;<span class="number">0x0A</span>,<span class="number">0x0D</span>&#125;;</span><br><span class="line">  HalUARTRead(<span class="number">0</span>,buf,<span class="number">8</span>);</span><br><span class="line">  <span class="keyword">if</span>(osal_memcmp(buf,<span class="string">"showinfo"</span>,<span class="number">8</span>))</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">2</span>;i++)</span><br><span class="line">    &#123;</span><br><span class="line">      HalUARTWrite(<span class="number">0</span>,nodeinfo[i].type,<span class="number">3</span>); <span class="comment">// 设备类型</span></span><br><span class="line">       </span><br><span class="line">      HalUARTWrite(<span class="number">0</span>,<span class="string">" NWK: "</span>,<span class="number">6</span>);</span><br><span class="line">      HalUARTWrite(<span class="number">0</span>,nodeinfo[i].NWK,<span class="number">4</span>); <span class="comment">//网络地址</span></span><br><span class="line">       </span><br><span class="line">      HalUARTWrite(<span class="number">0</span>,<span class="string">"  parentNWK: "</span>,<span class="number">13</span>);</span><br><span class="line">      HalUARTWrite(<span class="number">0</span>,nodeinfo[i].parentNWK,<span class="number">4</span>); <span class="comment">//父节点网络地址</span></span><br><span class="line"></span><br><span class="line">      HalUARTWrite(<span class="number">0</span>,enter,<span class="number">2</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>也就是说，当我们向串口输入showinfo时，串口会回应我们相关网络拓扑结构。<br>接下里烧录代码进行测试。</p>
+<h2 id="烧录代码出现的问题及解决"><a href="#烧录代码出现的问题及解决" class="headerlink" title="烧录代码出现的问题及解决"></a>烧录代码出现的问题及解决</h2><h3 id="问题出现Error-e27"><a href="#问题出现Error-e27" class="headerlink" title="问题出现Error[e27]"></a>问题出现Error[e27]</h3><p>切换角色至路由器，烧录路由器代码的时候可能出现下面的问题：</p>
+<p><img src="https://i.loli.net/2019/12/09/kl6xvbtUfhQmSjo.png" alt="router.png"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Error[e27]: Entry &quot;GenericApp_Init::?relay&quot; in module Coordinator ( C:\Texas Instruments\ZStack-CC2530-2.3.0-1.4.0\Projects\zstack\Samples\GenericApp\ CC2530DB\CoordinatorEB\Obj\Coordinator.r51 ) redefined in module Enddevice ( C:\Texas Instruments\ZStack-CC2530-2.3.0-1.4.0\Projects\zstack\Samples\ GenericApp\CC2530DB\CoordinatorEB\Obj\Enddevice.r51</span><br></pre></td></tr></table></figure>
+
+<p>从报错内容可以大概知道：因为我们的工程中包含其中两个不同的.C文件都定义了同一个函数，编译时系统同时编译这两个文件，导致这两个函数重定义了。</p>
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>1.右击协调器的c文件。选择options。</p>
+<p><img src="https://i.loli.net/2019/12/09/uqph8ZJ9kjwRdIG.png" alt="fix1.png"></p>
+<p>2.勾选左上角的勾，然后确定即可。</p>
+<p><img src="https://i.loli.net/2019/12/09/ZOiQ9X8HaNc3vB5.png" alt="fix2.png"></p>
+<p>3.重新编译<br>协调器的代码文件变灰色说明可以了。<br><img src="https://i.loli.net/2019/12/09/k5JTqa2hWB71VdL.png" alt="fix3.png"></p>
+<h2 id="实验结果"><a href="#实验结果" class="headerlink" title="实验结果"></a>实验结果</h2><p>三者上电后，最好全部按下复位。</p>
+<p>结果如下图。</p>
+<p><img src="https://i.loli.net/2019/12/09/3pfUIKbMC4v12m5.png" alt="showinfo1.png"></p>
+<h2 id="写在最后的话"><a href="#写在最后的话" class="headerlink" title="写在最后的话"></a>写在最后的话</h2><blockquote>
+<p>The problem with living for 200 years isn’t the loneliness or the pain or the loss. Okay, sure, it is those things. But what really gets you is when life ceases to surprise you.</p>
+</blockquote>
+<p>——《不死法医》</p>
+<blockquote>
+<p>活了200年的麻烦，并不是孤单或痛苦或失去。其实就是这些，但真正让你痛不欲生的是当生活不再惊喜。</p>
+</blockquote>
+<h2 id="需要联系我？"><a href="#需要联系我？" class="headerlink" title="需要联系我？"></a>需要联系我？</h2><p>如果有疑问或者建议，可以发邮件至<a href="mailto:stefancharles@qq.com" target="_blank" rel="noopener">stefancharles@qq.com</a>与我交流讨论。</p>
+
+        </div>
+        
+          
+
+
+  <section class='meta' id="footer-meta">
+    <hr>
+    <div class='new-meta-box'>
+      
+        
+          
+  
+  <div class='new-meta-item category'>
+    <a href='/categories/教程/' rel="nofollow">
+      <i class="fas fa-folder-open" aria-hidden="true"></i>
+      <p>教程</p>
+    </a>
+  </div>
+
+
+        
+      
+        
+          
+  
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/Zigbee/" rel="nofollow"><i class="fas fa-hashtag" aria-hidden="true"></i>&nbsp;<p>Zigbee</p></a></div>
+
+
+        
+      
+        
+          
+  <div class="new-meta-item share -mob-share-list">
+  <div class="-mob-share-list share-body">
+    
+      
+        <a class="-mob-share-qq" title="QQ好友" rel="external nofollow noopener noreferrer"
+          
+          href="http://connect.qq.com/widget/shareqq/index.html?url=https://Stefancharles.xyz/2019/12/09/zigbeetasknine/&title=【ZigBee】获取网络的拓扑结构 | Stefan's Blog&pics=https://i.loli.net/2019/08/15/4zEt9A6LvBegWX8.jpg&summary=实验简介任务9：
+组一个包括协调器路由器终端节点的zigbee网络，通过串口能获取它们的拓扑结构。"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/qq.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-qzone" title="QQ空间" rel="external nofollow noopener noreferrer"
+          
+          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://Stefancharles.xyz/2019/12/09/zigbeetasknine/&title=【ZigBee】获取网络的拓扑结构 | Stefan's Blog&pics=https://i.loli.net/2019/08/15/4zEt9A6LvBegWX8.jpg&summary=实验简介任务9：
+组一个包括协调器路由器终端节点的zigbee网络，通过串口能获取它们的拓扑结构。"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/qzone.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-weibo" title="微博" rel="external nofollow noopener noreferrer"
+          
+          href="http://service.weibo.com/share/share.php?url=https://Stefancharles.xyz/2019/12/09/zigbeetasknine/&title=【ZigBee】获取网络的拓扑结构 | Stefan's Blog&pics=https://i.loli.net/2019/08/15/4zEt9A6LvBegWX8.jpg&summary=实验简介任务9：
+组一个包括协调器路由器终端节点的zigbee网络，通过串口能获取它们的拓扑结构。"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/weibo.png">
+          
+        </a>
+      
+    
+  </div>
+</div>
+
+
+
+        
+      
+    </div>
+  </section>
+
+
+        
+        
+            <div class="prev-next">
+                
+                    <section class="prev">
+                        <span class="art-item-left">
+                            <h6><i class="fas fa-chevron-left" aria-hidden="true"></i>&nbsp;上一页</h6>
+                            <h4>
+                                <a href="/2019/12/09/springboot/" rel="prev" title="【Spring MVC】基于Java的安全即时通讯软件">
+                                  
+                                      【Spring MVC】基于Java的安全即时通讯软件
+                                  
+                                </a>
+                            </h4>
+                            
+                                
+                                <h6 class="tags">
+                                    <a class="tag" href="/tags/Java/"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i>Java</a> <a class="tag" href="/tags/Maven/"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i>Maven</a> <a class="tag" href="/tags/Spring/"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i>Spring</a>
+                                </h6>
+                            
+                        </span>
+                    </section>
+                
+                
+                    <section class="next">
+                        <span class="art-item-right" aria-hidden="true">
+                            <h6>下一页&nbsp;<i class="fas fa-chevron-right" aria-hidden="true"></i></h6>
+                            <h4>
+                                <a href="/2019/11/30/omnettaskone/" rel="prev" title="基于OMNET++仿真平台的正方形网络仿真">
+                                    
+                                        基于OMNET++仿真平台的正方形网络仿真
+                                    
+                                </a>
+                            </h4>
+                            
+                                
+                                <h6 class="tags">
+                                    <a class="tag" href="/tags/omnetpp/"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i>omnetpp</a>
+                                </h6>
+                            
+                        </span>
+                    </section>
+                
+            </div>
+        
+      </section>
+    </article>
+  
+
+  
+    <!-- 显示推荐文章和评论 -->
+
+
+
+  <article class="post white-box comments">
+    <section class="article typo">
+      <h4><i class="fas fa-comments fa-fw" aria-hidden="true"></i>&nbsp;评论</h4>
+      
+      
+      
+      
+        <section id="comments">
+          <div id="valine_container" class="valine_thread">
+            <i class="fas fa-spinner fa-spin fa-fw"></i>
+          </div>
+        </section>
+      
+    </section>
+  </article>
+
+
+  
+
+
+
+
+<!-- 根据页面mathjax变量决定是否加载MathJax数学公式js -->
+
+
+
+  <script>
+    window.subData = {
+      title: '【ZigBee】获取网络的拓扑结构',
+      tools: true
+    }
+  </script>
+
+
+</div>
+<aside class='l_side'>
+  
+    
+    
+      
+        
+          
+          
+            <section class='widget author'>
+  <div class='content pure'>
+    
+      <div class='avatar'>
+        <img class='avatar' src='https://i.loli.net/2019/08/15/oZF8Hh2dKIJ5V1a.jpg'/>
+      </div>
+    
+    
+    
+      <div class="social-wrapper">
+        
+          
+            <a href="/atom.xml"
+              class="social fas fa-rss flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+          
+            <a href="/stefancharles@vip.qq.com"
+              class="social fas fa-envelope flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+          
+            <a href="https://github.com/Stefancharles"
+              class="social fab fa-github flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+          
+            <a href="https://c.y.qq.com/base/fcgi-bin/u?__=jsQmg4H"
+              class="social fas fa-headphones-alt flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+      </div>
+    
+  </div>
+</section>
+
+          
+        
+      
+        
+          
+          
+            
+  <section class='widget toc-wrapper'>
+    
+<header class='pure'>
+  <div><i class="fas fa-list fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;本文目录</div>
+  
+    <div class='wrapper'><a class="s-toc rightBtn" rel="external nofollow noopener noreferrer" href="javascript:void(0)"><i class="fas fa-thumbtack fa-fw"></i></a></div>
+  
+</header>
+
+    <div class='content pure'>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#实验简介"><span class="toc-text">实验简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验环境"><span class="toc-text">实验环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验准备"><span class="toc-text">实验准备</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-下载基本工程文件"><span class="toc-text">1.下载基本工程文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-打开工程文件"><span class="toc-text">2.打开工程文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-尝试编译"><span class="toc-text">3.尝试编译</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#路由器和终端节点"><span class="toc-text">路由器和终端节点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#协调器"><span class="toc-text">协调器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#烧录代码出现的问题及解决"><span class="toc-text">烧录代码出现的问题及解决</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#问题出现Error-e27"><span class="toc-text">问题出现Error[e27]</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#解决方法"><span class="toc-text">解决方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验结果"><span class="toc-text">实验结果</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#写在最后的话"><span class="toc-text">写在最后的话</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#需要联系我？"><span class="toc-text">需要联系我？</span></a></li></ol>
+    </div>
+  </section>
+
+
+          
+        
+      
+        
+          
+          
+            <section class='widget grid'>
+  
+<header class='pure'>
+  <div><i class="fas fa-map-signs fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;站内导航</div>
+  
+</header>
+
+  <div class='content pure'>
+    <ul class="grid navgation">
+      
+        <li><a class="flat-box" title="/" href="/"
+          
+          
+          id="home">
+          
+            <i class="fas fa-clock fa-fw" aria-hidden="true"></i>
+          
+          近期文章
+        </a></li>
+      
+        <li><a class="flat-box" title="/blog/archives/" href="/blog/archives/"
+          
+            rel="nofollow"
+          
+          
+          id="blogarchives">
+          
+            <i class="fas fa-archive fa-fw" aria-hidden="true"></i>
+          
+          文章归档
+        </a></li>
+      
+        <li><a class="flat-box" title="/projects/" href="/projects/"
+          
+          
+          id="projects">
+          
+            <i class="fas fa-code-branch fa-fw" aria-hidden="true"></i>
+          
+          开源项目
+        </a></li>
+      
+        <li><a class="flat-box" title="/friends/" href="/friends/"
+          
+            rel="nofollow"
+          
+          
+          id="friends">
+          
+            <i class="fas fa-link fa-fw" aria-hidden="true"></i>
+          
+          我的友链
+        </a></li>
+      
+        <li><a class="flat-box" title="https://github.com/Stefancharles" href="https://github.com/Stefancharles"
+          
+            rel="nofollow"
+          
+          
+          id="https:github.comStefancharles">
+          
+            <i class="fas fa-book fa-fw" aria-hidden="true"></i>
+          
+          主题文档
+        </a></li>
+      
+        <li><a class="flat-box" title="/about/" href="/about/"
+          
+            rel="nofollow"
+          
+          
+          id="about">
+          
+            <i class="fas fa-info-circle fa-fw" aria-hidden="true"></i>
+          
+          关于小站
+        </a></li>
+      
+    </ul>
+  </div>
+</section>
+
+          
+        
+      
+        
+          
+          
+            
+  <section class='widget category'>
+    
+<header class='pure'>
+  <div><i class="fas fa-folder-open fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;文章分类</div>
+  
+    <a class="rightBtn"
+    
+      rel="nofollow"
+    
+    
+    href="/blog/categories/"
+    title="blog/categories/">
+    <i class="fas fa-expand-arrows-alt fa-fw"></i></a>
+  
+</header>
+
+    <div class='content pure'>
+      <ul class="entry">
+        
+          <li><a class="flat-box" title="/categories/Android/" href="/categories/Android/"><div class='name'>Android</div><div class='badge'>(2)</div></a></li>
+        
+          <li><a class="flat-box child" title="/categories/Android/MVP/" href="/categories/Android/MVP/"><div class='name'>MVP</div><div class='badge'>(1)</div></a></li>
+        
+          <li><a class="flat-box child" title="/categories/Android/OpenCV/" href="/categories/Android/OpenCV/"><div class='name'>OpenCV</div><div class='badge'>(1)</div></a></li>
+        
+          <li><a class="flat-box" title="/categories/C/" href="/categories/C/"><div class='name'>C++</div><div class='badge'>(1)</div></a></li>
+        
+          <li><a class="flat-box child" title="/categories/C/Qt/" href="/categories/C/Qt/"><div class='name'>Qt</div><div class='badge'>(1)</div></a></li>
+        
+          <li><a class="flat-box" title="/categories/复习/" href="/categories/复习/"><div class='name'>复习</div><div class='badge'>(4)</div></a></li>
+        
+          <li><a class="flat-box" title="/categories/教程/" href="/categories/教程/"><div class='name'>教程</div><div class='badge'>(12)</div></a></li>
+        
+          <li><a class="flat-box" title="/categories/笔记/" href="/categories/笔记/"><div class='name'>笔记</div><div class='badge'>(20)</div></a></li>
+        
+          <li><a class="flat-box" title="/categories/随笔/" href="/categories/随笔/"><div class='name'>随笔</div><div class='badge'>(3)</div></a></li>
+        
+      </ul>
+    </div>
+  </section>
+
+
+          
+        
+      
+        
+          
+          
+            
+  <section class='widget tagcloud'>
+    
+<header class='pure'>
+  <div><i class="fas fa-fire fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;热门标签</div>
+  
+    <a class="rightBtn"
+    
+      rel="nofollow"
+    
+    
+    href="/blog/tags/"
+    title="blog/tags/">
+    <i class="fas fa-expand-arrows-alt fa-fw"></i></a>
+  
+</header>
+
+    <div class='content pure'>
+      <a href="/tags/Android/" style="font-size: 24px; color: #555">Android</a> <a href="/tags/C/" style="font-size: 14px; color: #999">C#</a> <a href="/tags/C/" style="font-size: 14px; color: #999">C++</a> <a href="/tags/CNN/" style="font-size: 14px; color: #999">CNN</a> <a href="/tags/Fisher/" style="font-size: 14px; color: #999">Fisher</a> <a href="/tags/Http/" style="font-size: 18px; color: #7e7e7e">Http</a> <a href="/tags/HyperLPR/" style="font-size: 14px; color: #999">HyperLPR</a> <a href="/tags/IAR/" style="font-size: 14px; color: #999">IAR</a> <a href="/tags/Java/" style="font-size: 20px; color: #707070">Java</a> <a href="/tags/Keras/" style="font-size: 14px; color: #999">Keras</a> <a href="/tags/MVP/" style="font-size: 14px; color: #999">MVP</a> <a href="/tags/Maven/" style="font-size: 14px; color: #999">Maven</a> <a href="/tags/Mnist/" style="font-size: 18px; color: #7e7e7e">Mnist</a> <a href="/tags/NetSecurity/" style="font-size: 14px; color: #999">NetSecurity</a> <a href="/tags/Omnetpp/" style="font-size: 14px; color: #999">Omnetpp</a> <a href="/tags/OpenCV/" style="font-size: 18px; color: #7e7e7e">OpenCV</a> <a href="/tags/Qt/" style="font-size: 14px; color: #999">Qt</a> <a href="/tags/RFID/" style="font-size: 14px; color: #999">RFID</a> <a href="/tags/STM32/" style="font-size: 14px; color: #999">STM32</a> <a href="/tags/SVM/" style="font-size: 14px; color: #999">SVM</a> <a href="/tags/SharedPreferences/" style="font-size: 14px; color: #999">SharedPreferences</a> <a href="/tags/Spring/" style="font-size: 14px; color: #999">Spring</a> <a href="/tags/TensorFlow/" style="font-size: 14px; color: #999">TensorFlow</a> <a href="/tags/Thread/" style="font-size: 14px; color: #999">Thread</a> <a href="/tags/Ubuntu/" style="font-size: 16px; color: #8b8b8b">Ubuntu</a> <a href="/tags/WSN/" style="font-size: 14px; color: #999">WSN</a> <a href="/tags/Zigbee/" style="font-size: 22px; color: #636363">Zigbee</a> <a href="/tags/c/" style="font-size: 14px; color: #999">c++</a> <a href="/tags/omnetpp/" style="font-size: 16px; color: #8b8b8b">omnetpp</a>
+    </div>
+  </section>
+
+
+          
+        
+      
+        
+          
+          
+            
+
+
+  <section class='widget music'>
+    
+<header class='pure'>
+  <div><i class="fas fa-compact-disc fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;最近在听</div>
+  
+    <a class="rightBtn"
+    
+      rel="external nofollow noopener noreferrer"
+    
+    
+      target="_blank"
+    
+    href="https://c.y.qq.com/base/fcgi-bin/u?__=jsQmg4H"
+    title="https://c.y.qq.com/base/fcgi-bin/u?__=jsQmg4H">
+    <i class="far fa-heart fa-fw"></i></a>
+  
+</header>
+
+    <div class='content pure'>
+      
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.7.0/dist/APlayer.min.css">
+  <div class="aplayer"
+    data-theme="#1BCDFC"
+    
+    
+    data-mode="circulation"
+    data-server="tencent"
+    data-type="playlist"
+    data-id="4222498938"
+    data-volume="0.7">
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/aplayer@1.7.0/dist/APlayer.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/meting@1.1.0/dist/Meting.min.js"></script>
+
+
+    </div>
+  </section>
+
+
+          
+        
+      
+    
+
+  
+</aside>
+
+<footer id="footer" class="clearfix">
+  
+    <div class="footer">
+      <p>已经到底了，但是精彩继续！</p>
+
+    </div>
+    <br>
+  
+  
+    <div class="social-wrapper">
+      
+        
+          <a href="/atom.xml"
+            class="social fas fa-rss flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="/stefancharles@vip.qq.com"
+            class="social fas fa-envelope flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="https://github.com/Stefancharles"
+            class="social fab fa-github flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="https://c.y.qq.com/base/fcgi-bin/u?__=jsQmg4H"
+            class="social fas fa-headphones-alt flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+    </div>
+  
+  <br>
+  <div><p>博客内容遵循 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</a></p>
+</div>
+  <div>
+
+    
+      
+      总访问量为
+      <span id="busuanzi_value_site_pv"><i class="fas fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span>
+      次
+    
+    。
+  </div>
+</footer>
+<script>setLoadingBarProgress(80);</script>
+
+
+      <script>setLoadingBarProgress(60);</script>
+    </div>
+    <a class="s-top fas fa-arrow-up fa-fw" href='javascript:void(0)'></a>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+
+  <script>
+    var GOOGLE_CUSTOM_SEARCH_API_KEY = "AIzaSyBjTC6INtmeYy3ig7VaKWeU5obyVnyOAuA";
+    var GOOGLE_CUSTOM_SEARCH_ENGINE_ID = "007855274890026858194:3gmzbmgvb-q";
+    var ALGOLIA_API_KEY = "";
+    var ALGOLIA_APP_ID = "";
+    var ALGOLIA_INDEX_NAME = "";
+    var AZURE_SERVICE_NAME = "";
+    var AZURE_INDEX_NAME = "";
+    var AZURE_QUERY_KEY = "";
+    var BAIDU_API_ID = "";
+    var SEARCH_SERVICE = "hexo" || "hexo";
+    var ROOT = "/"||"/";
+    if(!ROOT.endsWith('/'))ROOT += '/';
+  </script>
+
+<script src="//instant.page/1.2.2" type="module" integrity="sha384-2xV8M5griQmzyiY3CDqh1dn4z3llDVqZDqzjzcY+jCBCk/a5fXJmuZ/40JJAPeoU"></script>
+
+
+  <script async src="https://cdn.jsdelivr.net/npm/scrollreveal@4.0.5/dist/scrollreveal.min.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      const $reveal = $('.reveal');
+      if ($reveal.length === 0) return;
+      const sr = ScrollReveal({ distance: 0 });
+      sr.reveal('.reveal');
+    });
+  </script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      Waves.attach('.flat-btn', ['waves-button']);
+      Waves.attach('.float-btn', ['waves-button', 'waves-float']);
+      Waves.attach('.float-btn-light', ['waves-button', 'waves-float', 'waves-light']);
+      Waves.attach('.flat-box', ['waves-block']);
+      Waves.attach('.float-box', ['waves-block', 'waves-float']);
+      Waves.attach('.waves-image');
+      Waves.init();
+    });
+  </script>
+
+
+  <script async src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-busuanzi@2.3/js/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+  
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.0.4/jquery.backstretch.min.js"></script>
+    <script type="text/javascript">
+      $(function(){
+        if ('.cover') {
+          $('.cover').backstretch(
+          ["https://img.vim-cn.com/6d/a0c9e6f9efad8b731cb7376504bd10d79d2053.jpg"],
+          {
+            duration: "6000",
+            fade: "2500"
+          });
+        } else {
+          $.backstretch(
+          ["https://img.vim-cn.com/6d/a0c9e6f9efad8b731cb7376504bd10d79d2053.jpg"],
+          {
+            duration: "6000",
+            fade: "2500"
+          });
+        }
+      });
+    </script>
+  
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+    
+      <script src="https://cdn.jsdelivr.net/gh/xaoxuu/volantis@1.0/js/volantis.min.js"></script>
+    
+  
+  <script>
+  var GUEST_INFO = ['nick','mail','link'];
+  var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+    return GUEST_INFO.indexOf(item) > -1
+  });
+  var notify = 'true' == true;
+  var verify = 'true' == true;
+  var valine = new Valine();
+  valine.init({
+    el: '#valine_container',
+    notify: notify,
+    verify: verify,
+    guest_info: guest_info,
+    
+      path: "/zigbee/",
+    
+    appId: "wlBz3oHtoKBEhnTNtpqYUTGX-gzGzoHsz",
+    appKey: "UlbGNoRRKQR1eV0uLcaHwkI1",
+    placeholder: "快来评论吧~",
+    pageSize:'10',
+    avatar:'mp',
+    lang:'zh-cn',
+    highlight:'true'
+  })
+  </script>
+
+
+
+  <script src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-material-x@19.5/js/app.js"></script>
+
+
+  <script src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-material-x@19.5/js/search.js"></script>
+
+
+
+
+<!-- 复制 -->
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+  let COPY_SUCCESS = "复制成功";
+  let COPY_FAILURE = "复制失败";
+  /*页面载入完成后，创建复制按钮*/
+  !function (e, t, a) {
+    /* code */
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '  <i class="fa fa-copy"></i><span>复制</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+
+      clipboard.on('success', function(e) {
+        //您可以加入成功提示
+        console.info('Action:', e.action);
+        console.info('Text:', e.text);
+        console.info('Trigger:', e.trigger);
+        success_prompt(COPY_SUCCESS);
+        e.clearSelection();
+      });
+      clipboard.on('error', function(e) {
+        //您可以加入失败提示
+        console.error('Action:', e.action);
+        console.error('Trigger:', e.trigger);
+        fail_prompt(COPY_FAILURE);
+      });
+    }
+    initCopyCode();
+
+  }(window, document);
+
+  /**
+   * 弹出式提示框，默认1.5秒自动消失
+   * @param message 提示信息
+   * @param style 提示样式，有alert-success、alert-danger、alert-warning、alert-info
+   * @param time 消失时间
+   */
+  var prompt = function (message, style, time)
+  {
+      style = (style === undefined) ? 'alert-success' : style;
+      time = (time === undefined) ? 1500 : time*1000;
+      $('<div>')
+          .appendTo('body')
+          .addClass('alert ' + style)
+          .html(message)
+          .show()
+          .delay(time)
+          .fadeOut();
+  };
+
+  // 成功提示
+  var success_prompt = function(message, time)
+  {
+      prompt(message, 'alert-success', time);
+  };
+
+  // 失败提示
+  var fail_prompt = function(message, time)
+  {
+      prompt(message, 'alert-danger', time);
+  };
+
+  // 提醒
+  var warning_prompt = function(message, time)
+  {
+      prompt(message, 'alert-warning', time);
+  };
+
+  // 信息提示
+  var info_prompt = function(message, time)
+  {
+      prompt(message, 'alert-info', time);
+  };
+
+</script>
+
+
+<!-- fancybox -->
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+<script>
+  let LAZY_LOAD_IMAGE = "";
+  $(".article-entry").find("fancybox").find("img").each(function () {
+      var element = document.createElement("a");
+      $(element).attr("data-fancybox", "gallery");
+      $(element).attr("href", $(this).attr("src"));
+      /* 图片采用懒加载处理时,
+       * 一般图片标签内会有个属性名来存放图片的真实地址，比如 data-original,
+       * 那么此处将原本的属性名src替换为对应属性名data-original,
+       * 修改如下
+       */
+       if (LAZY_LOAD_IMAGE) {
+         $(element).attr("href", $(this).attr("data-original"));
+       }
+      $(this).wrap(element);
+  });
+</script>
+
+
+
+
+
+  <script>setLoadingBarProgress(100);</script>
+</body>
+</html>

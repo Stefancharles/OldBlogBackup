@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+  <title>基础操作 | Stefan&#39;s Blog</title>
+  
+  <meta name="keywords" content="Life,Learn.">
+  
+  
+  <meta name="description" content="Record learning tutorials and life insights.">
+  
+
+  
+
+  <meta name="HandheldFriendly" content="True">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <!-- meta -->
+  
+
+  <!-- link -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.css">
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.6.3/css/all.min.css">
+  
+
+  
+  <link rel="shortcut icon" type="image/x-icon" href="https://cdn.jsdelivr.net/gh/xaoxuu/assets@master/favicon/favicon.ico">
+  
+
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-material-x@19.5/css/style.css">
+  
+
+  <script>
+    function setLoadingBarProgress(num) {
+      document.getElementById('loading-bar').style.width=num+"%";
+    }
+  </script>
+
+  
+  
+</head>
+
+<body>
+  
+  
+  <header class="l_header pure">
+  <div id="loading-bar-wrapper">
+    <div id="loading-bar" class="pure"></div>
+  </div>
+
+	<div class='wrapper'>
+		<div class="nav-main container container--flex">
+      <a class="logo flat-box" href='/' >
+        
+          Stefan's Blog
+        
+      </a>
+			<div class='menu navgation'>
+				<ul class='h-list'>
+          
+  					
+  						<li>
+								<a class="nav flat-box" href="/"
+                  
+                  
+                  id="home">
+									<i class='fas fa-grin fa-fw'></i>&nbsp;示例
+								</a>
+							</li>
+      			
+  						<li>
+								<a class="nav flat-box" href="/blog/categories/"
+                  
+                    rel="nofollow"
+                  
+                  
+                  id="blogcategories">
+									<i class='fas fa-folder-open fa-fw'></i>&nbsp;分类
+								</a>
+							</li>
+      			
+  						<li>
+								<a class="nav flat-box" href="/blog/tags/"
+                  
+                    rel="nofollow"
+                  
+                  
+                  id="blogtags">
+									<i class='fas fa-hashtag fa-fw'></i>&nbsp;标签
+								</a>
+							</li>
+      			
+  						<li>
+								<a class="nav flat-box" href="/blog/archives/"
+                  
+                    rel="nofollow"
+                  
+                  
+                  id="blogarchives">
+									<i class='fas fa-archive fa-fw'></i>&nbsp;归档
+								</a>
+							</li>
+      			
+      		
+				</ul>
+			</div>
+
+			
+				<div class="m_search">
+					<form name="searchform" class="form u-search-form">
+						<input type="text" class="input u-search-input" placeholder="搜索" />
+						<i class="icon fas fa-search fa-fw"></i>
+					</form>
+				</div>
+			
+			<ul class='switcher h-list'>
+				
+					<li class='s-search'><a class="fas fa-search fa-fw" href='javascript:void(0)'></a></li>
+				
+				<li class='s-menu'><a class="fas fa-bars fa-fw" href='javascript:void(0)'></a></li>
+			</ul>
+		</div>
+
+		<div class='nav-sub container container--flex'>
+			<a class="logo flat-box"></a>
+			<ul class='switcher h-list'>
+				<li class='s-comment'><a class="flat-btn fas fa-comments fa-fw" href='javascript:void(0)'></a></li>
+        
+          <li class='s-toc'><a class="flat-btn fas fa-list fa-fw" href='javascript:void(0)'></a></li>
+        
+			</ul>
+		</div>
+	</div>
+</header>
+	<aside class="menu-phone">
+    <header>
+		<nav class="menu navgation">
+      <ul>
+        
+          
+            <li>
+							<a class="nav flat-box" href="/"
+                
+                
+                id="home">
+								<i class='fas fa-clock fa-fw'></i>&nbsp;近期文章
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/blog/archives/"
+                
+                  rel="nofollow"
+                
+                
+                id="blogarchives">
+								<i class='fas fa-archive fa-fw'></i>&nbsp;文章归档
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/projects/"
+                
+                
+                id="projects">
+								<i class='fas fa-code-branch fa-fw'></i>&nbsp;开源项目
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/friends/"
+                
+                  rel="nofollow"
+                
+                
+                id="friends">
+								<i class='fas fa-link fa-fw'></i>&nbsp;我的友链
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="https://github.com/Stefancharles"
+                
+                  rel="nofollow"
+                
+                
+                id="https:github.comStefancharles">
+								<i class='fas fa-book fa-fw'></i>&nbsp;主题文档
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/about/"
+                
+                  rel="nofollow"
+                
+                
+                id="about">
+								<i class='fas fa-info-circle fa-fw'></i>&nbsp;关于小站
+							</a>
+            </li>
+          
+       
+      </ul>
+		</nav>
+    </header>
+	</aside>
+<script>setLoadingBarProgress(40);</script>
+
+
+
+  <div class="l_body nocover">
+    <div class='body-wrapper'>
+      <div class='l_main'>
+  
+
+  
+    <article id="post" class="post white-box article-type-post" itemscope itemprop="blogPost">
+      
+
+
+  <section class='meta'>
+    
+    
+    <div class="meta" id="header-meta">
+      
+        
+  
+    <h1 class="title">
+      <a href="/2019/08/18/top/">
+        基础操作
+      </a>
+    </h1>
+  
+
+
+      
+      <div class='new-meta-box'>
+        
+          
+        
+          
+            
+  <div class='new-meta-item author'>
+    <a href="https://Stefancharles.xyz" rel="nofollow">
+      
+        <img src="https://i.loli.net/2019/08/15/4zEt9A6LvBegWX8.jpg">
+      
+      <p>Stefan</p>
+    </a>
+  </div>
+
+
+          
+        
+          
+            <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+    <p>2019-08-18</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  
+  <div class='new-meta-item category'>
+    <a href='/categories/教程/' rel="nofollow">
+      <i class="fas fa-folder-open" aria-hidden="true"></i>
+      <p>教程</p>
+    </a>
+  </div>
+
+
+          
+        
+          
+            
+  
+    <div class="new-meta-item browse busuanzi">
+      <a class='notlink'>
+        <i class="fas fa-eye" aria-hidden="true"></i>
+        <p>
+          <span id="busuanzi_value_page_pv">
+            <i class="fas fa-spinner fa-spin fa-fw" aria-hidden="true"></i>
+          </span>
+        </p>
+      </a>
+    </div>
+  
+
+
+          
+        
+          
+            
+
+          
+        
+      </div>
+      
+        <hr>
+      
+    </div>
+  </section>
+
+
+      <section class="article typo">
+        <div class="article-entry" itemprop="articleBody">
+          <div id="hbe-security">
+  <div class="hbe-input-container">
+  <input type="password" class="hbe-form-control" id="pass" placeholder="输入密码，查看文章" />
+    <label for="pass">输入密码，查看文章</label>
+    <div class="bottom-line"></div>
+  </div>
+</div>
+<div id="decryptionError" style="display: none;">Incorrect Password!</div>
+<div id="noContentError" style="display: none;">No content to display!</div>
+<div id="encrypt-blog" style="display:none">
+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
+</div>
+<script src="/lib/crypto-js.js"></script><script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">
+        </div>
+        
+          
+
+
+  <section class='meta' id="footer-meta">
+    <hr>
+    <div class='new-meta-box'>
+      
+        
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2019-09-06T11:25:57+08:00">
+  <a class='notlink'>
+    <i class="fas fa-clock" aria-hidden="true"></i>
+    <p>最后更新于 2019年9月6日</p>
+  </a>
+</div>
+
+        
+      
+        
+          
+
+        
+      
+        
+          
+  <div class="new-meta-item share -mob-share-list">
+  <div class="-mob-share-list share-body">
+    
+      
+        <a class="-mob-share-qq" title="QQ好友" rel="external nofollow noopener noreferrer"
+          
+          href="http://connect.qq.com/widget/shareqq/index.html?url=https://Stefancharles.xyz/2019/08/18/top/&title=基础操作 | Stefan's Blog&pics=https://i.loli.net/2019/08/15/4zEt9A6LvBegWX8.jpg&summary=由于本博客内容不完整，暂时不开放，请理解"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/qq.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-qzone" title="QQ空间" rel="external nofollow noopener noreferrer"
+          
+          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://Stefancharles.xyz/2019/08/18/top/&title=基础操作 | Stefan's Blog&pics=https://i.loli.net/2019/08/15/4zEt9A6LvBegWX8.jpg&summary=由于本博客内容不完整，暂时不开放，请理解"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/qzone.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-weibo" title="微博" rel="external nofollow noopener noreferrer"
+          
+          href="http://service.weibo.com/share/share.php?url=https://Stefancharles.xyz/2019/08/18/top/&title=基础操作 | Stefan's Blog&pics=https://i.loli.net/2019/08/15/4zEt9A6LvBegWX8.jpg&summary=由于本博客内容不完整，暂时不开放，请理解"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/weibo.png">
+          
+        </a>
+      
+    
+  </div>
+</div>
+
+
+
+        
+      
+    </div>
+  </section>
+
+
+        
+        
+            <div class="prev-next">
+                
+                    <section class="prev">
+                        <span class="art-item-left">
+                            <h6><i class="fas fa-chevron-left" aria-hidden="true"></i>&nbsp;上一页</h6>
+                            <h4>
+                                <a href="/2019/08/30/projects/Warehouse/" rel="prev" title="WareHouse">
+                                  
+                                      WareHouse
+                                  
+                                </a>
+                            </h4>
+                            
+                                
+                                <h6 class="tags">
+                                    <a class="tag" href="/tags/C/"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i>C++</a> <a class="tag" href="/tags/Qt/"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i>Qt</a>
+                                </h6>
+                            
+                        </span>
+                    </section>
+                
+                
+            </div>
+        
+      </section>
+    </article>
+  
+
+  
+    <!-- 显示推荐文章和评论 -->
+
+
+
+  <article class="post white-box comments">
+    <section class="article typo">
+      <h4><i class="fas fa-comments fa-fw" aria-hidden="true"></i>&nbsp;评论</h4>
+      
+      
+      
+      
+        <section id="comments">
+          <div id="valine_container" class="valine_thread">
+            <i class="fas fa-spinner fa-spin fa-fw"></i>
+          </div>
+        </section>
+      
+    </section>
+  </article>
+
+
+  
+
+
+
+
+<!-- 根据页面mathjax变量决定是否加载MathJax数学公式js -->
+
+
+
+  <script>
+    window.subData = {
+      title: '基础操作',
+      tools: true
+    }
+  </script>
+
+
+</div>
+<aside class='l_side'>
+  
+    
+    
+      
+        
+          
+          
+            <section class='widget author'>
+  <div class='content pure'>
+    
+      <div class='avatar'>
+        <img class='avatar' src='https://i.loli.net/2019/08/15/oZF8Hh2dKIJ5V1a.jpg'/>
+      </div>
+    
+    
+    
+      <div class="social-wrapper">
+        
+          
+            <a href="/atom.xml"
+              class="social fas fa-rss flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+          
+            <a href="/stefancharles@vip.qq.com"
+              class="social fas fa-envelope flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+          
+            <a href="https://github.com/Stefancharles"
+              class="social fab fa-github flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+          
+            <a href="https://c.y.qq.com/base/fcgi-bin/u?__=jsQmg4H"
+              class="social fas fa-headphones-alt flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+      </div>
+    
+  </div>
+</section>
+
+          
+        
+      
+        
+          
+          
+            
+
+          
+        
+      
+        
+          
+          
+            <section class='widget grid'>
+  
+<header class='pure'>
+  <div><i class="fas fa-map-signs fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;站内导航</div>
+  
+</header>
+
+  <div class='content pure'>
+    <ul class="grid navgation">
+      
+        <li><a class="flat-box" title="/" href="/"
+          
+          
+          id="home">
+          
+            <i class="fas fa-clock fa-fw" aria-hidden="true"></i>
+          
+          近期文章
+        </a></li>
+      
+        <li><a class="flat-box" title="/blog/archives/" href="/blog/archives/"
+          
+            rel="nofollow"
+          
+          
+          id="blogarchives">
+          
+            <i class="fas fa-archive fa-fw" aria-hidden="true"></i>
+          
+          文章归档
+        </a></li>
+      
+        <li><a class="flat-box" title="/projects/" href="/projects/"
+          
+          
+          id="projects">
+          
+            <i class="fas fa-code-branch fa-fw" aria-hidden="true"></i>
+          
+          开源项目
+        </a></li>
+      
+        <li><a class="flat-box" title="/friends/" href="/friends/"
+          
+            rel="nofollow"
+          
+          
+          id="friends">
+          
+            <i class="fas fa-link fa-fw" aria-hidden="true"></i>
+          
+          我的友链
+        </a></li>
+      
+        <li><a class="flat-box" title="https://github.com/Stefancharles" href="https://github.com/Stefancharles"
+          
+            rel="nofollow"
+          
+          
+          id="https:github.comStefancharles">
+          
+            <i class="fas fa-book fa-fw" aria-hidden="true"></i>
+          
+          主题文档
+        </a></li>
+      
+        <li><a class="flat-box" title="/about/" href="/about/"
+          
+            rel="nofollow"
+          
+          
+          id="about">
+          
+            <i class="fas fa-info-circle fa-fw" aria-hidden="true"></i>
+          
+          关于小站
+        </a></li>
+      
+    </ul>
+  </div>
+</section>
+
+          
+        
+      
+        
+          
+          
+            
+  <section class='widget category'>
+    
+<header class='pure'>
+  <div><i class="fas fa-folder-open fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;文章分类</div>
+  
+    <a class="rightBtn"
+    
+      rel="nofollow"
+    
+    
+    href="/blog/categories/"
+    title="blog/categories/">
+    <i class="fas fa-expand-arrows-alt fa-fw"></i></a>
+  
+</header>
+
+    <div class='content pure'>
+      <ul class="entry">
+        
+          <li><a class="flat-box" title="/categories/Android/" href="/categories/Android/"><div class='name'>Android</div><div class='badge'>(2)</div></a></li>
+        
+          <li><a class="flat-box child" title="/categories/Android/MVP/" href="/categories/Android/MVP/"><div class='name'>MVP</div><div class='badge'>(1)</div></a></li>
+        
+          <li><a class="flat-box child" title="/categories/Android/OpenCV/" href="/categories/Android/OpenCV/"><div class='name'>OpenCV</div><div class='badge'>(1)</div></a></li>
+        
+          <li><a class="flat-box" title="/categories/C/" href="/categories/C/"><div class='name'>C++</div><div class='badge'>(1)</div></a></li>
+        
+          <li><a class="flat-box child" title="/categories/C/Qt/" href="/categories/C/Qt/"><div class='name'>Qt</div><div class='badge'>(1)</div></a></li>
+        
+          <li><a class="flat-box" title="/categories/复习/" href="/categories/复习/"><div class='name'>复习</div><div class='badge'>(4)</div></a></li>
+        
+          <li><a class="flat-box" title="/categories/教程/" href="/categories/教程/"><div class='name'>教程</div><div class='badge'>(12)</div></a></li>
+        
+          <li><a class="flat-box" title="/categories/笔记/" href="/categories/笔记/"><div class='name'>笔记</div><div class='badge'>(20)</div></a></li>
+        
+          <li><a class="flat-box" title="/categories/随笔/" href="/categories/随笔/"><div class='name'>随笔</div><div class='badge'>(3)</div></a></li>
+        
+      </ul>
+    </div>
+  </section>
+
+
+          
+        
+      
+        
+          
+          
+            
+  <section class='widget tagcloud'>
+    
+<header class='pure'>
+  <div><i class="fas fa-fire fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;热门标签</div>
+  
+    <a class="rightBtn"
+    
+      rel="nofollow"
+    
+    
+    href="/blog/tags/"
+    title="blog/tags/">
+    <i class="fas fa-expand-arrows-alt fa-fw"></i></a>
+  
+</header>
+
+    <div class='content pure'>
+      <a href="/tags/Android/" style="font-size: 24px; color: #555">Android</a> <a href="/tags/C/" style="font-size: 14px; color: #999">C#</a> <a href="/tags/C/" style="font-size: 14px; color: #999">C++</a> <a href="/tags/CNN/" style="font-size: 14px; color: #999">CNN</a> <a href="/tags/Fisher/" style="font-size: 14px; color: #999">Fisher</a> <a href="/tags/Http/" style="font-size: 18px; color: #7e7e7e">Http</a> <a href="/tags/HyperLPR/" style="font-size: 14px; color: #999">HyperLPR</a> <a href="/tags/IAR/" style="font-size: 14px; color: #999">IAR</a> <a href="/tags/Java/" style="font-size: 20px; color: #707070">Java</a> <a href="/tags/Keras/" style="font-size: 14px; color: #999">Keras</a> <a href="/tags/MVP/" style="font-size: 14px; color: #999">MVP</a> <a href="/tags/Maven/" style="font-size: 14px; color: #999">Maven</a> <a href="/tags/Mnist/" style="font-size: 18px; color: #7e7e7e">Mnist</a> <a href="/tags/NetSecurity/" style="font-size: 14px; color: #999">NetSecurity</a> <a href="/tags/Omnetpp/" style="font-size: 14px; color: #999">Omnetpp</a> <a href="/tags/OpenCV/" style="font-size: 18px; color: #7e7e7e">OpenCV</a> <a href="/tags/Qt/" style="font-size: 14px; color: #999">Qt</a> <a href="/tags/RFID/" style="font-size: 14px; color: #999">RFID</a> <a href="/tags/STM32/" style="font-size: 14px; color: #999">STM32</a> <a href="/tags/SVM/" style="font-size: 14px; color: #999">SVM</a> <a href="/tags/SharedPreferences/" style="font-size: 14px; color: #999">SharedPreferences</a> <a href="/tags/Spring/" style="font-size: 14px; color: #999">Spring</a> <a href="/tags/TensorFlow/" style="font-size: 14px; color: #999">TensorFlow</a> <a href="/tags/Thread/" style="font-size: 14px; color: #999">Thread</a> <a href="/tags/Ubuntu/" style="font-size: 16px; color: #8b8b8b">Ubuntu</a> <a href="/tags/WSN/" style="font-size: 14px; color: #999">WSN</a> <a href="/tags/Zigbee/" style="font-size: 22px; color: #636363">Zigbee</a> <a href="/tags/c/" style="font-size: 14px; color: #999">c++</a> <a href="/tags/omnetpp/" style="font-size: 16px; color: #8b8b8b">omnetpp</a>
+    </div>
+  </section>
+
+
+          
+        
+      
+        
+          
+          
+            
+
+
+  <section class='widget music'>
+    
+<header class='pure'>
+  <div><i class="fas fa-compact-disc fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;最近在听</div>
+  
+    <a class="rightBtn"
+    
+      rel="external nofollow noopener noreferrer"
+    
+    
+      target="_blank"
+    
+    href="https://c.y.qq.com/base/fcgi-bin/u?__=jsQmg4H"
+    title="https://c.y.qq.com/base/fcgi-bin/u?__=jsQmg4H">
+    <i class="far fa-heart fa-fw"></i></a>
+  
+</header>
+
+    <div class='content pure'>
+      
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.7.0/dist/APlayer.min.css">
+  <div class="aplayer"
+    data-theme="#1BCDFC"
+    
+    
+    data-mode="circulation"
+    data-server="tencent"
+    data-type="playlist"
+    data-id="4222498938"
+    data-volume="0.7">
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/aplayer@1.7.0/dist/APlayer.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/meting@1.1.0/dist/Meting.min.js"></script>
+
+
+    </div>
+  </section>
+
+
+          
+        
+      
+    
+
+  
+</aside>
+
+<footer id="footer" class="clearfix">
+  
+    <div class="footer">
+      <p>已经到底了，但是精彩继续！</p>
+
+    </div>
+    <br>
+  
+  
+    <div class="social-wrapper">
+      
+        
+          <a href="/atom.xml"
+            class="social fas fa-rss flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="/stefancharles@vip.qq.com"
+            class="social fas fa-envelope flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="https://github.com/Stefancharles"
+            class="social fab fa-github flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="https://c.y.qq.com/base/fcgi-bin/u?__=jsQmg4H"
+            class="social fas fa-headphones-alt flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+    </div>
+  
+  <br>
+  <div><p>博客内容遵循 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</a></p>
+</div>
+  <div>
+
+    
+      
+      总访问量为
+      <span id="busuanzi_value_site_pv"><i class="fas fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span>
+      次
+    
+    。
+  </div>
+</footer>
+<script>setLoadingBarProgress(80);</script>
+
+
+      <script>setLoadingBarProgress(60);</script>
+    </div>
+    <a class="s-top fas fa-arrow-up fa-fw" href='javascript:void(0)'></a>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+
+  <script>
+    var GOOGLE_CUSTOM_SEARCH_API_KEY = "AIzaSyBjTC6INtmeYy3ig7VaKWeU5obyVnyOAuA";
+    var GOOGLE_CUSTOM_SEARCH_ENGINE_ID = "007855274890026858194:3gmzbmgvb-q";
+    var ALGOLIA_API_KEY = "";
+    var ALGOLIA_APP_ID = "";
+    var ALGOLIA_INDEX_NAME = "";
+    var AZURE_SERVICE_NAME = "";
+    var AZURE_INDEX_NAME = "";
+    var AZURE_QUERY_KEY = "";
+    var BAIDU_API_ID = "";
+    var SEARCH_SERVICE = "hexo" || "hexo";
+    var ROOT = "/"||"/";
+    if(!ROOT.endsWith('/'))ROOT += '/';
+  </script>
+
+<script src="//instant.page/1.2.2" type="module" integrity="sha384-2xV8M5griQmzyiY3CDqh1dn4z3llDVqZDqzjzcY+jCBCk/a5fXJmuZ/40JJAPeoU"></script>
+
+
+  <script async src="https://cdn.jsdelivr.net/npm/scrollreveal@4.0.5/dist/scrollreveal.min.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      const $reveal = $('.reveal');
+      if ($reveal.length === 0) return;
+      const sr = ScrollReveal({ distance: 0 });
+      sr.reveal('.reveal');
+    });
+  </script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      Waves.attach('.flat-btn', ['waves-button']);
+      Waves.attach('.float-btn', ['waves-button', 'waves-float']);
+      Waves.attach('.float-btn-light', ['waves-button', 'waves-float', 'waves-light']);
+      Waves.attach('.flat-box', ['waves-block']);
+      Waves.attach('.float-box', ['waves-block', 'waves-float']);
+      Waves.attach('.waves-image');
+      Waves.init();
+    });
+  </script>
+
+
+  <script async src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-busuanzi@2.3/js/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+  
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.0.4/jquery.backstretch.min.js"></script>
+    <script type="text/javascript">
+      $(function(){
+        if ('.cover') {
+          $('.cover').backstretch(
+          ["https://img.vim-cn.com/6d/a0c9e6f9efad8b731cb7376504bd10d79d2053.jpg"],
+          {
+            duration: "6000",
+            fade: "2500"
+          });
+        } else {
+          $.backstretch(
+          ["https://img.vim-cn.com/6d/a0c9e6f9efad8b731cb7376504bd10d79d2053.jpg"],
+          {
+            duration: "6000",
+            fade: "2500"
+          });
+        }
+      });
+    </script>
+  
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+    
+      <script src="https://cdn.jsdelivr.net/gh/xaoxuu/volantis@1.0/js/volantis.min.js"></script>
+    
+  
+  <script>
+  var GUEST_INFO = ['nick','mail','link'];
+  var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+    return GUEST_INFO.indexOf(item) > -1
+  });
+  var notify = 'true' == true;
+  var verify = 'true' == true;
+  var valine = new Valine();
+  valine.init({
+    el: '#valine_container',
+    notify: notify,
+    verify: verify,
+    guest_info: guest_info,
+    
+      path: "/top/",
+    
+    appId: "wlBz3oHtoKBEhnTNtpqYUTGX-gzGzoHsz",
+    appKey: "UlbGNoRRKQR1eV0uLcaHwkI1",
+    placeholder: "快来评论吧~",
+    pageSize:'10',
+    avatar:'mp',
+    lang:'zh-cn',
+    highlight:'true'
+  })
+  </script>
+
+
+
+  <script src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-material-x@19.5/js/app.js"></script>
+
+
+  <script src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-material-x@19.5/js/search.js"></script>
+
+
+
+
+<!-- 复制 -->
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+  let COPY_SUCCESS = "复制成功";
+  let COPY_FAILURE = "复制失败";
+  /*页面载入完成后，创建复制按钮*/
+  !function (e, t, a) {
+    /* code */
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '  <i class="fa fa-copy"></i><span>复制</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+
+      clipboard.on('success', function(e) {
+        //您可以加入成功提示
+        console.info('Action:', e.action);
+        console.info('Text:', e.text);
+        console.info('Trigger:', e.trigger);
+        success_prompt(COPY_SUCCESS);
+        e.clearSelection();
+      });
+      clipboard.on('error', function(e) {
+        //您可以加入失败提示
+        console.error('Action:', e.action);
+        console.error('Trigger:', e.trigger);
+        fail_prompt(COPY_FAILURE);
+      });
+    }
+    initCopyCode();
+
+  }(window, document);
+
+  /**
+   * 弹出式提示框，默认1.5秒自动消失
+   * @param message 提示信息
+   * @param style 提示样式，有alert-success、alert-danger、alert-warning、alert-info
+   * @param time 消失时间
+   */
+  var prompt = function (message, style, time)
+  {
+      style = (style === undefined) ? 'alert-success' : style;
+      time = (time === undefined) ? 1500 : time*1000;
+      $('<div>')
+          .appendTo('body')
+          .addClass('alert ' + style)
+          .html(message)
+          .show()
+          .delay(time)
+          .fadeOut();
+  };
+
+  // 成功提示
+  var success_prompt = function(message, time)
+  {
+      prompt(message, 'alert-success', time);
+  };
+
+  // 失败提示
+  var fail_prompt = function(message, time)
+  {
+      prompt(message, 'alert-danger', time);
+  };
+
+  // 提醒
+  var warning_prompt = function(message, time)
+  {
+      prompt(message, 'alert-warning', time);
+  };
+
+  // 信息提示
+  var info_prompt = function(message, time)
+  {
+      prompt(message, 'alert-info', time);
+  };
+
+</script>
+
+
+<!-- fancybox -->
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+<script>
+  let LAZY_LOAD_IMAGE = "";
+  $(".article-entry").find("fancybox").find("img").each(function () {
+      var element = document.createElement("a");
+      $(element).attr("data-fancybox", "gallery");
+      $(element).attr("href", $(this).attr("src"));
+      /* 图片采用懒加载处理时,
+       * 一般图片标签内会有个属性名来存放图片的真实地址，比如 data-original,
+       * 那么此处将原本的属性名src替换为对应属性名data-original,
+       * 修改如下
+       */
+       if (LAZY_LOAD_IMAGE) {
+         $(element).attr("href", $(this).attr("data-original"));
+       }
+      $(this).wrap(element);
+  });
+</script>
+
+
+
+
+
+  <script>setLoadingBarProgress(100);</script>
+</body>
+</html>

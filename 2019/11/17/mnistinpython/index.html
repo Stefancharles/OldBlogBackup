@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+  <title>【TensorFlow】MNIST数字识别数据集识别 | Stefan&#39;s Blog</title>
+  
+  <meta name="keywords" content="Life,Learn.">
+  
+  
+  <meta name="description" content="Record learning tutorials and life insights.">
+  
+
+  
+
+  <meta name="HandheldFriendly" content="True">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <!-- meta -->
+  
+
+  <!-- link -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.css">
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.6.3/css/all.min.css">
+  
+
+  
+  <link rel="shortcut icon" type="image/x-icon" href="https://cdn.jsdelivr.net/gh/xaoxuu/assets@master/favicon/favicon.ico">
+  
+
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-material-x@19.5/css/style.css">
+  
+
+  <script>
+    function setLoadingBarProgress(num) {
+      document.getElementById('loading-bar').style.width=num+"%";
+    }
+  </script>
+
+  
+  
+</head>
+
+<body>
+  
+  
+  <div class="cover-wrapper">
+    <cover class='cover post half'>
+      
+        
+  <h1 class='title'>Stefan's Blog</h1>
+
+
+  <div class="m_search">
+    <form name="searchform" class="form u-search-form">
+      <input type="text" class="input u-search-input" placeholder="" />
+      <i class="icon fas fa-search fa-fw"></i>
+    </form>
+  </div>
+
+<div class='menu navgation'>
+  <ul class='h-list'>
+    
+      
+        <li>
+          <a class="nav home" href="/"
+            
+            
+            id="home">
+            <i class='fas fa-rss fa-fw'></i>&nbsp;博文
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home" href="/projects/"
+            
+            
+            id="projects">
+            <i class='fas fa-code-branch fa-fw'></i>&nbsp;项目
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home" href="/friends/"
+            
+              rel="nofollow"
+            
+            
+            id="friends">
+            <i class='fas fa-link fa-fw'></i>&nbsp;友链
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home" href="/about/"
+            
+              rel="nofollow"
+            
+            
+            id="about">
+            <i class='fas fa-info-circle fa-fw'></i>&nbsp;关于
+          </a>
+        </li>
+      
+    
+  </ul>
+</div>
+
+      
+    </cover>
+    <header class="l_header pure">
+  <div id="loading-bar-wrapper">
+    <div id="loading-bar" class="pure"></div>
+  </div>
+
+	<div class='wrapper'>
+		<div class="nav-main container container--flex">
+      <a class="logo flat-box" href='/' >
+        
+          Stefan's Blog
+        
+      </a>
+			<div class='menu navgation'>
+				<ul class='h-list'>
+          
+  					
+  						<li>
+								<a class="nav flat-box" href="/"
+                  
+                  
+                  id="home">
+									<i class='fas fa-grin fa-fw'></i>&nbsp;示例
+								</a>
+							</li>
+      			
+  						<li>
+								<a class="nav flat-box" href="/blog/categories/"
+                  
+                    rel="nofollow"
+                  
+                  
+                  id="blogcategories">
+									<i class='fas fa-folder-open fa-fw'></i>&nbsp;分类
+								</a>
+							</li>
+      			
+  						<li>
+								<a class="nav flat-box" href="/blog/tags/"
+                  
+                    rel="nofollow"
+                  
+                  
+                  id="blogtags">
+									<i class='fas fa-hashtag fa-fw'></i>&nbsp;标签
+								</a>
+							</li>
+      			
+  						<li>
+								<a class="nav flat-box" href="/blog/archives/"
+                  
+                    rel="nofollow"
+                  
+                  
+                  id="blogarchives">
+									<i class='fas fa-archive fa-fw'></i>&nbsp;归档
+								</a>
+							</li>
+      			
+      		
+				</ul>
+			</div>
+
+			
+				<div class="m_search">
+					<form name="searchform" class="form u-search-form">
+						<input type="text" class="input u-search-input" placeholder="搜索" />
+						<i class="icon fas fa-search fa-fw"></i>
+					</form>
+				</div>
+			
+			<ul class='switcher h-list'>
+				
+					<li class='s-search'><a class="fas fa-search fa-fw" href='javascript:void(0)'></a></li>
+				
+				<li class='s-menu'><a class="fas fa-bars fa-fw" href='javascript:void(0)'></a></li>
+			</ul>
+		</div>
+
+		<div class='nav-sub container container--flex'>
+			<a class="logo flat-box"></a>
+			<ul class='switcher h-list'>
+				<li class='s-comment'><a class="flat-btn fas fa-comments fa-fw" href='javascript:void(0)'></a></li>
+        
+          <li class='s-toc'><a class="flat-btn fas fa-list fa-fw" href='javascript:void(0)'></a></li>
+        
+			</ul>
+		</div>
+	</div>
+</header>
+	<aside class="menu-phone">
+    <header>
+		<nav class="menu navgation">
+      <ul>
+        
+          
+            <li>
+							<a class="nav flat-box" href="/"
+                
+                
+                id="home">
+								<i class='fas fa-clock fa-fw'></i>&nbsp;近期文章
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/blog/archives/"
+                
+                  rel="nofollow"
+                
+                
+                id="blogarchives">
+								<i class='fas fa-archive fa-fw'></i>&nbsp;文章归档
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/projects/"
+                
+                
+                id="projects">
+								<i class='fas fa-code-branch fa-fw'></i>&nbsp;开源项目
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/friends/"
+                
+                  rel="nofollow"
+                
+                
+                id="friends">
+								<i class='fas fa-link fa-fw'></i>&nbsp;我的友链
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="https://github.com/Stefancharles"
+                
+                  rel="nofollow"
+                
+                
+                id="https:github.comStefancharles">
+								<i class='fas fa-book fa-fw'></i>&nbsp;主题文档
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/about/"
+                
+                  rel="nofollow"
+                
+                
+                id="about">
+								<i class='fas fa-info-circle fa-fw'></i>&nbsp;关于小站
+							</a>
+            </li>
+          
+       
+      </ul>
+		</nav>
+    </header>
+	</aside>
+<script>setLoadingBarProgress(40);</script>
+
+  </div>
+
+
+  <div class="l_body">
+    <div class='body-wrapper'>
+      <div class='l_main'>
+  
+
+  
+    <article id="post" class="post white-box article-type-post" itemscope itemprop="blogPost">
+      
+
+
+  <section class='meta'>
+    
+    
+    <div class="meta" id="header-meta">
+      
+        
+  
+    <h1 class="title">
+      <a href="/2019/11/17/mnistinpython/">
+        【TensorFlow】MNIST数字识别数据集识别
+      </a>
+    </h1>
+  
+
+
+      
+      <div class='new-meta-box'>
+        
+          
+        
+          
+            
+  <div class='new-meta-item author'>
+    <a href="https://Stefancharles.xyz" rel="nofollow">
+      
+        <img src="https://i.loli.net/2019/08/15/4zEt9A6LvBegWX8.jpg">
+      
+      <p>Stefan</p>
+    </a>
+  </div>
+
+
+          
+        
+          
+            <div class="new-meta-item date" itemprop="dateUpdated" datetime="2019-11-18T11:33:45+08:00">
+  <a class='notlink'>
+    <i class="fas fa-clock" aria-hidden="true"></i>
+    <p>最后更新于 2019年11月18日</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  
+    <div class="new-meta-item browse busuanzi">
+      <a class='notlink'>
+        <i class="fas fa-eye" aria-hidden="true"></i>
+        <p>
+          <span id="busuanzi_value_page_pv">
+            <i class="fas fa-spinner fa-spin fa-fw" aria-hidden="true"></i>
+          </span>
+        </p>
+      </a>
+    </div>
+  
+
+
+          
+        
+      </div>
+      
+        <hr>
+      
+    </div>
+  </section>
+
+
+      <section class="article typo">
+        <div class="article-entry" itemprop="articleBody">
+          <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>在上一章中介绍了<a href="https://stefancharles.xyz/2019/11/12/mnist/">基于OpenCV的MNIST手写体SVM分类</a>,本篇将介绍一些使用Python对MNIST数据集进行操作。</p>
+<a id="more"></a>
+
+
+<h2 id="实验环境"><a href="#实验环境" class="headerlink" title="实验环境"></a>实验环境</h2><ul>
+<li>Pycharm 2019.3 BETA</li>
+<li>Win10 1909</li>
+<li>Python 3.7.0</li>
+<li>Chrome Dev 80.3964.0</li>
+</ul>
+<h2 id="使用Colab编辑和运行Python代码"><a href="#使用Colab编辑和运行Python代码" class="headerlink" title="使用Colab编辑和运行Python代码"></a>使用Colab编辑和运行Python代码</h2><p>按照谷歌官方的介绍：</p>
+<blockquote>
+<p>Colaboratory 是一个免费的 Jupyter 笔记本环境，不需要进行任何设置就可以使用，并且完全在云端运行。借助 Colaboratory，您可以编写和执行代码、保存和共享分析结果，以及利用强大的计算资源，所有这些都可通过浏览器免费使用。</p>
+</blockquote>
+<p>也就是说可以在线运行python代码，不需要进行麻烦的配置。</p>
+<p> <a href="https://colab.research.google.com/" target="_blank" rel="noopener">点击这里去CoLab</a></p>
+<p>今天我发现官方介绍的<strong>强大的计算资源</strong>真不是盖的。看来昨天是我冤枉它了。</p>
+<p>经过几步简单的设置，就可以使用GPU和TPU进行加速。</p>
+<p><img src="https://i.loli.net/2019/11/18/mZOUWougXPkzqcN.png" alt="Snipaste_2019-11-18_11-27-42.png"></p>
+<p>我在我自己电脑上跑一个周期需要20秒，在Colab上使用GPU一个周期仅仅需要2秒。</p>
+<p>当我用我自己电脑跑时，电脑CPU已经100%负载，此时我做不了其他事情，只能等程序跑完。<br>而在colab上，代码是在google云上跑，自己的电脑只是显示结果，CPU与平时一样，还能做其他工作。</p>
+<h2 id="下载数据"><a href="#下载数据" class="headerlink" title="下载数据"></a>下载数据</h2><p>建立TensorFlow程序下载并读取MNIST数据。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mnist = input_data.read_data_sets(<span class="string">"MNIST_data/"</span>, one_hot=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">print(<span class="string">'train'</span>, mnist.train.num_examples,</span><br><span class="line">      <span class="string">',validation'</span>, mnist.validation.num_examples,</span><br><span class="line">      <span class="string">',test'</span>, mnist.test.num_examples)</span><br><span class="line"></span><br><span class="line">print(<span class="string">'train_images : '</span>, mnist.train.images.shape,</span><br><span class="line">      <span class="string">' - labels : '</span>, mnist.train.labels.shape)</span><br></pre></td></tr></table></figure>
+
+<p>运行后，会在你的项目下新建一个MNIST_data文件夹，等待一会后，这个文件夹里会自动多出四个GZ压缩文件。<br><img src="https://i.loli.net/2019/11/17/WNR2rkxFaSHnlzu.png" alt="data.png"><br>控制台输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">train <span class="number">55000</span> ,validation <span class="number">5000</span> ,test <span class="number">10000</span></span><br><span class="line">train_images :  (<span class="number">55000</span>, <span class="number">784</span>)  - labels :  (<span class="number">55000</span>, <span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="查看多项数据images与labels"><a href="#查看多项数据images与labels" class="headerlink" title="查看多项数据images与labels"></a>查看多项数据images与labels</h2><p>为了后面方便的显示图像与标签，我们这里def一个显示的函数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">plot_images_labels_prediction</span><span class="params">(images, labels, prediction, idx, num=<span class="number">10</span>)</span>:</span></span><br><span class="line">    fig = plt.gcf()</span><br><span class="line">    fig.set_size_inches(<span class="number">12</span>, <span class="number">14</span>)</span><br><span class="line">    <span class="keyword">if</span> num &gt; <span class="number">25</span>: num = <span class="number">25</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, num):</span><br><span class="line">        ax = plt.subplot(<span class="number">5</span>, <span class="number">5</span>, <span class="number">1</span> + i)</span><br><span class="line"></span><br><span class="line">        ax.imshow(np.reshape(images[idx], (<span class="number">28</span>, <span class="number">28</span>)),</span><br><span class="line">                  cmap=<span class="string">'binary'</span>)</span><br><span class="line"></span><br><span class="line">        title = <span class="string">"label="</span> + str(np.argmax(labels[idx]))</span><br><span class="line">        <span class="keyword">if</span> len(prediction) &gt; <span class="number">0</span>:</span><br><span class="line">            title += <span class="string">",predict="</span> + str(prediction[idx])</span><br><span class="line"></span><br><span class="line">        ax.set_title(title, fontsize=<span class="number">10</span>)</span><br><span class="line">        ax.set_xticks([]);</span><br><span class="line">        ax.set_yticks([])</span><br><span class="line">        idx += <span class="number">1</span></span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure>
+
+<p>上面默认打印10个。</p>
+<h2 id="按批次读取数据"><a href="#按批次读取数据" class="headerlink" title="按批次读取数据"></a>按批次读取数据</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">batch_images_xs, batch_labels_ys = mnist.train.next_batch(batch_size=<span class="number">100</span>)</span><br><span class="line">print(len(batch_images_xs), len(batch_labels_ys))</span><br></pre></td></tr></table></figure>
+
+<p>可以调用上面的显示函数进行显示：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 显示批次数据</span></span><br><span class="line">plot_images_labels_prediction(batch_images_xs,batch_labels_ys,[],<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="建立多层感知器"><a href="#建立多层感知器" class="headerlink" title="建立多层感知器"></a>建立多层感知器</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 定义layer函数，建立2层网络</span></span><br><span class="line"><span class="comment"># 以正态分布的随机数建立并初始化W（权重）</span></span><br><span class="line"><span class="comment"># 以正态分布的随机数建立b(偏差)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">layer</span><span class="params">(output_dim,input_dim,inputs, activation=None)</span>:</span></span><br><span class="line">    W = tf.Variable(tf.random_normal([input_dim, output_dim]))</span><br><span class="line">    b = tf.Variable(tf.random_normal([<span class="number">1</span>, output_dim]))</span><br><span class="line">    XWb = tf.matmul(inputs, W) + b</span><br><span class="line">    <span class="keyword">if</span> activation <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">        outputs = XWb</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        outputs = activation(XWb)</span><br><span class="line">    <span class="keyword">return</span> outputs</span><br><span class="line"></span><br><span class="line"><span class="comment"># 建立输入层，使用placeholder方法建立输入层</span></span><br><span class="line"><span class="comment"># 输入数据类型为Float，即浮点数</span></span><br><span class="line"><span class="comment"># 第一维设置None，因为后续训练传入图像项数不确定</span></span><br><span class="line"><span class="comment"># 第二维维784，输入数字图像是784像素</span></span><br><span class="line">X = tf.placeholder(<span class="string">"float"</span>,[<span class="literal">None</span>,<span class="number">784</span>])</span><br><span class="line"><span class="comment"># 建立隐藏层</span></span><br><span class="line"><span class="comment"># 隐藏层神经元个数为226</span></span><br><span class="line"><span class="comment"># 输入层的神经元个数，也就是X=784</span></span><br><span class="line"><span class="comment"># 输入层 = X 连接输入层</span></span><br><span class="line"><span class="comment"># 定义激活函数为ReLU</span></span><br><span class="line">h1 = layer(output_dim=<span class="number">256</span>,input_dim=<span class="number">784</span>,inputs=X,activation=tf.nn.relu)</span><br><span class="line"><span class="comment"># 建立输出层</span></span><br><span class="line"><span class="comment"># 建立输出层神经元个数为10</span></span><br><span class="line"><span class="comment"># 输入神经元个数为隐藏层的个数 h1 = 256</span></span><br><span class="line"><span class="comment"># 连接隐藏层</span></span><br><span class="line"><span class="comment"># 没有激活函数</span></span><br><span class="line">y_predict = layer(output_dim=<span class="number">10</span>,input_dim=<span class="number">256</span>,inputs=h1,activation=<span class="literal">None</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="定义训练方法"><a href="#定义训练方法" class="headerlink" title="定义训练方法"></a>定义训练方法</h2><p>TensorFlow的定义训练方式必须自己定义损失函数的公式、优化器和设置参数，并定义评估模型准确率的公式。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 建立训练数据label真实值的placeholder</span></span><br><span class="line"><span class="comment"># 第二位设置为10，因为输入数字真实值已经是使用one-hot转换的值,0~9</span></span><br><span class="line">y_label = tf.placeholder(<span class="string">"float"</span>,[<span class="literal">None</span>,<span class="number">10</span>])</span><br><span class="line"><span class="comment"># 定义损失函数</span></span><br><span class="line"><span class="comment"># 使用cross_entropy()交叉熵训练</span></span><br><span class="line">loss_function = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits_v2(logits=y_predict,labels=y_label))</span><br><span class="line"><span class="comment"># 定义优化器</span></span><br><span class="line"><span class="comment"># 调用tf.train模块，定义optimizer(优化器)</span></span><br><span class="line"><span class="comment"># 使用AdaOptimizer并设置learning_rate = 0.001</span></span><br><span class="line"><span class="comment"># 优化器使用loss_function计算误差，并且按照误差更新模型权重与偏差，使误差最小化</span></span><br><span class="line">optimizer = tf.train.AdamOptimizer(learning_rate=<span class="number">0.001</span>).minimize(loss_function)</span><br></pre></td></tr></table></figure>
+
+<h2 id="定义评估模型准确率的方法"><a href="#定义评估模型准确率的方法" class="headerlink" title="定义评估模型准确率的方法"></a>定义评估模型准确率的方法</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 首先计算每一项数据是否预测正确</span></span><br><span class="line"><span class="comment"># 将运算结果存储在correct_prdiction中</span></span><br><span class="line"><span class="comment"># tf.equal判断真实值与测试值是否相等</span></span><br><span class="line"><span class="comment"># argmax将one-hot encoding转成数字0~9</span></span><br><span class="line">correct_prdiction = tf.equal(tf.argmax(y_label,<span class="number">1</span>), tf.argmax(y_predict,<span class="number">1</span>))</span><br><span class="line"><span class="comment"># 计算预测正确结果的平均值</span></span><br><span class="line"><span class="comment"># 将tf.cast转换成float，再使用reduce_mean转成所有数平均值</span></span><br><span class="line">accuracy = tf.reduce_mean(tf.cast(correct_prdiction,<span class="string">"float"</span>))</span><br></pre></td></tr></table></figure>
+
+<h2 id="进行训练"><a href="#进行训练" class="headerlink" title="进行训练"></a>进行训练</h2><p>训练数据共55000项，分为每一批次100项，要将所有数据训练完毕后需要执行550批次（55000/100=550），当所有数据训练完毕，成为完成一个训练周期。我们将执行15个训练周期，降低误差，提高准确率。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 定义训练参数</span></span><br><span class="line"><span class="comment"># 执行15个训练周期</span></span><br><span class="line"><span class="comment"># 每一批次项数为100</span></span><br><span class="line"><span class="comment"># loss、epoch、accuracy三个列表分别记录误差、训练周期、准确率</span></span><br><span class="line"><span class="comment"># time导入时间模块</span></span><br><span class="line">trainEpochs = <span class="number">15</span></span><br><span class="line">batchSize = <span class="number">100</span></span><br><span class="line">totalBatchs = int(mnist.train.num_examples / batchSize)</span><br><span class="line">loss_list = []</span><br><span class="line">epoch_list = []</span><br><span class="line">accuracy_list = []</span><br><span class="line"></span><br><span class="line">startTime = time()</span><br><span class="line"></span><br><span class="line">sess = tf.Session()</span><br><span class="line">sess.run(tf.global_variables_initializer())</span><br><span class="line"><span class="comment"># 进行迭代训练</span></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> range(trainEpochs):</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(totalBatchs):</span><br><span class="line">        batch_x, batch_y = mnist.train.next_batch(batchSize)</span><br><span class="line">        sess.run(optimizer, feed_dict=&#123;X: batch_x, y_label: batch_y&#125;)</span><br><span class="line"></span><br><span class="line">    loss, acc = sess.run([loss_function, accuracy],</span><br><span class="line">                         feed_dict=&#123;X: mnist.validation.images,</span><br><span class="line">                                    y_label: mnist.validation.labels&#125;)</span><br><span class="line"></span><br><span class="line">    epoch_list.append(epoch);</span><br><span class="line">    loss_list.append(loss)</span><br><span class="line">    accuracy_list.append(acc)</span><br><span class="line">    print(<span class="string">"Train Epoch:"</span>, <span class="string">'%02d'</span> % (epoch + <span class="number">1</span>), <span class="string">"Loss="</span>,</span><br><span class="line">          <span class="string">"&#123;:.9f&#125;"</span>.format(loss), <span class="string">" Accuracy="</span>, acc)</span><br><span class="line"></span><br><span class="line">duration = time() - startTime</span><br><span class="line">print(<span class="string">"Train Finished takes:"</span>, duration)</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Train Epoch: <span class="number">01</span> Loss= <span class="number">6.145112991</span>  Accuracy= <span class="number">0.8448</span></span><br><span class="line">Train Epoch: <span class="number">02</span> Loss= <span class="number">3.810992956</span>  Accuracy= <span class="number">0.8902</span></span><br><span class="line">Train Epoch: <span class="number">03</span> Loss= <span class="number">2.916266680</span>  Accuracy= <span class="number">0.908</span></span><br><span class="line">Train Epoch: <span class="number">04</span> Loss= <span class="number">2.435287952</span>  Accuracy= <span class="number">0.916</span></span><br><span class="line">Train Epoch: <span class="number">05</span> Loss= <span class="number">2.132323503</span>  Accuracy= <span class="number">0.9244</span></span><br><span class="line">Train Epoch: <span class="number">06</span> Loss= <span class="number">1.904199958</span>  Accuracy= <span class="number">0.9306</span></span><br><span class="line">Train Epoch: <span class="number">07</span> Loss= <span class="number">1.830164433</span>  Accuracy= <span class="number">0.9342</span></span><br><span class="line">Train Epoch: <span class="number">08</span> Loss= <span class="number">1.654303908</span>  Accuracy= <span class="number">0.9386</span></span><br><span class="line">Train Epoch: <span class="number">09</span> Loss= <span class="number">1.512639999</span>  Accuracy= <span class="number">0.9408</span></span><br><span class="line">Train Epoch: <span class="number">10</span> Loss= <span class="number">1.484358191</span>  Accuracy= <span class="number">0.94</span></span><br><span class="line">Train Epoch: <span class="number">11</span> Loss= <span class="number">1.389361858</span>  Accuracy= <span class="number">0.9434</span></span><br><span class="line">Train Epoch: <span class="number">12</span> Loss= <span class="number">1.329701424</span>  Accuracy= <span class="number">0.9438</span></span><br><span class="line">Train Epoch: <span class="number">13</span> Loss= <span class="number">1.301885366</span>  Accuracy= <span class="number">0.9444</span></span><br><span class="line">Train Epoch: <span class="number">14</span> Loss= <span class="number">1.228815317</span>  Accuracy= <span class="number">0.947</span></span><br><span class="line">Train Epoch: <span class="number">15</span> Loss= <span class="number">1.276753068</span>  Accuracy= <span class="number">0.943</span></span><br><span class="line">Train Finished takes: <span class="number">10.961797952651978</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="绘图"><a href="#绘图" class="headerlink" title="绘图"></a>绘图</h2><h3 id="Loss"><a href="#Loss" class="headerlink" title="Loss"></a>Loss</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">fig = plt.gcf()</span><br><span class="line">fig.set_size_inches(<span class="number">6</span>, <span class="number">3</span>)</span><br><span class="line">plt.plot(epoch_list, loss_list, label=<span class="string">'loss'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'loss'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'epoch'</span>)</span><br><span class="line">plt.legend()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.loli.net/2019/11/17/AQpKjBr9P2kNTzM.png" alt="loss.png"></p>
+<h3 id="Accuracy"><a href="#Accuracy" class="headerlink" title="Accuracy"></a>Accuracy</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">plt.plot(epoch_list, accuracy_list, label=<span class="string">"accuracy"</span>)</span><br><span class="line">fig = plt.gcf()</span><br><span class="line">fig.set_size_inches(<span class="number">6</span>, <span class="number">3</span>)</span><br><span class="line">plt.ylim(<span class="number">0.8</span>, <span class="number">1</span>)</span><br><span class="line">plt.ylabel(<span class="string">'accuracy'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'epoch'</span>)</span><br><span class="line">plt.legend()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.loli.net/2019/11/17/9pacr31EvO7uf2F.png" alt="acc.png"></p>
+<h2 id="模型准确率评估"><a href="#模型准确率评估" class="headerlink" title="模型准确率评估"></a>模型准确率评估</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">"Accuracy:"</span>, sess.run(accuracy, feed_dict=&#123;X: mnist.test.images, y_label: mnist.test.labels&#125;))</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Accuracy: <span class="number">0.9412</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="进行预测"><a href="#进行预测" class="headerlink" title="进行预测"></a>进行预测</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">prediction_result = sess.run(tf.argmax(y_predict, <span class="number">1</span>), feed_dict=&#123;X: mnist.test.images&#125;)</span><br><span class="line"><span class="comment"># 显示预测结果，前10项</span></span><br><span class="line">prediction_result[:<span class="number">10</span>]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">plot_images_labels_prediction</span><span class="params">(images, labels, prediction, idx, num=<span class="number">10</span>)</span>:</span></span><br><span class="line">    fig = plt.gcf()</span><br><span class="line">    fig.set_size_inches(<span class="number">12</span>, <span class="number">12</span>)</span><br><span class="line">    <span class="keyword">if</span> num &gt; <span class="number">25</span>: num = <span class="number">25</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, num):</span><br><span class="line">        ax = plt.subplot(<span class="number">5</span>, <span class="number">5</span>, <span class="number">1</span> + i)</span><br><span class="line"></span><br><span class="line">        ax.imshow(np.reshape(images[idx], (<span class="number">28</span>, <span class="number">28</span>)), cmap=<span class="string">'binary'</span>)</span><br><span class="line"></span><br><span class="line">        title = <span class="string">"label="</span> + str(np.argmax(labels[idx]))</span><br><span class="line">        <span class="keyword">if</span> len(prediction) &gt; <span class="number">0</span>:</span><br><span class="line">            title += <span class="string">",predict="</span> + str(prediction[idx])</span><br><span class="line"></span><br><span class="line">        ax.set_title(title, fontsize=<span class="number">10</span>)</span><br><span class="line">        ax.set_xticks([]);</span><br><span class="line">        ax.set_yticks([])</span><br><span class="line">        idx += <span class="number">1</span></span><br><span class="line">    plt.show()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">plot_images_labels_prediction(mnist.test.images, mnist.test.labels, prediction_result, <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.loli.net/2019/11/17/s179tRKXxcojCTE.png" alt="top10.png"></p>
+<p>从输出的图片可以看出，大部分的预测是正确的，还是有错误的情况，例如说5判断为6.</p>
+<h2 id="输出前500个错误的判断"><a href="#输出前500个错误的判断" class="headerlink" title="输出前500个错误的判断"></a>输出前500个错误的判断</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">500</span>):</span><br><span class="line">    <span class="keyword">if</span> prediction_result[i] != np.argmax(mnist.test.labels[i]):</span><br><span class="line">        print(<span class="string">"i="</span> + str(i) +</span><br><span class="line">              <span class="string">"   label="</span>, np.argmax(mnist.test.labels[i]),</span><br><span class="line">              <span class="string">"predict="</span>, prediction_result[i])</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">i=<span class="number">8</span>   label= <span class="number">5</span> predict= <span class="number">6</span></span><br><span class="line">i=<span class="number">24</span>   label= <span class="number">4</span> predict= <span class="number">7</span></span><br><span class="line">i=<span class="number">33</span>   label= <span class="number">4</span> predict= <span class="number">0</span></span><br><span class="line">i=<span class="number">61</span>   label= <span class="number">8</span> predict= <span class="number">2</span></span><br><span class="line">i=<span class="number">62</span>   label= <span class="number">9</span> predict= <span class="number">8</span></span><br><span class="line">i=<span class="number">78</span>   label= <span class="number">9</span> predict= <span class="number">7</span></span><br><span class="line">i=<span class="number">96</span>   label= <span class="number">1</span> predict= <span class="number">5</span></span><br><span class="line">i=<span class="number">118</span>   label= <span class="number">9</span> predict= <span class="number">8</span></span><br><span class="line">i=<span class="number">124</span>   label= <span class="number">7</span> predict= <span class="number">4</span></span><br><span class="line">i=<span class="number">125</span>   label= <span class="number">9</span> predict= <span class="number">4</span></span><br><span class="line">i=<span class="number">133</span>   label= <span class="number">7</span> predict= <span class="number">2</span></span><br><span class="line">i=<span class="number">149</span>   label= <span class="number">2</span> predict= <span class="number">6</span></span><br><span class="line">i=<span class="number">151</span>   label= <span class="number">9</span> predict= <span class="number">2</span></span><br><span class="line">i=<span class="number">159</span>   label= <span class="number">4</span> predict= <span class="number">1</span></span><br><span class="line">i=<span class="number">195</span>   label= <span class="number">3</span> predict= <span class="number">1</span></span><br><span class="line">i=<span class="number">211</span>   label= <span class="number">5</span> predict= <span class="number">8</span></span><br><span class="line">i=<span class="number">244</span>   label= <span class="number">2</span> predict= <span class="number">8</span></span><br><span class="line">i=<span class="number">245</span>   label= <span class="number">3</span> predict= <span class="number">5</span></span><br><span class="line">i=<span class="number">247</span>   label= <span class="number">4</span> predict= <span class="number">2</span></span><br><span class="line">i=<span class="number">306</span>   label= <span class="number">2</span> predict= <span class="number">1</span></span><br><span class="line">i=<span class="number">318</span>   label= <span class="number">2</span> predict= <span class="number">3</span></span><br><span class="line">i=<span class="number">320</span>   label= <span class="number">9</span> predict= <span class="number">7</span></span><br><span class="line">i=<span class="number">321</span>   label= <span class="number">2</span> predict= <span class="number">7</span></span><br><span class="line">i=<span class="number">324</span>   label= <span class="number">0</span> predict= <span class="number">3</span></span><br><span class="line">i=<span class="number">340</span>   label= <span class="number">5</span> predict= <span class="number">3</span></span><br><span class="line">i=<span class="number">359</span>   label= <span class="number">9</span> predict= <span class="number">4</span></span><br><span class="line">i=<span class="number">381</span>   label= <span class="number">3</span> predict= <span class="number">7</span></span><br><span class="line">i=<span class="number">389</span>   label= <span class="number">9</span> predict= <span class="number">4</span></span><br><span class="line">i=<span class="number">399</span>   label= <span class="number">4</span> predict= <span class="number">2</span></span><br><span class="line">i=<span class="number">404</span>   label= <span class="number">2</span> predict= <span class="number">7</span></span><br><span class="line">i=<span class="number">412</span>   label= <span class="number">5</span> predict= <span class="number">3</span></span><br><span class="line">i=<span class="number">445</span>   label= <span class="number">6</span> predict= <span class="number">0</span></span><br><span class="line">i=<span class="number">448</span>   label= <span class="number">9</span> predict= <span class="number">8</span></span><br><span class="line">i=<span class="number">449</span>   label= <span class="number">3</span> predict= <span class="number">5</span></span><br><span class="line">i=<span class="number">450</span>   label= <span class="number">3</span> predict= <span class="number">5</span></span><br><span class="line">i=<span class="number">457</span>   label= <span class="number">6</span> predict= <span class="number">5</span></span><br><span class="line">i=<span class="number">468</span>   label= <span class="number">7</span> predict= <span class="number">3</span></span><br><span class="line">i=<span class="number">478</span>   label= <span class="number">5</span> predict= <span class="number">3</span></span><br><span class="line">i=<span class="number">479</span>   label= <span class="number">9</span> predict= <span class="number">5</span></span><br><span class="line">i=<span class="number">486</span>   label= <span class="number">8</span> predict= <span class="number">7</span></span><br><span class="line">i=<span class="number">495</span>   label= <span class="number">8</span> predict= <span class="number">3</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="改进方案"><a href="#改进方案" class="headerlink" title="改进方案"></a>改进方案</h2><p>这里的正确率还是不太理想。改进的方法有很多，例如我们将之前隐藏层原本的256个神经元改成1000个，或者使用两层隐藏层。<br>或者使用卷积神经网络等等来提高正确率。<br>这里我暂时没有深入再去研究。后面如果有时间和精力再研究。<br>有兴趣的同学可以暂时参考林博主的<a href="https://blog.csdn.net/qq_40318498/article/details/103071141" target="_blank" rel="noopener">关于MNIST手写数字识别的几种实现方式</a>。</p>
+<h2 id="致谢"><a href="#致谢" class="headerlink" title="致谢"></a>致谢</h2><p>本次实验参考了很多资料，在此表示感谢。如果有侵权的地方，请联系我：<a href="mailto:stefancharles@qq.com" target="_blank" rel="noopener">stefancharles@qq.com</a>，我会立刻删除侵权内容。</p>
+<p>如果你认为我哪里写得不对，也可以联系我一起讨论。</p>
+<p>以下是参考来源。</p>
+<ul>
+<li><p>1.MNIST <a href="http://archive.ics.uci.edu/ml/datasets/Iris" target="_blank" rel="noopener">数据地址</a></p>
+</li>
+<li><p>2.CoLAB <a href="https://colab.research.google.com/" target="_blank" rel="noopener">CoLab</a></p>
+</li>
+<li><p>3.<a href="https://blog.csdn.net/rtygbwwwerr/article/details/50778098" target="_blank" rel="noopener">交叉熵（Cross-Entropy）</a></p>
+</li>
+<li><p>4.林博主 - <a href="https://blog.csdn.net/qq_40318498/article/details/103071141" target="_blank" rel="noopener">关于MNIST手写数字识别的几种实现方式</a></p>
+</li>
+</ul>
+
+        </div>
+        
+          
+
+
+  <section class='meta' id="footer-meta">
+    <hr>
+    <div class='new-meta-box'>
+      
+        
+          
+  
+  <div class='new-meta-item category'>
+    <a href='/categories/笔记/' rel="nofollow">
+      <i class="fas fa-folder-open" aria-hidden="true"></i>
+      <p>笔记</p>
+    </a>
+  </div>
+
+
+        
+      
+        
+          
+  
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/Mnist/" rel="nofollow"><i class="fas fa-hashtag" aria-hidden="true"></i>&nbsp;<p>Mnist</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/TensorFlow/" rel="nofollow"><i class="fas fa-hashtag" aria-hidden="true"></i>&nbsp;<p>TensorFlow</p></a></div>
+
+
+        
+      
+        
+          
+  <div class="new-meta-item share -mob-share-list">
+  <div class="-mob-share-list share-body">
+    
+      
+        <a class="-mob-share-qq" title="QQ好友" rel="external nofollow noopener noreferrer"
+          
+          href="http://connect.qq.com/widget/shareqq/index.html?url=https://Stefancharles.xyz/2019/11/17/mnistinpython/&title=【TensorFlow】MNIST数字识别数据集识别 | Stefan's Blog&pics=https://i.loli.net/2019/08/15/4zEt9A6LvBegWX8.jpg&summary=简介在上一章中介绍了基于OpenCV的MNIST手写体SVM分类,本篇将介绍一些使用Python对MNIST数据集进行操作。"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/qq.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-qzone" title="QQ空间" rel="external nofollow noopener noreferrer"
+          
+          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://Stefancharles.xyz/2019/11/17/mnistinpython/&title=【TensorFlow】MNIST数字识别数据集识别 | Stefan's Blog&pics=https://i.loli.net/2019/08/15/4zEt9A6LvBegWX8.jpg&summary=简介在上一章中介绍了基于OpenCV的MNIST手写体SVM分类,本篇将介绍一些使用Python对MNIST数据集进行操作。"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/qzone.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-weibo" title="微博" rel="external nofollow noopener noreferrer"
+          
+          href="http://service.weibo.com/share/share.php?url=https://Stefancharles.xyz/2019/11/17/mnistinpython/&title=【TensorFlow】MNIST数字识别数据集识别 | Stefan's Blog&pics=https://i.loli.net/2019/08/15/4zEt9A6LvBegWX8.jpg&summary=简介在上一章中介绍了基于OpenCV的MNIST手写体SVM分类,本篇将介绍一些使用Python对MNIST数据集进行操作。"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/weibo.png">
+          
+        </a>
+      
+    
+  </div>
+</div>
+
+
+
+        
+      
+    </div>
+  </section>
+
+
+        
+        
+            <div class="prev-next">
+                
+                    <section class="prev">
+                        <span class="art-item-left">
+                            <h6><i class="fas fa-chevron-left" aria-hidden="true"></i>&nbsp;上一页</h6>
+                            <h4>
+                                <a href="/2019/11/18/mnistinkeras/" rel="prev" title="keras卷积神经网络对MNIST数据集进行操作">
+                                  
+                                      keras卷积神经网络对MNIST数据集进行操作
+                                  
+                                </a>
+                            </h4>
+                            
+                                
+                                <h6 class="tags">
+                                    <a class="tag" href="/tags/Mnist/"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i>Mnist</a> <a class="tag" href="/tags/Keras/"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i>Keras</a>
+                                </h6>
+                            
+                        </span>
+                    </section>
+                
+                
+                    <section class="next">
+                        <span class="art-item-right" aria-hidden="true">
+                            <h6>下一页&nbsp;<i class="fas fa-chevron-right" aria-hidden="true"></i></h6>
+                            <h4>
+                                <a href="/2019/11/12/mnist/" rel="prev" title="基于OpenCV的MNIST手写体SVM分类">
+                                    
+                                        基于OpenCV的MNIST手写体SVM分类
+                                    
+                                </a>
+                            </h4>
+                            
+                                
+                                <h6 class="tags">
+                                    <a class="tag" href="/tags/Mnist/"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i>Mnist</a> <a class="tag" href="/tags/OpenCV/"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i>OpenCV</a> <a class="tag" href="/tags/SVM/"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i>SVM</a>
+                                </h6>
+                            
+                        </span>
+                    </section>
+                
+            </div>
+        
+      </section>
+    </article>
+  
+
+  
+    <!-- 显示推荐文章和评论 -->
+
+
+
+  <article class="post white-box comments">
+    <section class="article typo">
+      <h4><i class="fas fa-comments fa-fw" aria-hidden="true"></i>&nbsp;评论</h4>
+      
+      
+      
+      
+        <section id="comments">
+          <div id="valine_container" class="valine_thread">
+            <i class="fas fa-spinner fa-spin fa-fw"></i>
+          </div>
+        </section>
+      
+    </section>
+  </article>
+
+
+  
+
+
+
+
+<!-- 根据页面mathjax变量决定是否加载MathJax数学公式js -->
+
+
+
+  <script>
+    window.subData = {
+      title: '【TensorFlow】MNIST数字识别数据集识别',
+      tools: true
+    }
+  </script>
+
+
+</div>
+<aside class='l_side'>
+  
+    
+    
+      
+        
+          
+          
+            <section class='widget author'>
+  <div class='content pure'>
+    
+      <div class='avatar'>
+        <img class='avatar' src='https://i.loli.net/2019/08/15/oZF8Hh2dKIJ5V1a.jpg'/>
+      </div>
+    
+    
+    
+      <div class="social-wrapper">
+        
+          
+            <a href="/atom.xml"
+              class="social fas fa-rss flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+          
+            <a href="/stefancharles@vip.qq.com"
+              class="social fas fa-envelope flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+          
+            <a href="https://github.com/Stefancharles"
+              class="social fab fa-github flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+          
+            <a href="https://c.y.qq.com/base/fcgi-bin/u?__=jsQmg4H"
+              class="social fas fa-headphones-alt flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+      </div>
+    
+  </div>
+</section>
+
+          
+        
+      
+        
+          
+          
+            
+  <section class='widget toc-wrapper'>
+    
+<header class='pure'>
+  <div><i class="fas fa-list fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;本文目录</div>
+  
+    <div class='wrapper'><a class="s-toc rightBtn" rel="external nofollow noopener noreferrer" href="javascript:void(0)"><i class="fas fa-thumbtack fa-fw"></i></a></div>
+  
+</header>
+
+    <div class='content pure'>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#简介"><span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验环境"><span class="toc-text">实验环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用Colab编辑和运行Python代码"><span class="toc-text">使用Colab编辑和运行Python代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#下载数据"><span class="toc-text">下载数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看多项数据images与labels"><span class="toc-text">查看多项数据images与labels</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#按批次读取数据"><span class="toc-text">按批次读取数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建立多层感知器"><span class="toc-text">建立多层感知器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#定义训练方法"><span class="toc-text">定义训练方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#定义评估模型准确率的方法"><span class="toc-text">定义评估模型准确率的方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#进行训练"><span class="toc-text">进行训练</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#绘图"><span class="toc-text">绘图</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Loss"><span class="toc-text">Loss</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Accuracy"><span class="toc-text">Accuracy</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#模型准确率评估"><span class="toc-text">模型准确率评估</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#进行预测"><span class="toc-text">进行预测</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#输出前500个错误的判断"><span class="toc-text">输出前500个错误的判断</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#改进方案"><span class="toc-text">改进方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#致谢"><span class="toc-text">致谢</span></a></li></ol>
+    </div>
+  </section>
+
+
+          
+        
+      
+        
+          
+          
+            <section class='widget grid'>
+  
+<header class='pure'>
+  <div><i class="fas fa-map-signs fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;站内导航</div>
+  
+</header>
+
+  <div class='content pure'>
+    <ul class="grid navgation">
+      
+        <li><a class="flat-box" title="/" href="/"
+          
+          
+          id="home">
+          
+            <i class="fas fa-clock fa-fw" aria-hidden="true"></i>
+          
+          近期文章
+        </a></li>
+      
+        <li><a class="flat-box" title="/blog/archives/" href="/blog/archives/"
+          
+            rel="nofollow"
+          
+          
+          id="blogarchives">
+          
+            <i class="fas fa-archive fa-fw" aria-hidden="true"></i>
+          
+          文章归档
+        </a></li>
+      
+        <li><a class="flat-box" title="/projects/" href="/projects/"
+          
+          
+          id="projects">
+          
+            <i class="fas fa-code-branch fa-fw" aria-hidden="true"></i>
+          
+          开源项目
+        </a></li>
+      
+        <li><a class="flat-box" title="/friends/" href="/friends/"
+          
+            rel="nofollow"
+          
+          
+          id="friends">
+          
+            <i class="fas fa-link fa-fw" aria-hidden="true"></i>
+          
+          我的友链
+        </a></li>
+      
+        <li><a class="flat-box" title="https://github.com/Stefancharles" href="https://github.com/Stefancharles"
+          
+            rel="nofollow"
+          
+          
+          id="https:github.comStefancharles">
+          
+            <i class="fas fa-book fa-fw" aria-hidden="true"></i>
+          
+          主题文档
+        </a></li>
+      
+        <li><a class="flat-box" title="/about/" href="/about/"
+          
+            rel="nofollow"
+          
+          
+          id="about">
+          
+            <i class="fas fa-info-circle fa-fw" aria-hidden="true"></i>
+          
+          关于小站
+        </a></li>
+      
+    </ul>
+  </div>
+</section>
+
+          
+        
+      
+        
+          
+          
+            
+  <section class='widget category'>
+    
+<header class='pure'>
+  <div><i class="fas fa-folder-open fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;文章分类</div>
+  
+    <a class="rightBtn"
+    
+      rel="nofollow"
+    
+    
+    href="/blog/categories/"
+    title="blog/categories/">
+    <i class="fas fa-expand-arrows-alt fa-fw"></i></a>
+  
+</header>
+
+    <div class='content pure'>
+      <ul class="entry">
+        
+          <li><a class="flat-box" title="/categories/Android/" href="/categories/Android/"><div class='name'>Android</div><div class='badge'>(2)</div></a></li>
+        
+          <li><a class="flat-box child" title="/categories/Android/MVP/" href="/categories/Android/MVP/"><div class='name'>MVP</div><div class='badge'>(1)</div></a></li>
+        
+          <li><a class="flat-box child" title="/categories/Android/OpenCV/" href="/categories/Android/OpenCV/"><div class='name'>OpenCV</div><div class='badge'>(1)</div></a></li>
+        
+          <li><a class="flat-box" title="/categories/C/" href="/categories/C/"><div class='name'>C++</div><div class='badge'>(1)</div></a></li>
+        
+          <li><a class="flat-box child" title="/categories/C/Qt/" href="/categories/C/Qt/"><div class='name'>Qt</div><div class='badge'>(1)</div></a></li>
+        
+          <li><a class="flat-box" title="/categories/复习/" href="/categories/复习/"><div class='name'>复习</div><div class='badge'>(4)</div></a></li>
+        
+          <li><a class="flat-box" title="/categories/教程/" href="/categories/教程/"><div class='name'>教程</div><div class='badge'>(12)</div></a></li>
+        
+          <li><a class="flat-box" title="/categories/笔记/" href="/categories/笔记/"><div class='name'>笔记</div><div class='badge'>(20)</div></a></li>
+        
+          <li><a class="flat-box" title="/categories/随笔/" href="/categories/随笔/"><div class='name'>随笔</div><div class='badge'>(3)</div></a></li>
+        
+      </ul>
+    </div>
+  </section>
+
+
+          
+        
+      
+        
+          
+          
+            
+  <section class='widget tagcloud'>
+    
+<header class='pure'>
+  <div><i class="fas fa-fire fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;热门标签</div>
+  
+    <a class="rightBtn"
+    
+      rel="nofollow"
+    
+    
+    href="/blog/tags/"
+    title="blog/tags/">
+    <i class="fas fa-expand-arrows-alt fa-fw"></i></a>
+  
+</header>
+
+    <div class='content pure'>
+      <a href="/tags/Android/" style="font-size: 24px; color: #555">Android</a> <a href="/tags/C/" style="font-size: 14px; color: #999">C#</a> <a href="/tags/C/" style="font-size: 14px; color: #999">C++</a> <a href="/tags/CNN/" style="font-size: 14px; color: #999">CNN</a> <a href="/tags/Fisher/" style="font-size: 14px; color: #999">Fisher</a> <a href="/tags/Http/" style="font-size: 18px; color: #7e7e7e">Http</a> <a href="/tags/HyperLPR/" style="font-size: 14px; color: #999">HyperLPR</a> <a href="/tags/IAR/" style="font-size: 14px; color: #999">IAR</a> <a href="/tags/Java/" style="font-size: 20px; color: #707070">Java</a> <a href="/tags/Keras/" style="font-size: 14px; color: #999">Keras</a> <a href="/tags/MVP/" style="font-size: 14px; color: #999">MVP</a> <a href="/tags/Maven/" style="font-size: 14px; color: #999">Maven</a> <a href="/tags/Mnist/" style="font-size: 18px; color: #7e7e7e">Mnist</a> <a href="/tags/NetSecurity/" style="font-size: 14px; color: #999">NetSecurity</a> <a href="/tags/Omnetpp/" style="font-size: 14px; color: #999">Omnetpp</a> <a href="/tags/OpenCV/" style="font-size: 18px; color: #7e7e7e">OpenCV</a> <a href="/tags/Qt/" style="font-size: 14px; color: #999">Qt</a> <a href="/tags/RFID/" style="font-size: 14px; color: #999">RFID</a> <a href="/tags/STM32/" style="font-size: 14px; color: #999">STM32</a> <a href="/tags/SVM/" style="font-size: 14px; color: #999">SVM</a> <a href="/tags/SharedPreferences/" style="font-size: 14px; color: #999">SharedPreferences</a> <a href="/tags/Spring/" style="font-size: 14px; color: #999">Spring</a> <a href="/tags/TensorFlow/" style="font-size: 14px; color: #999">TensorFlow</a> <a href="/tags/Thread/" style="font-size: 14px; color: #999">Thread</a> <a href="/tags/Ubuntu/" style="font-size: 16px; color: #8b8b8b">Ubuntu</a> <a href="/tags/WSN/" style="font-size: 14px; color: #999">WSN</a> <a href="/tags/Zigbee/" style="font-size: 22px; color: #636363">Zigbee</a> <a href="/tags/c/" style="font-size: 14px; color: #999">c++</a> <a href="/tags/omnetpp/" style="font-size: 16px; color: #8b8b8b">omnetpp</a>
+    </div>
+  </section>
+
+
+          
+        
+      
+        
+          
+          
+            
+
+
+  <section class='widget music'>
+    
+<header class='pure'>
+  <div><i class="fas fa-compact-disc fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;最近在听</div>
+  
+    <a class="rightBtn"
+    
+      rel="external nofollow noopener noreferrer"
+    
+    
+      target="_blank"
+    
+    href="https://c.y.qq.com/base/fcgi-bin/u?__=jsQmg4H"
+    title="https://c.y.qq.com/base/fcgi-bin/u?__=jsQmg4H">
+    <i class="far fa-heart fa-fw"></i></a>
+  
+</header>
+
+    <div class='content pure'>
+      
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.7.0/dist/APlayer.min.css">
+  <div class="aplayer"
+    data-theme="#1BCDFC"
+    
+    
+    data-mode="circulation"
+    data-server="tencent"
+    data-type="playlist"
+    data-id="4222498938"
+    data-volume="0.7">
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/aplayer@1.7.0/dist/APlayer.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/meting@1.1.0/dist/Meting.min.js"></script>
+
+
+    </div>
+  </section>
+
+
+          
+        
+      
+    
+
+  
+</aside>
+
+<footer id="footer" class="clearfix">
+  
+    <div class="footer">
+      <p>已经到底了，但是精彩继续！</p>
+
+    </div>
+    <br>
+  
+  
+    <div class="social-wrapper">
+      
+        
+          <a href="/atom.xml"
+            class="social fas fa-rss flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="/stefancharles@vip.qq.com"
+            class="social fas fa-envelope flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="https://github.com/Stefancharles"
+            class="social fab fa-github flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="https://c.y.qq.com/base/fcgi-bin/u?__=jsQmg4H"
+            class="social fas fa-headphones-alt flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+    </div>
+  
+  <br>
+  <div><p>博客内容遵循 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</a></p>
+</div>
+  <div>
+
+    
+      
+      总访问量为
+      <span id="busuanzi_value_site_pv"><i class="fas fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span>
+      次
+    
+    。
+  </div>
+</footer>
+<script>setLoadingBarProgress(80);</script>
+
+
+      <script>setLoadingBarProgress(60);</script>
+    </div>
+    <a class="s-top fas fa-arrow-up fa-fw" href='javascript:void(0)'></a>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+
+  <script>
+    var GOOGLE_CUSTOM_SEARCH_API_KEY = "AIzaSyBjTC6INtmeYy3ig7VaKWeU5obyVnyOAuA";
+    var GOOGLE_CUSTOM_SEARCH_ENGINE_ID = "007855274890026858194:3gmzbmgvb-q";
+    var ALGOLIA_API_KEY = "";
+    var ALGOLIA_APP_ID = "";
+    var ALGOLIA_INDEX_NAME = "";
+    var AZURE_SERVICE_NAME = "";
+    var AZURE_INDEX_NAME = "";
+    var AZURE_QUERY_KEY = "";
+    var BAIDU_API_ID = "";
+    var SEARCH_SERVICE = "hexo" || "hexo";
+    var ROOT = "/"||"/";
+    if(!ROOT.endsWith('/'))ROOT += '/';
+  </script>
+
+<script src="//instant.page/1.2.2" type="module" integrity="sha384-2xV8M5griQmzyiY3CDqh1dn4z3llDVqZDqzjzcY+jCBCk/a5fXJmuZ/40JJAPeoU"></script>
+
+
+  <script async src="https://cdn.jsdelivr.net/npm/scrollreveal@4.0.5/dist/scrollreveal.min.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      const $reveal = $('.reveal');
+      if ($reveal.length === 0) return;
+      const sr = ScrollReveal({ distance: 0 });
+      sr.reveal('.reveal');
+    });
+  </script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      Waves.attach('.flat-btn', ['waves-button']);
+      Waves.attach('.float-btn', ['waves-button', 'waves-float']);
+      Waves.attach('.float-btn-light', ['waves-button', 'waves-float', 'waves-light']);
+      Waves.attach('.flat-box', ['waves-block']);
+      Waves.attach('.float-box', ['waves-block', 'waves-float']);
+      Waves.attach('.waves-image');
+      Waves.init();
+    });
+  </script>
+
+
+  <script async src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-busuanzi@2.3/js/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+  
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.0.4/jquery.backstretch.min.js"></script>
+    <script type="text/javascript">
+      $(function(){
+        if ('.cover') {
+          $('.cover').backstretch(
+          ["https://img.vim-cn.com/6d/a0c9e6f9efad8b731cb7376504bd10d79d2053.jpg"],
+          {
+            duration: "6000",
+            fade: "2500"
+          });
+        } else {
+          $.backstretch(
+          ["https://img.vim-cn.com/6d/a0c9e6f9efad8b731cb7376504bd10d79d2053.jpg"],
+          {
+            duration: "6000",
+            fade: "2500"
+          });
+        }
+      });
+    </script>
+  
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+    
+      <script src="https://cdn.jsdelivr.net/gh/xaoxuu/volantis@1.0/js/volantis.min.js"></script>
+    
+  
+  <script>
+  var GUEST_INFO = ['nick','mail','link'];
+  var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+    return GUEST_INFO.indexOf(item) > -1
+  });
+  var notify = 'true' == true;
+  var verify = 'true' == true;
+  var valine = new Valine();
+  valine.init({
+    el: '#valine_container',
+    notify: notify,
+    verify: verify,
+    guest_info: guest_info,
+    
+      path: "/mnist/",
+    
+    appId: "wlBz3oHtoKBEhnTNtpqYUTGX-gzGzoHsz",
+    appKey: "UlbGNoRRKQR1eV0uLcaHwkI1",
+    placeholder: "快来评论吧~",
+    pageSize:'10',
+    avatar:'mp',
+    lang:'zh-cn',
+    highlight:'true'
+  })
+  </script>
+
+
+
+  <script src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-material-x@19.5/js/app.js"></script>
+
+
+  <script src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-material-x@19.5/js/search.js"></script>
+
+
+
+
+<!-- 复制 -->
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+  let COPY_SUCCESS = "复制成功";
+  let COPY_FAILURE = "复制失败";
+  /*页面载入完成后，创建复制按钮*/
+  !function (e, t, a) {
+    /* code */
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '  <i class="fa fa-copy"></i><span>复制</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+
+      clipboard.on('success', function(e) {
+        //您可以加入成功提示
+        console.info('Action:', e.action);
+        console.info('Text:', e.text);
+        console.info('Trigger:', e.trigger);
+        success_prompt(COPY_SUCCESS);
+        e.clearSelection();
+      });
+      clipboard.on('error', function(e) {
+        //您可以加入失败提示
+        console.error('Action:', e.action);
+        console.error('Trigger:', e.trigger);
+        fail_prompt(COPY_FAILURE);
+      });
+    }
+    initCopyCode();
+
+  }(window, document);
+
+  /**
+   * 弹出式提示框，默认1.5秒自动消失
+   * @param message 提示信息
+   * @param style 提示样式，有alert-success、alert-danger、alert-warning、alert-info
+   * @param time 消失时间
+   */
+  var prompt = function (message, style, time)
+  {
+      style = (style === undefined) ? 'alert-success' : style;
+      time = (time === undefined) ? 1500 : time*1000;
+      $('<div>')
+          .appendTo('body')
+          .addClass('alert ' + style)
+          .html(message)
+          .show()
+          .delay(time)
+          .fadeOut();
+  };
+
+  // 成功提示
+  var success_prompt = function(message, time)
+  {
+      prompt(message, 'alert-success', time);
+  };
+
+  // 失败提示
+  var fail_prompt = function(message, time)
+  {
+      prompt(message, 'alert-danger', time);
+  };
+
+  // 提醒
+  var warning_prompt = function(message, time)
+  {
+      prompt(message, 'alert-warning', time);
+  };
+
+  // 信息提示
+  var info_prompt = function(message, time)
+  {
+      prompt(message, 'alert-info', time);
+  };
+
+</script>
+
+
+<!-- fancybox -->
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+<script>
+  let LAZY_LOAD_IMAGE = "";
+  $(".article-entry").find("fancybox").find("img").each(function () {
+      var element = document.createElement("a");
+      $(element).attr("data-fancybox", "gallery");
+      $(element).attr("href", $(this).attr("src"));
+      /* 图片采用懒加载处理时,
+       * 一般图片标签内会有个属性名来存放图片的真实地址，比如 data-original,
+       * 那么此处将原本的属性名src替换为对应属性名data-original,
+       * 修改如下
+       */
+       if (LAZY_LOAD_IMAGE) {
+         $(element).attr("href", $(this).attr("data-original"));
+       }
+      $(this).wrap(element);
+  });
+</script>
+
+
+
+
+
+  <script>setLoadingBarProgress(100);</script>
+</body>
+</html>

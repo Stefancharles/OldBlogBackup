@@ -1,0 +1,1230 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+  <title>基于OMNET++仿真平台的正方形网络仿真 | Stefan&#39;s Blog</title>
+  
+  <meta name="keywords" content="Life,Learn.">
+  
+  
+  <meta name="description" content="Record learning tutorials and life insights.">
+  
+
+  
+
+  <meta name="HandheldFriendly" content="True">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <!-- meta -->
+  
+
+  <!-- link -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.css">
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.6.3/css/all.min.css">
+  
+
+  
+  <link rel="shortcut icon" type="image/x-icon" href="https://cdn.jsdelivr.net/gh/xaoxuu/assets@master/favicon/favicon.ico">
+  
+
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-material-x@19.5/css/style.css">
+  
+
+  <script>
+    function setLoadingBarProgress(num) {
+      document.getElementById('loading-bar').style.width=num+"%";
+    }
+  </script>
+
+  
+  
+</head>
+
+<body>
+  
+  
+  <div class="cover-wrapper">
+    <cover class='cover post half'>
+      
+        
+  <h1 class='title'>Stefan's Blog</h1>
+
+
+  <div class="m_search">
+    <form name="searchform" class="form u-search-form">
+      <input type="text" class="input u-search-input" placeholder="" />
+      <i class="icon fas fa-search fa-fw"></i>
+    </form>
+  </div>
+
+<div class='menu navgation'>
+  <ul class='h-list'>
+    
+      
+        <li>
+          <a class="nav home" href="/"
+            
+            
+            id="home">
+            <i class='fas fa-rss fa-fw'></i>&nbsp;博文
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home" href="/projects/"
+            
+            
+            id="projects">
+            <i class='fas fa-code-branch fa-fw'></i>&nbsp;项目
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home" href="/friends/"
+            
+              rel="nofollow"
+            
+            
+            id="friends">
+            <i class='fas fa-link fa-fw'></i>&nbsp;友链
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home" href="/about/"
+            
+              rel="nofollow"
+            
+            
+            id="about">
+            <i class='fas fa-info-circle fa-fw'></i>&nbsp;关于
+          </a>
+        </li>
+      
+    
+  </ul>
+</div>
+
+      
+    </cover>
+    <header class="l_header pure">
+  <div id="loading-bar-wrapper">
+    <div id="loading-bar" class="pure"></div>
+  </div>
+
+	<div class='wrapper'>
+		<div class="nav-main container container--flex">
+      <a class="logo flat-box" href='/' >
+        
+          Stefan's Blog
+        
+      </a>
+			<div class='menu navgation'>
+				<ul class='h-list'>
+          
+  					
+  						<li>
+								<a class="nav flat-box" href="/"
+                  
+                  
+                  id="home">
+									<i class='fas fa-grin fa-fw'></i>&nbsp;示例
+								</a>
+							</li>
+      			
+  						<li>
+								<a class="nav flat-box" href="/blog/categories/"
+                  
+                    rel="nofollow"
+                  
+                  
+                  id="blogcategories">
+									<i class='fas fa-folder-open fa-fw'></i>&nbsp;分类
+								</a>
+							</li>
+      			
+  						<li>
+								<a class="nav flat-box" href="/blog/tags/"
+                  
+                    rel="nofollow"
+                  
+                  
+                  id="blogtags">
+									<i class='fas fa-hashtag fa-fw'></i>&nbsp;标签
+								</a>
+							</li>
+      			
+  						<li>
+								<a class="nav flat-box" href="/blog/archives/"
+                  
+                    rel="nofollow"
+                  
+                  
+                  id="blogarchives">
+									<i class='fas fa-archive fa-fw'></i>&nbsp;归档
+								</a>
+							</li>
+      			
+      		
+				</ul>
+			</div>
+
+			
+				<div class="m_search">
+					<form name="searchform" class="form u-search-form">
+						<input type="text" class="input u-search-input" placeholder="搜索" />
+						<i class="icon fas fa-search fa-fw"></i>
+					</form>
+				</div>
+			
+			<ul class='switcher h-list'>
+				
+					<li class='s-search'><a class="fas fa-search fa-fw" href='javascript:void(0)'></a></li>
+				
+				<li class='s-menu'><a class="fas fa-bars fa-fw" href='javascript:void(0)'></a></li>
+			</ul>
+		</div>
+
+		<div class='nav-sub container container--flex'>
+			<a class="logo flat-box"></a>
+			<ul class='switcher h-list'>
+				<li class='s-comment'><a class="flat-btn fas fa-comments fa-fw" href='javascript:void(0)'></a></li>
+        
+          <li class='s-toc'><a class="flat-btn fas fa-list fa-fw" href='javascript:void(0)'></a></li>
+        
+			</ul>
+		</div>
+	</div>
+</header>
+	<aside class="menu-phone">
+    <header>
+		<nav class="menu navgation">
+      <ul>
+        
+          
+            <li>
+							<a class="nav flat-box" href="/"
+                
+                
+                id="home">
+								<i class='fas fa-clock fa-fw'></i>&nbsp;近期文章
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/blog/archives/"
+                
+                  rel="nofollow"
+                
+                
+                id="blogarchives">
+								<i class='fas fa-archive fa-fw'></i>&nbsp;文章归档
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/projects/"
+                
+                
+                id="projects">
+								<i class='fas fa-code-branch fa-fw'></i>&nbsp;开源项目
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/friends/"
+                
+                  rel="nofollow"
+                
+                
+                id="friends">
+								<i class='fas fa-link fa-fw'></i>&nbsp;我的友链
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="https://github.com/Stefancharles"
+                
+                  rel="nofollow"
+                
+                
+                id="https:github.comStefancharles">
+								<i class='fas fa-book fa-fw'></i>&nbsp;主题文档
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/about/"
+                
+                  rel="nofollow"
+                
+                
+                id="about">
+								<i class='fas fa-info-circle fa-fw'></i>&nbsp;关于小站
+							</a>
+            </li>
+          
+       
+      </ul>
+		</nav>
+    </header>
+	</aside>
+<script>setLoadingBarProgress(40);</script>
+
+  </div>
+
+
+  <div class="l_body">
+    <div class='body-wrapper'>
+      <div class='l_main'>
+  
+
+  
+    <article id="post" class="post white-box article-type-post" itemscope itemprop="blogPost">
+      
+
+
+  <section class='meta'>
+    
+    
+    <div class="meta" id="header-meta">
+      
+        
+  
+    <h1 class="title">
+      <a href="/2019/11/30/omnettaskone/">
+        基于OMNET++仿真平台的正方形网络仿真
+      </a>
+    </h1>
+  
+
+
+      
+      <div class='new-meta-box'>
+        
+          
+        
+          
+            
+  <div class='new-meta-item author'>
+    <a href="https://Stefancharles.xyz" rel="nofollow">
+      
+        <img src="https://i.loli.net/2019/08/15/4zEt9A6LvBegWX8.jpg">
+      
+      <p>Stefan</p>
+    </a>
+  </div>
+
+
+          
+        
+          
+            <div class="new-meta-item date" itemprop="dateUpdated" datetime="2019-12-01T17:09:53+08:00">
+  <a class='notlink'>
+    <i class="fas fa-clock" aria-hidden="true"></i>
+    <p>最后更新于 2019年12月1日</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  
+    <div class="new-meta-item browse busuanzi">
+      <a class='notlink'>
+        <i class="fas fa-eye" aria-hidden="true"></i>
+        <p>
+          <span id="busuanzi_value_page_pv">
+            <i class="fas fa-spinner fa-spin fa-fw" aria-hidden="true"></i>
+          </span>
+        </p>
+      </a>
+    </div>
+  
+
+
+          
+        
+      </div>
+      
+        <hr>
+      
+    </div>
+  </section>
+
+
+      <section class="article typo">
+        <div class="article-entry" itemprop="articleBody">
+          <h2 id="实验要求"><a href="#实验要求" class="headerlink" title="实验要求"></a>实验要求</h2><p>以讲解的tictoc网络模型为例，建立一个TicToc正方形网络模型，如下图所示，网络节点是正方形的四个节点，均为Tic模块的实例，节点周期性的产生数据包，数据包通过输出门发送到相连的邻接点，<br>当节点产生的数据包又回到发送节点时，删除该数据包。<strong>当某个节点产生的数据包个数等于100时，结束网络仿真过程</strong>，统计各节点产生、发送、接受的数据包个数。</p>
+<a id="more"></a>
+
+
+<h2 id="实验环境"><a href="#实验环境" class="headerlink" title="实验环境"></a>实验环境</h2><ul>
+<li>Win10 1909</li>
+<li>OMNeT++ 5.5.1</li>
+<li>VSCode</li>
+</ul>
+<h2 id="建立工程"><a href="#建立工程" class="headerlink" title="建立工程"></a>建立工程</h2><p>首先我们需要做一些实验前的准备工作。<a href="https://stefancharles.xyz/2019/11/08/omnetpp/">点击这里去之前的我的一篇博客</a>记录了OMNeT的安装以及如何开始上手一个简单的工程。这里我不再重复造轮子。</p>
+<h2 id="大致思路"><a href="#大致思路" class="headerlink" title="大致思路"></a>大致思路</h2><p>首先我们需要一个我们模块的类，这个类public继承自cSimpleModule。根据实验的要求，我们需要设计三个整型变量来分别对各节点产生、发送、接受的数据包个数进行统计。三个函数分别用作初始化（initialize），转发消息（forwardMessage），处理收到的消息（handleMessage）。<br>在initialize()函数里我们对四个节点进行定时发送，按照周期性的要求，也可以初始化的时候同时发送数据包（消息）。当一个节点收到消息的时候，就进到处理消息函数里，在handleMessage()函数里我们判断一个收到的消息是不是自己发的消息，如果是，那么就销毁刚刚收到的这个消息，并且又开启新一轮的发送消息。<br>四个节点都是如此，循环直到节点的createcount达到100就停止。</p>
+<p>一个很随意的流程图如下：</p>
+<p><img src="https://i.loli.net/2019/11/29/kG3HW7UTix9wjE6.png" alt="20191129210443.png"></p>
+<blockquote>
+<p>当然，思路很简单。引用屈博士的话，“说谁不会说”。俗话说，纸上谈来终觉浅，绝知此事要躬行。Talk is cheap ,Show me the code.</p>
+</blockquote>
+<h2 id="实验准备"><a href="#实验准备" class="headerlink" title="实验准备"></a>实验准备</h2><ul>
+<li>.cc文件是对所有模块生效的代码，不是只对特定的某一个模块或者节点生效。</li>
+<li>删除网络中的所有消息可以结束仿真，调用endSimulation()函数也可以结束仿真。</li>
+<li>在win10下，如果按下开始仿真任务栏有图标但是没有界面，可以尝试外接一个显示器。</li>
+<li>提示access denied是因为已经存在一个仿真界面，需要关闭原有的才能新建一个。</li>
+<li>在仿真界面的左上角有一个fast图标，可以快速仿真到仿真结束。</li>
+<li>对变量传参到WATCH()函数，可以在仿真时较为直观观察变量的值。</li>
+<li>数据包和消息（Message）是一个意思。</li>
+<li>EV相当于cout。</li>
+<li>send(msg, “out”)函数只是把消息推送到out门，出了门后消息具体怎么走不属于它管。</li>
+<li>NED文件描述消息出门后具体路线。</li>
+</ul>
+<h2 id="参考代码"><a href="#参考代码" class="headerlink" title="参考代码"></a>参考代码</h2><p>我们以Txc13作为demo，来完成这一次实验。</p>
+<h3 id="类定义"><a href="#类定义" class="headerlink" title="类定义"></a>类定义</h3><p>部分参考代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Txc13</span> :</span> <span class="keyword">public</span> cSimpleModule</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">int</span> createcount;</span><br><span class="line">    <span class="keyword">int</span> sendcount;</span><br><span class="line">    <span class="keyword">int</span> receivecount;</span><br><span class="line">  <span class="keyword">protected</span>:</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> TicTocMsg13 *<span class="title">generateMessage</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">forwardMessage</span><span class="params">(TicTocMsg13 *msg)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">initialize</span><span class="params">()</span> override</span>;</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">handleMessage</span><span class="params">(cMessage *msg)</span> override</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>createcount,sendcount,receivecount分别对应各节点产生、发送、接受的数据包个数。</p>
+<p>generateMessage()函数是用来产生消息，返回一个TicTocMsg13类型的消息对象。</p>
+<p>TicTocMsg13定义如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TicTocMsg13</span> :</span> <span class="keyword">public</span> ::omnetpp::cMessage</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">protected</span>:</span><br><span class="line">    <span class="keyword">int</span> source = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> destination = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> hopCount = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">copy</span><span class="params">(<span class="keyword">const</span> TicTocMsg13&amp; other)</span></span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">protected</span>:</span><br><span class="line">    <span class="comment">// protected and unimplemented operator==(), to prevent accidental usage</span></span><br><span class="line">    <span class="keyword">bool</span> <span class="keyword">operator</span>==(<span class="keyword">const</span> TicTocMsg13&amp;);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">    TicTocMsg13(<span class="keyword">const</span> <span class="keyword">char</span> *name=<span class="literal">nullptr</span>, <span class="keyword">short</span> kind=<span class="number">0</span>);</span><br><span class="line">    TicTocMsg13(<span class="keyword">const</span> TicTocMsg13&amp; other);</span><br><span class="line">    <span class="keyword">virtual</span> ~TicTocMsg13();</span><br><span class="line">    TicTocMsg13&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> TicTocMsg13&amp; other);</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> TicTocMsg13 *<span class="title">dup</span><span class="params">()</span> <span class="keyword">const</span> override </span>&#123;<span class="keyword">return</span> <span class="keyword">new</span> TicTocMsg13(*<span class="keyword">this</span>);&#125;</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">parsimPack</span><span class="params">(omnetpp::cCommBuffer *b)</span> <span class="keyword">const</span> override</span>;</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">parsimUnpack</span><span class="params">(omnetpp::cCommBuffer *b)</span> override</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// field getter/setter methods</span></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">int</span> <span class="title">getSource</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">setSource</span><span class="params">(<span class="keyword">int</span> source)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">int</span> <span class="title">getDestination</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">setDestination</span><span class="params">(<span class="keyword">int</span> destination)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">int</span> <span class="title">getHopCount</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">setHopCount</span><span class="params">(<span class="keyword">int</span> hopCount)</span></span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>在这里我们可以调用函数设置或者获取跳数，目的节点等信息。后面会用到里面的部分函数。</p>
+<h3 id="注册模块"><a href="#注册模块" class="headerlink" title="注册模块"></a>注册模块</h3><p>这一步很简单但是很重要。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Define_Module(Txc13);</span><br></pre></td></tr></table></figure>
+
+<h3 id="initialize"><a href="#initialize" class="headerlink" title="initialize()"></a>initialize()</h3><p>这里我让第一个节点在0时刻产生和发送消息，第二、三、四个节点分别在0.5，1.0，1.5时刻发送消息。<br>也可以全部设置为同时发。<br>部分参考代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">void</span> Txc13::initialize()</span><br><span class="line">&#123;</span><br><span class="line">   createcount = <span class="number">0</span>;</span><br><span class="line">   sendcount = <span class="number">0</span>;</span><br><span class="line">   receivecount = <span class="number">0</span>;</span><br><span class="line">   <span class="comment">// Boot the process scheduling the initial message as a self-message.</span></span><br><span class="line">   <span class="keyword">if</span>(getId()==<span class="number">2</span>)&#123;</span><br><span class="line">   TicTocMsg13 *msg = generateMessage();</span><br><span class="line">   scheduleAt(<span class="number">0.0</span>, msg);</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">if</span>(getId()==<span class="number">3</span>)&#123;</span><br><span class="line">   TicTocMsg13 *msg = generateMessage();</span><br><span class="line">   scheduleAt(<span class="number">0.5</span>, msg);</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">if</span>(getId()==<span class="number">4</span>)&#123;</span><br><span class="line">   TicTocMsg13 *msg = generateMessage();</span><br><span class="line">   scheduleAt(<span class="number">1.0</span>, msg);</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">if</span>(getId()==<span class="number">5</span>)&#123;</span><br><span class="line">   TicTocMsg13 *msg = generateMessage();</span><br><span class="line">   scheduleAt(<span class="number">1.5</span>, msg);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>getId()函数作用如下注释描述。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Returns the component's ID in the simulation object (cSimulation).</span></span><br><span class="line"><span class="comment"> * Component IDs are guaranteed to be unique during a simulation run</span></span><br><span class="line"><span class="comment"> * (that is, IDs of deleted components are not reused for new components.)</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @see cSimulation::getComponent(), cSimulation::getModule(), cSimulation::getChannel()</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
+
+<p>第一个模块的ID是2，后面的模块依次加1.</p>
+<h3 id="generateMessage"><a href="#generateMessage" class="headerlink" title="generateMessage()"></a>generateMessage()</h3><p>在产生消息的函数里使createcount计数器加1，每调用一次这个函数那么就会使createcount加1。同时设置源点和终点，虽然都是自己吧。<br>部分参考代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">TicTocMsg13 *Txc13::generateMessage()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// Produce source and destination addresses.</span></span><br><span class="line">    createcount++;</span><br><span class="line">    <span class="keyword">int</span> src = getId();</span><br><span class="line">    <span class="keyword">int</span> dest =src;</span><br><span class="line">    <span class="keyword">char</span> msgname[<span class="number">20</span>];</span><br><span class="line">    <span class="built_in">sprintf</span>(msgname, <span class="string">"tic-%d-to-%d"</span>, src, dest);</span><br><span class="line">    TicTocMsg13 *msg = <span class="keyword">new</span> TicTocMsg13(msgname);</span><br><span class="line">    msg-&gt;setSource(src);</span><br><span class="line">    msg-&gt;setDestination(dest);</span><br><span class="line">    <span class="keyword">return</span> msg;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="forwardMessage"><a href="#forwardMessage" class="headerlink" title="forwardMessage()"></a>forwardMessage()</h3><p>在这里我们把消息推送到out门。出了门后怎么走就不管，也管不了。<br>现在再回头看一看实验要求：</p>
+<blockquote>
+<p>当节点产生的数据包又回到发送节点时，删除该数据包。<strong>当某个节点产生的数据包个数等于100时，结束网络仿真过程</strong>，统计各节点产生、发送、接受的数据包个数。</p>
+</blockquote>
+<p>注意我加粗的文字部分。当有一个节点产生第100个消息的时候，它已经产生了，但是不能发出去。<br>所以关键就在forwardMessage()对createcount做验证。<br>部分参考代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">void</span> Txc13::forwardMessage(TicTocMsg13 *msg)</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(createcount &gt;= <span class="number">100</span>)</span><br><span class="line">     &#123;</span><br><span class="line">         EV &lt;&lt;getName () &lt;&lt; <span class="string">" 's count reached zero,deleting message\n"</span>;</span><br><span class="line">         EV &lt;&lt; <span class="string">"createcount: "</span> &lt;&lt; createcount &lt;&lt; <span class="string">"\n"</span>;</span><br><span class="line">         EV &lt;&lt; <span class="string">"sendcount: "</span> &lt;&lt; sendcount &lt;&lt; <span class="string">"\n"</span>;</span><br><span class="line">         EV &lt;&lt; <span class="string">"receivecount: "</span> &lt;&lt; receivecount &lt;&lt; <span class="string">"\n"</span>;</span><br><span class="line">         <span class="keyword">delete</span> msg;</span><br><span class="line">         endSimulation();</span><br><span class="line">     &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        EV &lt;&lt; getName() &lt;&lt;<span class="string">" 's createcount is"</span> &lt;&lt; createcount &lt;&lt;<span class="string">",sending  message\n"</span>;</span><br><span class="line">        <span class="comment">// Increment hop count.</span></span><br><span class="line">        msg-&gt;setHopCount(msg-&gt;getHopCount()+<span class="number">1</span>);</span><br><span class="line">        sendcount++;</span><br><span class="line">        send(msg, <span class="string">"out"</span>); <span class="comment">// send out the message</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>同时需要注意，其他节点发给本节点的消息也要帮别人转发出去，所以要使sendcount加1。</p>
+<h3 id="handleMessage"><a href="#handleMessage" class="headerlink" title="handleMessage()"></a>handleMessage()</h3><p>当有消息来到节点时，节点自动调用handleMessage(cMessage *msg)函数。<br>部分参考代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> Txc13::handleMessage(cMessage *msg)</span><br><span class="line">&#123;</span><br><span class="line">    receivecount++;</span><br><span class="line">    <span class="keyword">if</span> (msg-&gt;getDestination() == getId()) &#123;</span><br><span class="line">      <span class="comment">// Message arrived.</span></span><br><span class="line">      EV &lt;&lt; <span class="string">"Message "</span> &lt;&lt; msg &lt;&lt; <span class="string">" arrived after "</span> &lt;&lt; msg-&gt;getHopCount() &lt;&lt; <span class="string">" hops.\n"</span>;</span><br><span class="line">      bubble(<span class="string">"ARRIVED, starting new one!"</span>);</span><br><span class="line">      <span class="keyword">delete</span> msg;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// Generate another one.</span></span><br><span class="line">      EV &lt;&lt; <span class="string">"Generating another message: "</span>;</span><br><span class="line">      TicTocMsg13 *newmsg = generateMessage();</span><br><span class="line">      EV &lt;&lt; newmsg &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">      forwardMessage(newmsg);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// We need to forward the message.</span></span><br><span class="line">        forwardMessage(ttmsg);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>严格来说这里代码是存在问题的，实验要求<strong>节点周期性产生消息发送出去</strong>，而我们这里是等节点收到上一个我们发的消息后再重新Generate一个消息出去。由于正好是一个正方形网络，所以导致这样也算是周期性。然而，如果不是正方形网络，而是一个随机的网络里，那么就很大可能上一个消息还没到，这一个节点就已经到了周期定时的时间而不得不再Generate一个消息出去。</p>
+<p>这样的话，需要在initialize()函数里进行改动，会复杂一些。有时间可以去尝试。</p>
+<p>上文还有一些小细节上的代码没有贴出。整体的代码就是如此。当然代码实现的方式还有很多，比如说调用getModuleId()也可能可以。</p>
+<h2 id="仿真结果"><a href="#仿真结果" class="headerlink" title="仿真结果"></a>仿真结果</h2><p>按照一开始我们对消息产生的时间的设定，讲道理第一个节点的createcount应该先到100.</p>
+<p>实验结果如下图：<br><img src="https://i.loli.net/2019/11/30/UIntROEVxuG4eJ2.png" alt="result1.png"></p>
+<p>可以看到第一个节点createcount先到100。符合我们的理论推断。</p>
+<h2 id="致谢"><a href="#致谢" class="headerlink" title="致谢"></a>致谢</h2><p>本次实验最难的不是思路，因为思路很简单，说谁都会说，“云指挥” 谁都会。</p>
+<p>纸上谈来终觉浅，绝知此事要躬行。</p>
+<p>主要的问题在于具体代码的实现，因为对很多函数不了解，很多api可以方便的用，然而我们却不知道它们的存在。</p>
+<p>一开始我用了很多没有必要的代码来实现，用零零散散的时间写了四个晚上的代码。然而还是有一些问题。</p>
+<p>后来经过物联网实验室的<strong>阳博主</strong>的指导，醍醐灌顶。在这里表示感谢。</p>
+<p><a href="https://me.csdn.net/qq_42398342" target="_blank" rel="noopener">点击这里去阳博主的csdn博客</a></p>
+<p>可以关注一波阳博主。</p>
+<h2 id="需要联系我？"><a href="#需要联系我？" class="headerlink" title="需要联系我？"></a>需要联系我？</h2><p>后面有时间就更新基于OMNET++仿真平台的4维超立方体网络仿真实验。</p>
+<p>如果有疑问或者建议，可以发邮件至<a href="mailto:stefancharles@qq.com" target="_blank" rel="noopener">stefancharles@qq.com</a>与我交流讨论。</p>
+<p>下面的内容与本实验无关。</p>
+<h2 id="说在最后的话"><a href="#说在最后的话" class="headerlink" title="说在最后的话"></a>说在最后的话</h2><blockquote>
+<p>Some memories are precious … and we need to hang on to them. But Emily Dickinson wrote, “Forever is composed of nows”. And she is right. If we root ourselves too deeply in the past , we will miss what is right in front of us.</p>
+</blockquote>
+<p>不太准确的翻译：</p>
+<blockquote>
+<p>有些记忆很珍贵。我们需要考它们取暖。但是Emily Dickinson写道：“永恒由现在组成”。她说得对，如果我们对过去扎根太深，就会错过现在。</p>
+</blockquote>
+<p>这句话出自于一部美剧《不死法医》。高中的时候我把这一句规规整整的写在读书笔记本上，然而现在再拿起来看的时候，又读到了不同于当时的感受。<br>高二的压力很大让我很怀念高一的生活，压抑在那个时候的我期望着高中时光的结束，期待高中老师描述的那种大学生活。</p>
+<p>然而站在现在的时间节点来看，过去那段的高中时间却是温暖我现在前行的记忆。我知道没有人可以真的回到过去，但是很多时候我把现在与记忆对比，这让我深深扎根于过去。</p>
+<p><img src="https://i.loli.net/2019/11/30/W1EnFOheUJmHup7.jpg" alt="20191130154626.jpg"></p>
+<p>自己在实验室写代码，或者写东西很久后，恍惚间有种很深的失落感，一想到自己需要做的很多事情还没有做，很多想要做的事情又没能有机会去做。曾经做过很多让自己后悔的事情又不能够重新做，对不起过很多人，也让很多人失望过…</p>
+<p>生活不是仿真，不能重新再来，也不能快进快退。我们都明白这一点，很多时候还是会失落，失落过后最重要的还是需要重新on your feet，尽力做好眼前事，cherish right now.</p>
+<p>希望不负自己。</p>
+
+        </div>
+        
+          
+
+
+  <section class='meta' id="footer-meta">
+    <hr>
+    <div class='new-meta-box'>
+      
+        
+          
+  
+  <div class='new-meta-item category'>
+    <a href='/categories/教程/' rel="nofollow">
+      <i class="fas fa-folder-open" aria-hidden="true"></i>
+      <p>教程</p>
+    </a>
+  </div>
+
+
+        
+      
+        
+          
+  
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/omnetpp/" rel="nofollow"><i class="fas fa-hashtag" aria-hidden="true"></i>&nbsp;<p>omnetpp</p></a></div>
+
+
+        
+      
+        
+          
+  <div class="new-meta-item share -mob-share-list">
+  <div class="-mob-share-list share-body">
+    
+      
+        <a class="-mob-share-qq" title="QQ好友" rel="external nofollow noopener noreferrer"
+          
+          href="http://connect.qq.com/widget/shareqq/index.html?url=https://Stefancharles.xyz/2019/11/30/omnettaskone/&title=基于OMNET++仿真平台的正方形网络仿真 | Stefan's Blog&pics=https://i.loli.net/2019/08/15/4zEt9A6LvBegWX8.jpg&summary=实验要求以讲解的tictoc网络模型为例，建立一个TicToc正方形网络模型，如下图所示，网络节点是正方形的四个节点，均为Tic模块的实例，节点周期性的产生数据包，数据包通过输出门发送到相连的邻接点，当节点产生的数据包又回到发送节点时，删除该数据包。当某个节点产生的数据包个数等于100时，结束网络仿真过程，统计各节点产生、发送、接受的数据包个数。"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/qq.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-qzone" title="QQ空间" rel="external nofollow noopener noreferrer"
+          
+          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://Stefancharles.xyz/2019/11/30/omnettaskone/&title=基于OMNET++仿真平台的正方形网络仿真 | Stefan's Blog&pics=https://i.loli.net/2019/08/15/4zEt9A6LvBegWX8.jpg&summary=实验要求以讲解的tictoc网络模型为例，建立一个TicToc正方形网络模型，如下图所示，网络节点是正方形的四个节点，均为Tic模块的实例，节点周期性的产生数据包，数据包通过输出门发送到相连的邻接点，当节点产生的数据包又回到发送节点时，删除该数据包。当某个节点产生的数据包个数等于100时，结束网络仿真过程，统计各节点产生、发送、接受的数据包个数。"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/qzone.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-weibo" title="微博" rel="external nofollow noopener noreferrer"
+          
+          href="http://service.weibo.com/share/share.php?url=https://Stefancharles.xyz/2019/11/30/omnettaskone/&title=基于OMNET++仿真平台的正方形网络仿真 | Stefan's Blog&pics=https://i.loli.net/2019/08/15/4zEt9A6LvBegWX8.jpg&summary=实验要求以讲解的tictoc网络模型为例，建立一个TicToc正方形网络模型，如下图所示，网络节点是正方形的四个节点，均为Tic模块的实例，节点周期性的产生数据包，数据包通过输出门发送到相连的邻接点，当节点产生的数据包又回到发送节点时，删除该数据包。当某个节点产生的数据包个数等于100时，结束网络仿真过程，统计各节点产生、发送、接受的数据包个数。"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/weibo.png">
+          
+        </a>
+      
+    
+  </div>
+</div>
+
+
+
+        
+      
+    </div>
+  </section>
+
+
+        
+        
+            <div class="prev-next">
+                
+                    <section class="prev">
+                        <span class="art-item-left">
+                            <h6><i class="fas fa-chevron-left" aria-hidden="true"></i>&nbsp;上一页</h6>
+                            <h4>
+                                <a href="/2019/12/09/zigbeetasknine/" rel="prev" title="【ZigBee】获取网络的拓扑结构">
+                                  
+                                      【ZigBee】获取网络的拓扑结构
+                                  
+                                </a>
+                            </h4>
+                            
+                                
+                                <h6 class="tags">
+                                    <a class="tag" href="/tags/Zigbee/"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i>Zigbee</a>
+                                </h6>
+                            
+                        </span>
+                    </section>
+                
+                
+                    <section class="next">
+                        <span class="art-item-right" aria-hidden="true">
+                            <h6>下一页&nbsp;<i class="fas fa-chevron-right" aria-hidden="true"></i></h6>
+                            <h4>
+                                <a href="/2019/11/25/zigbeetasksix/" rel="prev" title="【ZigBee】协调器广播&amp;终端节点单播">
+                                    
+                                        【ZigBee】协调器广播&amp;终端节点单播
+                                    
+                                </a>
+                            </h4>
+                            
+                                
+                                <h6 class="tags">
+                                    <a class="tag" href="/tags/Zigbee/"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i>Zigbee</a>
+                                </h6>
+                            
+                        </span>
+                    </section>
+                
+            </div>
+        
+      </section>
+    </article>
+  
+
+  
+    <!-- 显示推荐文章和评论 -->
+
+
+
+  <article class="post white-box comments">
+    <section class="article typo">
+      <h4><i class="fas fa-comments fa-fw" aria-hidden="true"></i>&nbsp;评论</h4>
+      
+      
+      
+      
+        <section id="comments">
+          <div id="valine_container" class="valine_thread">
+            <i class="fas fa-spinner fa-spin fa-fw"></i>
+          </div>
+        </section>
+      
+    </section>
+  </article>
+
+
+  
+
+
+
+
+<!-- 根据页面mathjax变量决定是否加载MathJax数学公式js -->
+
+
+
+  <script>
+    window.subData = {
+      title: '基于OMNET++仿真平台的正方形网络仿真',
+      tools: true
+    }
+  </script>
+
+
+</div>
+<aside class='l_side'>
+  
+    
+    
+      
+        
+          
+          
+            <section class='widget author'>
+  <div class='content pure'>
+    
+      <div class='avatar'>
+        <img class='avatar' src='https://i.loli.net/2019/08/15/oZF8Hh2dKIJ5V1a.jpg'/>
+      </div>
+    
+    
+    
+      <div class="social-wrapper">
+        
+          
+            <a href="/atom.xml"
+              class="social fas fa-rss flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+          
+            <a href="/stefancharles@vip.qq.com"
+              class="social fas fa-envelope flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+          
+            <a href="https://github.com/Stefancharles"
+              class="social fab fa-github flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+          
+            <a href="https://c.y.qq.com/base/fcgi-bin/u?__=jsQmg4H"
+              class="social fas fa-headphones-alt flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+      </div>
+    
+  </div>
+</section>
+
+          
+        
+      
+        
+          
+          
+            
+  <section class='widget toc-wrapper'>
+    
+<header class='pure'>
+  <div><i class="fas fa-list fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;本文目录</div>
+  
+    <div class='wrapper'><a class="s-toc rightBtn" rel="external nofollow noopener noreferrer" href="javascript:void(0)"><i class="fas fa-thumbtack fa-fw"></i></a></div>
+  
+</header>
+
+    <div class='content pure'>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#实验要求"><span class="toc-text">实验要求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验环境"><span class="toc-text">实验环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建立工程"><span class="toc-text">建立工程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#大致思路"><span class="toc-text">大致思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验准备"><span class="toc-text">实验准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考代码"><span class="toc-text">参考代码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#类定义"><span class="toc-text">类定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#注册模块"><span class="toc-text">注册模块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#initialize"><span class="toc-text">initialize()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#generateMessage"><span class="toc-text">generateMessage()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#forwardMessage"><span class="toc-text">forwardMessage()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#handleMessage"><span class="toc-text">handleMessage()</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#仿真结果"><span class="toc-text">仿真结果</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#致谢"><span class="toc-text">致谢</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#需要联系我？"><span class="toc-text">需要联系我？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#说在最后的话"><span class="toc-text">说在最后的话</span></a></li></ol>
+    </div>
+  </section>
+
+
+          
+        
+      
+        
+          
+          
+            <section class='widget grid'>
+  
+<header class='pure'>
+  <div><i class="fas fa-map-signs fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;站内导航</div>
+  
+</header>
+
+  <div class='content pure'>
+    <ul class="grid navgation">
+      
+        <li><a class="flat-box" title="/" href="/"
+          
+          
+          id="home">
+          
+            <i class="fas fa-clock fa-fw" aria-hidden="true"></i>
+          
+          近期文章
+        </a></li>
+      
+        <li><a class="flat-box" title="/blog/archives/" href="/blog/archives/"
+          
+            rel="nofollow"
+          
+          
+          id="blogarchives">
+          
+            <i class="fas fa-archive fa-fw" aria-hidden="true"></i>
+          
+          文章归档
+        </a></li>
+      
+        <li><a class="flat-box" title="/projects/" href="/projects/"
+          
+          
+          id="projects">
+          
+            <i class="fas fa-code-branch fa-fw" aria-hidden="true"></i>
+          
+          开源项目
+        </a></li>
+      
+        <li><a class="flat-box" title="/friends/" href="/friends/"
+          
+            rel="nofollow"
+          
+          
+          id="friends">
+          
+            <i class="fas fa-link fa-fw" aria-hidden="true"></i>
+          
+          我的友链
+        </a></li>
+      
+        <li><a class="flat-box" title="https://github.com/Stefancharles" href="https://github.com/Stefancharles"
+          
+            rel="nofollow"
+          
+          
+          id="https:github.comStefancharles">
+          
+            <i class="fas fa-book fa-fw" aria-hidden="true"></i>
+          
+          主题文档
+        </a></li>
+      
+        <li><a class="flat-box" title="/about/" href="/about/"
+          
+            rel="nofollow"
+          
+          
+          id="about">
+          
+            <i class="fas fa-info-circle fa-fw" aria-hidden="true"></i>
+          
+          关于小站
+        </a></li>
+      
+    </ul>
+  </div>
+</section>
+
+          
+        
+      
+        
+          
+          
+            
+  <section class='widget category'>
+    
+<header class='pure'>
+  <div><i class="fas fa-folder-open fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;文章分类</div>
+  
+    <a class="rightBtn"
+    
+      rel="nofollow"
+    
+    
+    href="/blog/categories/"
+    title="blog/categories/">
+    <i class="fas fa-expand-arrows-alt fa-fw"></i></a>
+  
+</header>
+
+    <div class='content pure'>
+      <ul class="entry">
+        
+          <li><a class="flat-box" title="/categories/Android/" href="/categories/Android/"><div class='name'>Android</div><div class='badge'>(2)</div></a></li>
+        
+          <li><a class="flat-box child" title="/categories/Android/MVP/" href="/categories/Android/MVP/"><div class='name'>MVP</div><div class='badge'>(1)</div></a></li>
+        
+          <li><a class="flat-box child" title="/categories/Android/OpenCV/" href="/categories/Android/OpenCV/"><div class='name'>OpenCV</div><div class='badge'>(1)</div></a></li>
+        
+          <li><a class="flat-box" title="/categories/C/" href="/categories/C/"><div class='name'>C++</div><div class='badge'>(1)</div></a></li>
+        
+          <li><a class="flat-box child" title="/categories/C/Qt/" href="/categories/C/Qt/"><div class='name'>Qt</div><div class='badge'>(1)</div></a></li>
+        
+          <li><a class="flat-box" title="/categories/复习/" href="/categories/复习/"><div class='name'>复习</div><div class='badge'>(4)</div></a></li>
+        
+          <li><a class="flat-box" title="/categories/教程/" href="/categories/教程/"><div class='name'>教程</div><div class='badge'>(12)</div></a></li>
+        
+          <li><a class="flat-box" title="/categories/笔记/" href="/categories/笔记/"><div class='name'>笔记</div><div class='badge'>(20)</div></a></li>
+        
+          <li><a class="flat-box" title="/categories/随笔/" href="/categories/随笔/"><div class='name'>随笔</div><div class='badge'>(3)</div></a></li>
+        
+      </ul>
+    </div>
+  </section>
+
+
+          
+        
+      
+        
+          
+          
+            
+  <section class='widget tagcloud'>
+    
+<header class='pure'>
+  <div><i class="fas fa-fire fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;热门标签</div>
+  
+    <a class="rightBtn"
+    
+      rel="nofollow"
+    
+    
+    href="/blog/tags/"
+    title="blog/tags/">
+    <i class="fas fa-expand-arrows-alt fa-fw"></i></a>
+  
+</header>
+
+    <div class='content pure'>
+      <a href="/tags/Android/" style="font-size: 24px; color: #555">Android</a> <a href="/tags/C/" style="font-size: 14px; color: #999">C#</a> <a href="/tags/C/" style="font-size: 14px; color: #999">C++</a> <a href="/tags/CNN/" style="font-size: 14px; color: #999">CNN</a> <a href="/tags/Fisher/" style="font-size: 14px; color: #999">Fisher</a> <a href="/tags/Http/" style="font-size: 18px; color: #7e7e7e">Http</a> <a href="/tags/HyperLPR/" style="font-size: 14px; color: #999">HyperLPR</a> <a href="/tags/IAR/" style="font-size: 14px; color: #999">IAR</a> <a href="/tags/Java/" style="font-size: 20px; color: #707070">Java</a> <a href="/tags/Keras/" style="font-size: 14px; color: #999">Keras</a> <a href="/tags/MVP/" style="font-size: 14px; color: #999">MVP</a> <a href="/tags/Maven/" style="font-size: 14px; color: #999">Maven</a> <a href="/tags/Mnist/" style="font-size: 18px; color: #7e7e7e">Mnist</a> <a href="/tags/NetSecurity/" style="font-size: 14px; color: #999">NetSecurity</a> <a href="/tags/Omnetpp/" style="font-size: 14px; color: #999">Omnetpp</a> <a href="/tags/OpenCV/" style="font-size: 18px; color: #7e7e7e">OpenCV</a> <a href="/tags/Qt/" style="font-size: 14px; color: #999">Qt</a> <a href="/tags/RFID/" style="font-size: 14px; color: #999">RFID</a> <a href="/tags/STM32/" style="font-size: 14px; color: #999">STM32</a> <a href="/tags/SVM/" style="font-size: 14px; color: #999">SVM</a> <a href="/tags/SharedPreferences/" style="font-size: 14px; color: #999">SharedPreferences</a> <a href="/tags/Spring/" style="font-size: 14px; color: #999">Spring</a> <a href="/tags/TensorFlow/" style="font-size: 14px; color: #999">TensorFlow</a> <a href="/tags/Thread/" style="font-size: 14px; color: #999">Thread</a> <a href="/tags/Ubuntu/" style="font-size: 16px; color: #8b8b8b">Ubuntu</a> <a href="/tags/WSN/" style="font-size: 14px; color: #999">WSN</a> <a href="/tags/Zigbee/" style="font-size: 22px; color: #636363">Zigbee</a> <a href="/tags/c/" style="font-size: 14px; color: #999">c++</a> <a href="/tags/omnetpp/" style="font-size: 16px; color: #8b8b8b">omnetpp</a>
+    </div>
+  </section>
+
+
+          
+        
+      
+        
+          
+          
+            
+
+
+  <section class='widget music'>
+    
+<header class='pure'>
+  <div><i class="fas fa-compact-disc fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;最近在听</div>
+  
+    <a class="rightBtn"
+    
+      rel="external nofollow noopener noreferrer"
+    
+    
+      target="_blank"
+    
+    href="https://c.y.qq.com/base/fcgi-bin/u?__=jsQmg4H"
+    title="https://c.y.qq.com/base/fcgi-bin/u?__=jsQmg4H">
+    <i class="far fa-heart fa-fw"></i></a>
+  
+</header>
+
+    <div class='content pure'>
+      
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.7.0/dist/APlayer.min.css">
+  <div class="aplayer"
+    data-theme="#1BCDFC"
+    
+    
+    data-mode="circulation"
+    data-server="tencent"
+    data-type="playlist"
+    data-id="4222498938"
+    data-volume="0.7">
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/aplayer@1.7.0/dist/APlayer.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/meting@1.1.0/dist/Meting.min.js"></script>
+
+
+    </div>
+  </section>
+
+
+          
+        
+      
+    
+
+  
+</aside>
+
+<footer id="footer" class="clearfix">
+  
+    <div class="footer">
+      <p>已经到底了，但是精彩继续！</p>
+
+    </div>
+    <br>
+  
+  
+    <div class="social-wrapper">
+      
+        
+          <a href="/atom.xml"
+            class="social fas fa-rss flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="/stefancharles@vip.qq.com"
+            class="social fas fa-envelope flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="https://github.com/Stefancharles"
+            class="social fab fa-github flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="https://c.y.qq.com/base/fcgi-bin/u?__=jsQmg4H"
+            class="social fas fa-headphones-alt flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+    </div>
+  
+  <br>
+  <div><p>博客内容遵循 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</a></p>
+</div>
+  <div>
+
+    
+      
+      总访问量为
+      <span id="busuanzi_value_site_pv"><i class="fas fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span>
+      次
+    
+    。
+  </div>
+</footer>
+<script>setLoadingBarProgress(80);</script>
+
+
+      <script>setLoadingBarProgress(60);</script>
+    </div>
+    <a class="s-top fas fa-arrow-up fa-fw" href='javascript:void(0)'></a>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+
+  <script>
+    var GOOGLE_CUSTOM_SEARCH_API_KEY = "AIzaSyBjTC6INtmeYy3ig7VaKWeU5obyVnyOAuA";
+    var GOOGLE_CUSTOM_SEARCH_ENGINE_ID = "007855274890026858194:3gmzbmgvb-q";
+    var ALGOLIA_API_KEY = "";
+    var ALGOLIA_APP_ID = "";
+    var ALGOLIA_INDEX_NAME = "";
+    var AZURE_SERVICE_NAME = "";
+    var AZURE_INDEX_NAME = "";
+    var AZURE_QUERY_KEY = "";
+    var BAIDU_API_ID = "";
+    var SEARCH_SERVICE = "hexo" || "hexo";
+    var ROOT = "/"||"/";
+    if(!ROOT.endsWith('/'))ROOT += '/';
+  </script>
+
+<script src="//instant.page/1.2.2" type="module" integrity="sha384-2xV8M5griQmzyiY3CDqh1dn4z3llDVqZDqzjzcY+jCBCk/a5fXJmuZ/40JJAPeoU"></script>
+
+
+  <script async src="https://cdn.jsdelivr.net/npm/scrollreveal@4.0.5/dist/scrollreveal.min.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      const $reveal = $('.reveal');
+      if ($reveal.length === 0) return;
+      const sr = ScrollReveal({ distance: 0 });
+      sr.reveal('.reveal');
+    });
+  </script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      Waves.attach('.flat-btn', ['waves-button']);
+      Waves.attach('.float-btn', ['waves-button', 'waves-float']);
+      Waves.attach('.float-btn-light', ['waves-button', 'waves-float', 'waves-light']);
+      Waves.attach('.flat-box', ['waves-block']);
+      Waves.attach('.float-box', ['waves-block', 'waves-float']);
+      Waves.attach('.waves-image');
+      Waves.init();
+    });
+  </script>
+
+
+  <script async src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-busuanzi@2.3/js/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+  
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.0.4/jquery.backstretch.min.js"></script>
+    <script type="text/javascript">
+      $(function(){
+        if ('.cover') {
+          $('.cover').backstretch(
+          ["https://img.vim-cn.com/6d/a0c9e6f9efad8b731cb7376504bd10d79d2053.jpg"],
+          {
+            duration: "6000",
+            fade: "2500"
+          });
+        } else {
+          $.backstretch(
+          ["https://img.vim-cn.com/6d/a0c9e6f9efad8b731cb7376504bd10d79d2053.jpg"],
+          {
+            duration: "6000",
+            fade: "2500"
+          });
+        }
+      });
+    </script>
+  
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+    
+      <script src="https://cdn.jsdelivr.net/gh/xaoxuu/volantis@1.0/js/volantis.min.js"></script>
+    
+  
+  <script>
+  var GUEST_INFO = ['nick','mail','link'];
+  var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+    return GUEST_INFO.indexOf(item) > -1
+  });
+  var notify = 'true' == true;
+  var verify = 'true' == true;
+  var valine = new Valine();
+  valine.init({
+    el: '#valine_container',
+    notify: notify,
+    verify: verify,
+    guest_info: guest_info,
+    
+      path: "/omnetpp/",
+    
+    appId: "wlBz3oHtoKBEhnTNtpqYUTGX-gzGzoHsz",
+    appKey: "UlbGNoRRKQR1eV0uLcaHwkI1",
+    placeholder: "快来评论吧~",
+    pageSize:'10',
+    avatar:'mp',
+    lang:'zh-cn',
+    highlight:'true'
+  })
+  </script>
+
+
+
+  <script src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-material-x@19.5/js/app.js"></script>
+
+
+  <script src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-material-x@19.5/js/search.js"></script>
+
+
+
+
+<!-- 复制 -->
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+  let COPY_SUCCESS = "复制成功";
+  let COPY_FAILURE = "复制失败";
+  /*页面载入完成后，创建复制按钮*/
+  !function (e, t, a) {
+    /* code */
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '  <i class="fa fa-copy"></i><span>复制</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+
+      clipboard.on('success', function(e) {
+        //您可以加入成功提示
+        console.info('Action:', e.action);
+        console.info('Text:', e.text);
+        console.info('Trigger:', e.trigger);
+        success_prompt(COPY_SUCCESS);
+        e.clearSelection();
+      });
+      clipboard.on('error', function(e) {
+        //您可以加入失败提示
+        console.error('Action:', e.action);
+        console.error('Trigger:', e.trigger);
+        fail_prompt(COPY_FAILURE);
+      });
+    }
+    initCopyCode();
+
+  }(window, document);
+
+  /**
+   * 弹出式提示框，默认1.5秒自动消失
+   * @param message 提示信息
+   * @param style 提示样式，有alert-success、alert-danger、alert-warning、alert-info
+   * @param time 消失时间
+   */
+  var prompt = function (message, style, time)
+  {
+      style = (style === undefined) ? 'alert-success' : style;
+      time = (time === undefined) ? 1500 : time*1000;
+      $('<div>')
+          .appendTo('body')
+          .addClass('alert ' + style)
+          .html(message)
+          .show()
+          .delay(time)
+          .fadeOut();
+  };
+
+  // 成功提示
+  var success_prompt = function(message, time)
+  {
+      prompt(message, 'alert-success', time);
+  };
+
+  // 失败提示
+  var fail_prompt = function(message, time)
+  {
+      prompt(message, 'alert-danger', time);
+  };
+
+  // 提醒
+  var warning_prompt = function(message, time)
+  {
+      prompt(message, 'alert-warning', time);
+  };
+
+  // 信息提示
+  var info_prompt = function(message, time)
+  {
+      prompt(message, 'alert-info', time);
+  };
+
+</script>
+
+
+<!-- fancybox -->
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+<script>
+  let LAZY_LOAD_IMAGE = "";
+  $(".article-entry").find("fancybox").find("img").each(function () {
+      var element = document.createElement("a");
+      $(element).attr("data-fancybox", "gallery");
+      $(element).attr("href", $(this).attr("src"));
+      /* 图片采用懒加载处理时,
+       * 一般图片标签内会有个属性名来存放图片的真实地址，比如 data-original,
+       * 那么此处将原本的属性名src替换为对应属性名data-original,
+       * 修改如下
+       */
+       if (LAZY_LOAD_IMAGE) {
+         $(element).attr("href", $(this).attr("data-original"));
+       }
+      $(this).wrap(element);
+  });
+</script>
+
+
+
+
+
+  <script>setLoadingBarProgress(100);</script>
+</body>
+</html>

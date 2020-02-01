@@ -1,0 +1,1502 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+  <title>【RFID】期末复习知识提纲 | Stefan&#39;s Blog</title>
+  
+  <meta name="keywords" content="Life,Learn.">
+  
+  
+  <meta name="description" content="Record learning tutorials and life insights.">
+  
+
+  
+
+  <meta name="HandheldFriendly" content="True">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <!-- meta -->
+  
+
+  <!-- link -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.css">
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.6.3/css/all.min.css">
+  
+
+  
+  <link rel="shortcut icon" type="image/x-icon" href="https://cdn.jsdelivr.net/gh/xaoxuu/assets@master/favicon/favicon.ico">
+  
+
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-material-x@19.5/css/style.css">
+  
+
+  <script>
+    function setLoadingBarProgress(num) {
+      document.getElementById('loading-bar').style.width=num+"%";
+    }
+  </script>
+
+  
+  
+</head>
+
+<body>
+  
+  
+  <div class="cover-wrapper">
+    <cover class='cover post half'>
+      
+        
+  <h1 class='title'>Stefan's Blog</h1>
+
+
+  <div class="m_search">
+    <form name="searchform" class="form u-search-form">
+      <input type="text" class="input u-search-input" placeholder="" />
+      <i class="icon fas fa-search fa-fw"></i>
+    </form>
+  </div>
+
+<div class='menu navgation'>
+  <ul class='h-list'>
+    
+      
+        <li>
+          <a class="nav home" href="/"
+            
+            
+            id="home">
+            <i class='fas fa-rss fa-fw'></i>&nbsp;博文
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home" href="/projects/"
+            
+            
+            id="projects">
+            <i class='fas fa-code-branch fa-fw'></i>&nbsp;项目
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home" href="/friends/"
+            
+              rel="nofollow"
+            
+            
+            id="friends">
+            <i class='fas fa-link fa-fw'></i>&nbsp;友链
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home" href="/about/"
+            
+              rel="nofollow"
+            
+            
+            id="about">
+            <i class='fas fa-info-circle fa-fw'></i>&nbsp;关于
+          </a>
+        </li>
+      
+    
+  </ul>
+</div>
+
+      
+    </cover>
+    <header class="l_header pure">
+  <div id="loading-bar-wrapper">
+    <div id="loading-bar" class="pure"></div>
+  </div>
+
+	<div class='wrapper'>
+		<div class="nav-main container container--flex">
+      <a class="logo flat-box" href='/' >
+        
+          Stefan's Blog
+        
+      </a>
+			<div class='menu navgation'>
+				<ul class='h-list'>
+          
+  					
+  						<li>
+								<a class="nav flat-box" href="/"
+                  
+                  
+                  id="home">
+									<i class='fas fa-grin fa-fw'></i>&nbsp;示例
+								</a>
+							</li>
+      			
+  						<li>
+								<a class="nav flat-box" href="/blog/categories/"
+                  
+                    rel="nofollow"
+                  
+                  
+                  id="blogcategories">
+									<i class='fas fa-folder-open fa-fw'></i>&nbsp;分类
+								</a>
+							</li>
+      			
+  						<li>
+								<a class="nav flat-box" href="/blog/tags/"
+                  
+                    rel="nofollow"
+                  
+                  
+                  id="blogtags">
+									<i class='fas fa-hashtag fa-fw'></i>&nbsp;标签
+								</a>
+							</li>
+      			
+  						<li>
+								<a class="nav flat-box" href="/blog/archives/"
+                  
+                    rel="nofollow"
+                  
+                  
+                  id="blogarchives">
+									<i class='fas fa-archive fa-fw'></i>&nbsp;归档
+								</a>
+							</li>
+      			
+      		
+				</ul>
+			</div>
+
+			
+				<div class="m_search">
+					<form name="searchform" class="form u-search-form">
+						<input type="text" class="input u-search-input" placeholder="搜索" />
+						<i class="icon fas fa-search fa-fw"></i>
+					</form>
+				</div>
+			
+			<ul class='switcher h-list'>
+				
+					<li class='s-search'><a class="fas fa-search fa-fw" href='javascript:void(0)'></a></li>
+				
+				<li class='s-menu'><a class="fas fa-bars fa-fw" href='javascript:void(0)'></a></li>
+			</ul>
+		</div>
+
+		<div class='nav-sub container container--flex'>
+			<a class="logo flat-box"></a>
+			<ul class='switcher h-list'>
+				<li class='s-comment'><a class="flat-btn fas fa-comments fa-fw" href='javascript:void(0)'></a></li>
+        
+          <li class='s-toc'><a class="flat-btn fas fa-list fa-fw" href='javascript:void(0)'></a></li>
+        
+			</ul>
+		</div>
+	</div>
+</header>
+	<aside class="menu-phone">
+    <header>
+		<nav class="menu navgation">
+      <ul>
+        
+          
+            <li>
+							<a class="nav flat-box" href="/"
+                
+                
+                id="home">
+								<i class='fas fa-clock fa-fw'></i>&nbsp;近期文章
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/blog/archives/"
+                
+                  rel="nofollow"
+                
+                
+                id="blogarchives">
+								<i class='fas fa-archive fa-fw'></i>&nbsp;文章归档
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/projects/"
+                
+                
+                id="projects">
+								<i class='fas fa-code-branch fa-fw'></i>&nbsp;开源项目
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/friends/"
+                
+                  rel="nofollow"
+                
+                
+                id="friends">
+								<i class='fas fa-link fa-fw'></i>&nbsp;我的友链
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="https://github.com/Stefancharles"
+                
+                  rel="nofollow"
+                
+                
+                id="https:github.comStefancharles">
+								<i class='fas fa-book fa-fw'></i>&nbsp;主题文档
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/about/"
+                
+                  rel="nofollow"
+                
+                
+                id="about">
+								<i class='fas fa-info-circle fa-fw'></i>&nbsp;关于小站
+							</a>
+            </li>
+          
+       
+      </ul>
+		</nav>
+    </header>
+	</aside>
+<script>setLoadingBarProgress(40);</script>
+
+  </div>
+
+
+  <div class="l_body">
+    <div class='body-wrapper'>
+      <div class='l_main'>
+  
+
+  
+    <article id="post" class="post white-box article-type-post" itemscope itemprop="blogPost">
+      
+
+
+  <section class='meta'>
+    
+    
+    <div class="meta" id="header-meta">
+      
+        
+  
+    <h1 class="title">
+      <a href="/2019/12/16/RFIDreview/">
+        【RFID】期末复习知识提纲
+      </a>
+    </h1>
+  
+
+
+      
+      <div class='new-meta-box'>
+        
+          
+        
+          
+            
+  <div class='new-meta-item author'>
+    <a href="https://Stefancharles.xyz" rel="nofollow">
+      
+        <img src="https://i.loli.net/2019/08/15/4zEt9A6LvBegWX8.jpg">
+      
+      <p>Stefan</p>
+    </a>
+  </div>
+
+
+          
+        
+          
+            <div class="new-meta-item date" itemprop="dateUpdated" datetime="2019-12-22T21:44:47+08:00">
+  <a class='notlink'>
+    <i class="fas fa-clock" aria-hidden="true"></i>
+    <p>最后更新于 2019年12月22日</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  
+    <div class="new-meta-item browse busuanzi">
+      <a class='notlink'>
+        <i class="fas fa-eye" aria-hidden="true"></i>
+        <p>
+          <span id="busuanzi_value_page_pv">
+            <i class="fas fa-spinner fa-spin fa-fw" aria-hidden="true"></i>
+          </span>
+        </p>
+      </a>
+    </div>
+  
+
+
+          
+        
+      </div>
+      
+        <hr>
+      
+    </div>
+  </section>
+
+
+      <section class="article typo">
+        <div class="article-entry" itemprop="articleBody">
+          <h1 id="RFID复习提纲"><a href="#RFID复习提纲" class="headerlink" title="RFID复习提纲"></a>RFID复习提纲</h1><p>本篇文章按RFID考试题库里的章节进行知识点进行梳理。考试当天将会暂时关闭本博客。请理解。</p>
+<hr>
+<blockquote>
+<p>We fight, because we knew we had nothing to lose.</p>
+</blockquote>
+<hr>
+<a id="more"></a>
+
+<h2 id="第一章-传输线理论"><a href="#第一章-传输线理论" class="headerlink" title="第一章 传输线理论"></a>第一章 传输线理论</h2><p>1.阻抗、导纳的含义</p>
+<ul>
+<li>阻抗：对电路中的电流所起的阻碍作用叫做阻抗。</li>
+<li>导纳：描述交流电通过电路或系统时的困难程度。</li>
+</ul>
+<hr>
+<h2 id="第二章-谐振电路"><a href="#第二章-谐振电路" class="headerlink" title="第二章 谐振电路"></a>第二章 谐振电路</h2><ul>
+<li>1.串联正弦交流电路发生谐振的条件是  <strong>U<sub>L</sub> = U<sub>C</sub>，即X<sub>L</sub> = X<sub>C</sub></strong>，谐振时的谐振频率品质因数 <strong>Q=X<sub>L</sub>/R</strong> ，串联谐振又称为<strong>电压谐振</strong>。 </li>
+<li>2.在发生串联谐振时，电路中的感抗与容抗<strong>相等</strong>，此时电路中的阻抗最<strong>小</strong>，电流最 <strong>大</strong>，总阻抗Z= <strong>R</strong>。</li>
+<li>3.谐振发生时，电路中的角频率w<sub>0</sub> = <strong>1/√LC</strong> ，f<sub>0</sub>=<strong>1/2π*√LC</strong>。</li>
+</ul>
+<hr>
+<h2 id="第三章-天线基础"><a href="#第三章-天线基础" class="headerlink" title="第三章 天线基础"></a>第三章 天线基础</h2><p>1.半波振子天线的长度为 <strong>λ/4</strong>。</p>
+<p>2.在弯折线偶极子天线中，当天线弯折次数n增多、弯折高度h增加或者弯折角а增大后，天线的谐振频率<strong>降低</strong>。</p>
+<p>3.已知天线的辐射功率为P∑=30W，且损耗功率为PL=5W。则天线输入功率：<strong>30+5=35w</strong>;效率:<strong>30÷35≈0.857</strong>。</p>
+<p>4.用天线的辐射电阻P∑来度量天线辐射功率的能力，即辐射电阻越 <strong>大</strong> 天线的辐射能力越强。</p>
+<p>5.天线辐射最强的方向所在波瓣称为 <strong>主瓣</strong>，其宽度是衡量天线最大辐射区域 <strong>尖锐程度</strong> 的物理量。</p>
+<p>6.波瓣宽度越<strong>宽</strong>，方向性越 <strong>差</strong> 作用距离越 <strong>近</strong> 抗干扰能力越 <strong>弱</strong> 但是天线的覆盖范围越 <strong>大</strong>。</p>
+<p>7.天线的种类很多，可以按照多种方式进行分类，其中按照<strong>波段</strong>可将天线分为</p>
+<ul>
+<li>长波天线</li>
+<li>中波天线</li>
+<li>短波天线</li>
+<li>超短波天线</li>
+<li>微波天线</li>
+</ul>
+<p>8.简述RFID系统中，读写器与标签之间是怎样进行无线通信的。</p>
+<p>读写器产生高频振荡能量，经过传输线传输到发射天线，然后以电磁波形式向预定方向辐射。接收天线将接收到的电磁波能量通过馈线送到标签。</p>
+<p>9.微带天线的特点</p>
+<ul>
+<li>1.体积小、剖面低、重量轻、易于与载体共形；</li>
+<li>2.成本低、易于批量生产，可方便地与馈电网络、器件和微带电路集成；</li>
+<li>3.散射截面小、波瓣宽；易于实现线极化、圆极化、双极化和双频段工作；</li>
+<li>5.效率低、功率容量低、高Q值、频带窄</li>
+</ul>
+<hr>
+<h2 id="第四章-RFID系统概论"><a href="#第四章-RFID系统概论" class="headerlink" title="第四章 RFID系统概论"></a>第四章 RFID系统概论</h2><p>1.在QR code中，L级的纠错能力可以纠错<strong>7%</strong>数据码字。</p>
+<p>2.物流二维码<strong>不是</strong>二维码类别。</p>
+<p>3.自动识别技术的分类：</p>
+<ul>
+<li>光符号识别技术</li>
+<li>语音识别技术</li>
+<li>生物计量识别技术</li>
+<li>IC卡技术</li>
+<li>条形码技术</li>
+<li>射频识别（RFID）技术</li>
+</ul>
+<p>4.ISBN条形码组成部分。</p>
+<p>国际标准书号，简称ISBN，ISBN码由13位数字组成。中国内的ISBN组成结构：<strong>978 + 组号 + 出版社号 + 书名号 + 校验号</strong></p>
+<p>5.条形码和二维码组成结构上有什么不同？条形码相较于二维码的优缺点是什么？</p>
+<p>条形码是将宽度不等的多个黑条和空白，按一定的编码规则排列，以表达一组信息的图形标识符。</p>
+<p>二维码是用某种特定的几何图形按一定规律在平面分布的黑白相间的图形。</p>
+<ul>
+<li>条形码的优点：技术成熟、使用广泛、设备成本低廉 </li>
+<li>条形码的缺点：信息量少、只支持英文或数字、需与电脑数据库结合</li>
+</ul>
+<p>6.二维码的主要用途，二维码可以包含哪些类型的数据？</p>
+<p>二维码现在广泛用于<strong>物流货品追踪，商业推广，电子身份识别防伪</strong>等服务。</p>
+<p>二维码可以包含<strong>字母，数字，字符，中文，图片 声音</strong>等数据。</p>
+<p>7.比较条形码与二维条形码</p>
+<p>二维码与条形码的关系：二维码是条形码的一个分支</p>
+<p>条形码特点：</p>
+<ul>
+<li>1、可直接显示内容为英文、数字、简单符号</li>
+<li>2、贮存数据不多，主要依靠计算机中的关联数据库</li>
+<li>3、保密性不高</li>
+<li>4、损污后可读性差</li>
+<li>5、对读取设备要求较低</li>
+</ul>
+<p>二维条形码特点：</p>
+<ul>
+<li>1、可直接显示英文、中文、数字、符号、图型</li>
+<li>2、贮存数据量大，可存放1K字符，可用扫描仪直接读取内容，无需另接数据库</li>
+<li>3、保密性高</li>
+<li>4、容错率高</li>
+<li>5、对读取设备要求较高</li>
+</ul>
+<p>8.简述RFID技术的的优点</p>
+<ul>
+<li>1.体积小且形状多样：RFID标签在读取上并不受尺寸大小与形状限制。</li>
+<li>2.耐环境性：RFID对水、油等物质却有极强的抗污性。在黑暗的环境中，RFID标签也能被读取。</li>
+<li>3.可重复使用：标签具有读写功能，电子数据可反复覆盖，可以被回收而重复用。</li>
+<li>4.穿透性强：标签在被纸张、木材和塑料等非金属或非透明的材质包裹的情况下也可以进行穿透性通讯。</li>
+<li>5.数据安全性：标签内的数据通过循环冗余校验的方法来保证标签发送的数据准确性。</li>
+</ul>
+<p>9.简述低频标签的优缺点</p>
+<p>优点：</p>
+<ul>
+<li>标签芯片一般采用普通的CMOS工艺，具有省电、廉价的特点；</li>
+<li>工作频率不受无线电频率管制约束；</li>
+<li>可以穿透水、有机组织、木材等；</li>
+<li>非常适合近距离的、低速度的、数据量要求较少的识别应用等。</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>标签存贮数据量较少；</li>
+<li>只能适合低速、近距离识别应用；</li>
+<li>与高频标签相比，标签天线匝数更多，成本更高。</li>
+</ul>
+<hr>
+<h2 id="第六章-RFID读写器"><a href="#第六章-RFID读写器" class="headerlink" title="第六章 RFID读写器"></a>第六章 RFID读写器</h2><p>1.低频RFID通信协议是ISO18000-<strong>2</strong>，高频RFID通信协议是ISO18000-<strong>3</strong>。</p>
+<p>2.读写器由 <strong>天线，射频模块，逻辑控制模块</strong> 构成。</p>
+<p>3.读写器的主要作用：</p>
+<ul>
+<li>通过天线与RFID标签进行无线通信</li>
+<li>可以实现对标签的内存数据的读写</li>
+</ul>
+<p>4.未来的读写器的发展方向：</p>
+<ul>
+<li>多功能</li>
+<li>小型化</li>
+<li>便携式</li>
+<li>嵌入式</li>
+<li>模块化 </li>
+</ul>
+<p>5.读写器主要功能：</p>
+<ul>
+<li>与电子标签通信</li>
+<li>标签供能</li>
+<li>多标签识别</li>
+<li>移动目标识别 </li>
+</ul>
+<p>6.高频读写器的工作频段是：<strong>13.56Mhz</strong>。高频读写器具有 <strong>防冲撞特性</strong> ，可以读取多个电子标签。</p>
+<p>7.高频读写器按照遵从的协议基本可以分为两类读写器：<strong>ISO/IEC14443读写器</strong> 和 <strong>ISO/IEC15693协议读写器</strong>。</p>
+<p>8.ISO/IEC 14443 <strong>近耦合</strong>IC卡，最大的读取距离为<strong>10 cm</strong>。ISO/IEC 15693<strong>疏耦合</strong>IC卡，最大的读取距离为<strong>1 m</strong>。</p>
+<p>9.高频读写器的应用：</p>
+<ul>
+<li>一卡通</li>
+<li>门禁</li>
+<li>二代身份证</li>
+<li>生产自动化</li>
+</ul>
+<p>10.简述读写器中天线的功能</p>
+<p>读写器的天线是发射和接收射频载波信号的设备，负责电流信号和射频载波信号的互换。</p>
+<p>11.简述读写器与电子标签和计算机之间的交互过程</p>
+<p>读写器通过天线发送一定频率的射频信号，当电子标签进入设定工作距离时，向读写器发送自身编码等信息，读写器将数据信息送到计算机进行处理，计算机向控制器发送控制指令。</p>
+<p>12.射频接口模块中“时钟发生器”起什么作用？</p>
+<p>产生稳定间隔且持续不断的电压脉冲作为工作时钟，使模块中各部件随着时钟信号来同步运行。</p>
+<p>13.简述基于低频RFID的汽车防盗系统的工作原理</p>
+<p><img src="https://i.loli.net/2019/12/20/FYfcy4bOwtzenT6.png" alt="image.png"></p>
+<p>硬件选择电子标签、读写电路、单片机、语音报警电路、电源监控电路、存储接口电路和汽车发动机电子点火系统。</p>
+<p>汽车防盗系统由<strong>电子标签</strong>和<strong>读写器</strong>组成。原理是将汽车的机械钥匙与电子标签结合，即将小型电子标签直接装入到钥匙把手内，当一个具有正确识别码的钥匙插入点火开关后，汽车才能启动。</p>
+<hr>
+<h2 id="第七章-编码与调制"><a href="#第七章-编码与调制" class="headerlink" title="第七章 编码与调制"></a>第七章 编码与调制</h2><p>1.CRC冗余校验</p>
+<p>现假设选择的CRC生成多项式为G（X）= X<sup>4</sup> + X<sup>3</sup> + 1，要求出二进制序列<strong>10110011</strong>的CRC校验码。</p>
+<p>（1）首先把生成多项式转换成二进制数，由G（X）= X<sup>4</sup> + X<sup>3</sup> + 1可以知道它一共是5位（总位数等于最高位的幂次加1，即4+1=5），二进制比特串为<strong>11001</strong>。</p>
+<p>（2）因为生成多项式的位数为5，校验码的位数比生成多项式的位数少1。所以CRC校验码的位数为4。因为原数据帧10110011，在它后面再加4个0，得到101100110000，然后把这个数以“模2除法”方式除以生成多项式，得到的余数（即CRC码）为0100。</p>
+<blockquote>
+<p>模2除法:相当于二进制中的逻辑异或运算</p>
+</blockquote>
+<p><img src="https://i.loli.net/2019/12/20/9p16AqHBJPlEQ38.png" alt="image.png"></p>
+<p>（3）把上步计算得到的CRC校验0100替换原始帧101100110000后面的四个“0”，得到新帧101100110100。再把这个新帧发送到接收端。</p>
+<p>（4）当以上新帧到达接收端后，接收端会把这个新帧再用上面选定的除数11001以“模2除法”方式去除，验证余数是否为0，如果为0，则证明该帧数据在传输过程中没有出现差错，否则出现了差错。</p>
+<p>2.抗干扰性能最好的调制方法是<strong>相移键控</strong>。</p>
+<p>3.大部分射频识别系统的耦合方式是<strong>电感耦合</strong>。</p>
+<p>4.电感耦合可以分为<strong>密耦合系统</strong>和<strong>遥耦合系统</strong>。</p>
+<p>5.低成本射频识别系统的主流是<strong>遥耦合系统</strong>。</p>
+<p>6.电磁反向散射这种通信方式利用的是<strong>电磁场</strong>。 </p>
+<p>7.RFID系统的耦合方式可以分为 <strong>电感耦合</strong> 和 <strong>电磁反向散射耦合</strong> 。电感耦合系统中，电阻负载调制通过对 <strong>读写器电压</strong> 调控，最终完成信息的传输。</p>
+<p>8.电感耦合的原理是 <strong>电磁感应原理</strong> ，电磁反射应用的是 <strong>电磁波的空间传播</strong> 规律。</p>
+<p>9.功率放大器的功率增益指的是<strong>输出功率与输入功率之比</strong>，单位是<strong>分贝</strong>。</p>
+<p>10.组成低通滤波器的电子元件包括：<strong>电容，电感，电阻</strong>。</p>
+<p>11.目前国际上广泛采用的频率分布于4种波段:<strong>低频、高频、超高频 和 微波</strong>。它们的典型工作频率分别是<strong>125KHz、13.54MHz、850MHz～910MHz和2.45GHz</strong>。</p>
+<p>12.<strong>动物识别</strong>是低频标签的典型应用，中频标签的典型应用有<strong>电子车票、电子闭锁防盗、小区物业管理</strong> 。</p>
+<p>13.RFID在<strong>低频段</strong>（100MHz以下）工作是基于<strong>电感耦合</strong>，在<strong>高频段</strong>（400MHz以上）工作是基于<strong>电磁反向散射耦合</strong>。</p>
+<p>14.通信系统中为什么要进行调制和解调？调制的分类方法有哪些？</p>
+<p>原因：调制器用于改变高频载波信号，使得载波信号的振幅、频率或相位与要发送的基带信号相关。解调器的作用则是解调获取到的信号，以重现基带信号。</p>
+<p>15.指出下图描述分别是哪种调制方式，简述这三种调制方式的特点。</p>
+<p><img src="https://i.loli.net/2019/12/20/PKU5IErVJ2Gb8jY.png" alt="image.png"></p>
+<p>分别为ASK，FSK和PSK。</p>
+<p><strong>ASK:</strong> 即按载波的幅度受到数字数据的调制而取不同的值，例如对应二进制0，载波振幅为0；对应二进制1，载波振幅为1。调幅技术实现起来简单，但容易受增益变化的影响，是一种低效的调制技术。</p>
+<p><strong>FSK:</strong> 即按数字数据的值（0或1）调制载波的频率。例如对应二进制0的载波频率为F1，而对应二进制1的载波频率为F2。该技术抗干扰性能好，但占用带宽较大。在电话线路上，使用FSK可以实现全双工操作，通常可达到1200bps的速率。</p>
+<p><strong>PSK:</strong> 即按数字数据的值调制载波相位。例如用180相移表示1，用0相移表示0。这种调制技术抗干扰性能最好，且相位的变化也可以作为定时信息来同步发送机和接收机的时钟，并对传输速率起到加倍的作用。</p>
+<p>16.什么是副载波调制，副载波调制在RFID系统中起什么作用</p>
+<p>副载波调制是指首先把信号调制在载波1上，出于某种原因，决定对这个结果再进行一次调制，于是用这个结果去调制另外一个频率更高的载波2。副载波调制在RFID中起到通信，供电的作用。</p>
+<p>17.为何反向不归零编码不用于实际传输？</p>
+<ul>
+<li><p>存在直流分量，信道一般难以传输零频附近的频率分量。</p>
+</li>
+<li><p>接收端判决门限与信号功率有关，使用不方便。</p>
+</li>
+<li><p>不能直接用来提取位同步信号，因为NRZ中不含有位同步信号频率成分。</p>
+</li>
+<li><p>要求传输线中有一根接地。</p>
+</li>
+</ul>
+<p>18.曼彻斯特码如何检测数据传输中的错误？</p>
+<p>当多个电子标签同时发送数据位有不同时，接收的上升边和下降边互相抵消，导致在整个位长度副载波信号是不跳变，可判断为发生碰撞。</p>
+<p>19.给定数据为00110010，求画出修正密勒编码后的波形图。</p>
+<p><img src="https://i.loli.net/2019/12/20/8pulahAZE5CzeHX.png" alt="image.png"></p>
+<p>规则：在“1”的中间时刻跳变，在连续的第二个“0”的开始时刻跳变。</p>
+<p>20.信源编码的作用是什么？</p>
+<ul>
+<li>减少码元数目和速率，进行数据压缩</li>
+<li>将模拟信号转数字信号</li>
+</ul>
+<p>21.差分曼彻斯特码的编码规则与引进原因</p>
+<p>编码规则：在信号位开始时不改变信号极性表示“1”。改变则表示“0”</p>
+<p>引进原因：编码变化少，适合传输高速信息。</p>
+<p>22.RFID电磁反向散射耦合</p>
+<p>读写器天线辐射出的电磁波到达射频天线表面后形成反射回波，反射回波再被读写器天线所接收，从而达到传达信息的目的。</p>
+<p>23.简述电感耦合系统下读写器向电子标签提供能量的过程</p>
+<p>读写器线圈上的交变电流、产生交变磁场，当电子标签进入读写器产生的交变磁场时，电子标签的电感线圈上就会产生交变电流，从而获得读写器提供的能量。</p>
+<p>24.简述电感耦合方式和电磁反向散射耦合方式的数据传输过程</p>
+<p><strong>电感耦合方式：</strong>读写器的电容与天线线圈并联，一起构成并联震荡回路，该回路的谐振使读写器天线线圈产生非常大的电流，谐振频率与读写器发射频率一致，最终调制后的读写器线圈电压与电子标签二进制数据波形相同</p>
+<p><strong>电磁反向散射耦合方式：</strong>功率P1从读写器天线发射出来，只有一部分P1到达标签天线并为其提供电压，整流后为标签芯片供电。到达功率P1的一部分被天线反射，其反射功率为P2，经自由空间后再到达读写器，被读写器天线接收。读写器接收的信号经收发耦合器电路传输至收发器，放大后经电路处理器获得有用信息。</p>
+<p>25.RFID电磁反向散射方式的射频前端由哪些模块组成？</p>
+<p>数/模变换器，模/数变换器，混频器，放大器，滤波器，本地振荡器，双工器，天线</p>
+<h2 id="第八章-防碰撞技术"><a href="#第八章-防碰撞技术" class="headerlink" title="第八章 防碰撞技术"></a>第八章 防碰撞技术</h2><p>1.纯Aloha算法的碰撞周期为<strong>2T</strong>。</p>
+<p>2.在RFID中，采用曼彻斯特码、Miller码和修正Miller码作为传输码型的目的是：<strong>便于同步和检错</strong>。</p>
+<p>3.在射频识别系统中，最常用的防碰撞算法是<strong>时分多址法TDMA</strong>。</p>
+<p>4.在基本二进制算法中，为了从N个标签中找出唯一一个标签，需要进行多次请求，其平均次数L为<strong>log<sub>2</sub>N+1</strong>。</p>
+<p>5.在RFID系统防碰撞算法中 <strong>二进制树搜素算法</strong>是由<strong>读写器</strong>控制驱动。</p>
+<p>6.在RFID系统中，为保持数据的完整性和安全性，必须采用<strong>差错控制和防碰撞算法</strong>。</p>
+<p>7.RFID系统中有两种类型的通信碰撞存在，一种是<strong>阅读器碰撞</strong>，另一种是<strong>电子标签碰撞</strong>。</p>
+<p>8.常用在多路通信方式有：<strong>空分多路法、时分多路法、频分多路法</strong>。在RFID系统中，主要采用<strong>时分多路法</strong>。</p>
+<p>9.TDMA算法又可以分为<strong>基于概率的ALOHA算法</strong>和<strong>确定的二进制算法</strong>两种。上述两种TDMA算法中，会出现“饿死”现象的算法是<strong>基于概率的ALOHA算法</strong>。</p>
+<p>10.帧时隙Aloha算法是在时隙Aloha算法的基础上，把N个时隙组成一帧，每个时隙的长度够一个标签回答完，标签在每N个时隙中，可以随机发送 <strong>1</strong> 次信息。</p>
+<p>11.为了实现二进制搜索算法，就要选用 <strong>曼彻斯特编码</strong> ，因为这种编码可以检测出碰撞位。</p>
+<p>12.为了实现二进制树型搜索算法，引入以下4种命令：</p>
+<ul>
+<li><p>REQUEST——请求</p>
+</li>
+<li><p>SELECT——选择</p>
+</li>
+<li><p>READ-DATA——读出数据</p>
+</li>
+<li><p>UNSELECT——退出选择</p>
+</li>
+</ul>
+<p>13.为了防止碰撞的发生，射频识别系统中需要设计相应的防碰撞技术，在通信中这种技术也称为<strong>多址技术</strong>。不是差错控制技术。</p>
+<p>14.简述碰撞的种类</p>
+<p>阅读器碰撞：多个阅读器同时与一个标签通信。</p>
+<p>电子标签碰撞：多个标签同时响应阅读器的命令发送信息。</p>
+<p>15.简述碰撞的解决方案</p>
+<p>1）空分多址（SDMA）</p>
+<p>2）频分多址（FDMA）</p>
+<p>3）码分多址（CDMA）</p>
+<p>4）时分多址（TDMA）</p>
+<p>16.简述ALOHA算法的工作过程、实现步骤。</p>
+<p>若读写器检测出信号存在相互干扰，读写器就会以向电子标签发出命令，令其停止向读写器传输信号；电子标签在接收到命令信号之后，就会停止发送信息，并会在接下来的一个<strong>随机时间段</strong>内进入到待命状态，只有当该时间段过去后，才会重新向读写器发送信息。<strong>各个电标签待命时间片段长度是随机的，再次向读写器发送信号的时间也不相同，这样减少碰撞的可能性</strong>。</p>
+<p>当读写器成功识别某一个标签后，就会立即对该标签下达命令使之进入到休眠的状态。而其他标签则会一直对读写器所发出命令进行响应，并重复发送信息给读写器，当标签被识别后，就会一一进入到休眠状态，直到读写器识别出所有在其工作区内的标签后，算法过程才结束。</p>
+<p>17.时隙Aloha算法优点是可以将冲突减少一半，将信道负载增加，冲突和性能有何变化？</p>
+<p>冲突会呈指数增加，信道性能降低。</p>
+<p>假设阅读器射频工作范围内存在N个标签，理论上阅读器需要至少N个时隙才能成功识别完，如果在识别过程中，又有标签到达，那么系统吞吐量会直线下降，最坏的情况下，即使多次搜索也未能识别导致“饿死现象”。</p>
+<p>18.二进制树型搜索算法的基本思想是什么？</p>
+<p>不断的将导致碰撞的电子标签进行划分，缩小下一步搜索的标签数量，直到只有一个电子标签进行回应。</p>
+<p>19.二进制数型搜索算法为什么选用曼切斯特编码 ?</p>
+<p>如果两个电子标签同时发送的数位有不同的值，则接收的上升沿和下降沿互相抵消。用这种方法可以按位追溯跟踪冲突的出现，可以检测出碰撞位。</p>
+<hr>
+<h2 id="第九章-RFID的安全问题"><a href="#第九章-RFID的安全问题" class="headerlink" title="第九章 RFID的安全问题"></a>第九章 RFID的安全问题</h2><p>1.处理RFID问题更具有挑战性的原因？</p>
+<ul>
+<li>数据容易被偷听</li>
+<li>计算能力和可编程能力都被标签本身的成本所约束</li>
+</ul>
+<p>2.RFID面临的攻击有哪些？</p>
+<ul>
+<li><p>1.侵入电子标签数据</p>
+</li>
+<li><p>2.侵入电子标签和读写器之间的通信</p>
+</li>
+<li><p>3.侵入读写器内数据</p>
+</li>
+<li><p>4.侵入主机系统</p>
+</li>
+</ul>
+<p>3.RFID系统安全解决方案</p>
+<p>物理方法：杀死标签，法拉第网罩，主动干扰，阻止标签</p>
+<p>逻辑方法：Hash锁，随机Hash锁，Hash链，匿名ID方案，重加密方案</p>
+<p>4.简述hash锁方案原理</p>
+<p>标签使用metaID，标签内部有一个用于存储临时metaID的内存。</p>
+<p>在锁定状态下，标签用metaID响应查询；</p>
+<p>在非锁定状态下，标签向读写器提供自己的信息。</p>
+<h2 id="第十章-物联网架构RFID标准"><a href="#第十章-物联网架构RFID标准" class="headerlink" title="第十章 物联网架构RFID标准"></a>第十章 物联网架构RFID标准</h2><p>1.RFID标准体系主要包括<strong>技术标准</strong>，<strong>数据内容标准</strong>，<strong>性能标准</strong>，<strong>应用标准</strong>。</p>
+<p>2.动物的无线射频识别高级标签第一部分的空中接口属于<strong>应用标准</strong>。</p>
+<p>3.第二代身份证是符合<strong>ISO/IEC 14443 TYPE B</strong>协议的射频卡。</p>
+<p>4.GB/T20563 2006在RFID标准体系中属于<strong>应用标准</strong>。</p>
+<p>5.ISO/IEC 18000标准系列中包含了 <strong>6</strong> 个部分，18000-7定义的<strong>超高频</strong>频段.</p>
+<p>6.ISO/IEC 15693标准中标签到读写器的数据编码采用  <strong>曼彻斯特编码</strong>  方式。</p>
+<p>7.ISO/IEC 15693标准中标签有四种状态，分别是 <strong>断电</strong>、<strong>准备</strong>、<strong>静默</strong>、<strong>选择</strong> 。</p>
+<p>8.ISO/IEC 15693标准中工作频率范围为 <strong>13.56MHz±7KHz</strong>  ，工作磁场范围为  <strong>0.15A/m~5A/m</strong>  。</p>
+<p>9.<strong>编码标准</strong> 和 <strong>通信协议（通信接口）</strong>是RFID标准中争夺比较激烈的部分，两者也构成了RFID标准的核心。这两者分别属于 <strong>数据内容标准</strong>和<strong>技术标准</strong>。</p>
+<p>10.物联网标准是 <strong>EPCglobal</strong> 所特有的。</p>
+<p>11.ISO/IEC、EPCglobal和UID这三个标准组织制定的标准相互之间并不兼容，主要差别在 <strong>通讯方式</strong> 、 <strong>防冲突协议</strong> 和 <strong>数据格式</strong> 三个方面。</p>
+<p>12.在ISO/IEC 14443标准协议中，规定载波频率为 <strong>13.56MHz</strong> 。</p>
+<p>13.ISO/IEC 14443标准由 <strong>物理特性</strong>  、 <strong>射频能量和信号接口</strong>  、<strong>初始化和防碰撞</strong>  、 <strong>传输协议</strong> 四个部分组成。</p>
+<p>14.ISO/IEC 18000-2标准的标签分为两个类型Type-A和Type-B,它们在 <strong>物理层</strong> 存在不同，但是支持相同的 <strong>协议和防碰撞机制</strong>，Type-A标签工作在 <strong>双工通信</strong> 模式下，Type-B标签工作在 <strong>半双工通信</strong> 模式下。</p>
+<p>15.ISO/IEC 18000-6标准的Type-A采用 <strong>ALOHA</strong> 防碰撞算法，Type-B采用 <strong>二叉树</strong> 防碰撞算法，均采用 <strong>双相间隔码编码</strong>。</p>
+<p>16.ISO/IEC 18000-4标准定义了 2.4GHz的空中接口通信协议参数，主要应用于 <strong>货品管理领域</strong>。ISO/IEC 18000-4标准定义了 433MHz的空中接口通信协议参数，应用于 <strong>单品应用管理方面</strong> 。</p>
+<p>17.GB/T20563 2006标准是 <strong>动物射频识别代码结构</strong> 标准的简称，其规定了代码结构分为三部分：<strong>控制代码段（第1至16位）</strong>，国家和地区代码段和国家动物代码段。</p>
+<p>18.RFID技术广泛应用的前提是什么？有什么意义？</p>
+<p>RFID技术广泛应用的前提是<strong>标准化</strong>。可以解决编码通信、空中接口和数据共享等问题，促进RFID技术发展。</p>
+<p>19.ISO/IEC 15693标准中数据元素里的UID, AFI, DSFID分别指的是什么？</p>
+<p>UID(Unique Identifier)唯一标识符。</p>
+<p>AFI(Application Family Identifier)应用族标识符。</p>
+<p>DSFID(Data Storage Format Identifier)数据存储格式标识符。</p>
+<p>20.简述ISO/IEC 14443标准的类型中不同标准所采用的防碰撞算法</p>
+<p>A型采用位检测防碰撞协议</p>
+<p>B型通过一组命令来管理防碰撞过程，防碰撞方案以时隙为基础。</p>
+<p>21.简述ISO/IEC 18000-6系列方案的特点。</p>
+<p>Type-A方案存储容量大，防碰撞能力较弱，且数据结构复杂，指令类型多。</p>
+<p>Type-B方案存储容量小，防碰撞能力较强，数据结构和指令简单。</p>
+<p>Type-C方案的性能处于Type-A和Type-B二者之间，具有较高的普适性。</p>
+<p>22.EPCglobal标准框架分为哪三个层次，并阐述其内容</p>
+<p>EPCglobal标准框架包括<strong>数据识别</strong>、<strong>数据获取</strong>和<strong>数据交换</strong>三个层次。</p>
+<p><strong>数据识别层</strong>的标准包括RFID标签数据标准和协议标准，目的是确保不同企业间数据格式和说明的统一性；</p>
+<p><strong>数据获取层</strong>的标准包括读写器协议标准、读写器管理标准、读写器组网和初始化标准，以及中间件标准等，定义了收集和记录EPC数据的主要基础设施组件，并允许最终用户使用具有互操作性的设备建立RFID应用；</p>
+<p><strong>数据交换层</strong>的标准包括EPC信息服务标准（EPC Information Services，EPCIS）、核心业务词汇标准（Core Business Vocabulary，CBV）、对象名解析服务标准（Object Name Service，ONS）、发现服务标准（Discovery Services）、安全认证标准（Certificate Profile），以及谱系标准（Pedigree）等，提高广域环境下物流信息的可视性，目的是为最终用户提供可以共享的EPC数据，并实现EPC网络服务的接入。</p>
+<p>23.从技术方面简要分析RFID标准多元化的原因。</p>
+<p>1.RFID的工作频率和信息传输方式：RFID的工作频率分布在低频至微波的各个频段中，技术差异大。</p>
+<p>2,作用距离：作用距离不同产生的差异主要表现在以下几个方面：应答器的工作方式分为有源工作方式和无源工作方式两种；RFID系统的工作原理不同，近距离采用电感耦合方式，远距离采用基于微波的反散射耦合方式；载波功率的差异；这些都会导致不同的标准产生；</p>
+<p>3，应用目标的不同：RFID的应用广泛，针对不同的应用目的，其存储的数据代码，外形需求，频率选择，作用距离以及复杂度都会有很大的差异；</p>
+<p>4，技术的发展：随着信息技术和制造业的进步，RFID标准需要不断融入这些新进展，以形成与时俱进的标准。</p>
+<h2 id="第十一章-物联网架构—EPC系统"><a href="#第十一章-物联网架构—EPC系统" class="headerlink" title="第十一章 物联网架构—EPC系统"></a>第十一章 物联网架构—EPC系统</h2><p>1.64位EPC编码中<strong>EPC-64Ⅲ型</strong>编码的厂商数量最多。</p>
+<p>2.若EPC编码版本号前三位是000，则这个EPC编码可能是<strong>EPC-256Ⅱ型</strong>。</p>
+<p>3.Savant系统完成的任务是： <strong>数据校对</strong>、 <strong>数据传输</strong> 、 <strong>数据存储</strong> 、<strong>读写器协调</strong>、  <strong>任务管理</strong>。</p>
+<p>4.ONS服务器由<strong>ONS根服务器</strong>和<strong>本地ONS服务器</strong>组成。</p>
+<p>5.某商品信息为“一个蓝色的500ml的水杯”，其中“蓝色，500ml”是由EPC编码结构当中的 <strong>对象分类代码</strong> 决定的。</p>
+<p>6.国际上具影响力三大RFID标准化体系组织是  EPC Global美，UID日本，ISO/IEC标准体系 。</p>
+<p>7.96位EPC码由<strong>版本号</strong>、<strong>域名管理者</strong>、<strong>对象分类代码</strong> 和<strong>序列号</strong>构成。</p>
+<p>8.电子标签含有物品唯一标识体系的编码，其中<strong>电子产品代码/EPC</strong>是全球产品代码的一个分支，它包含著一系列的数据和信息，如产地、日期代码和其他关键的供应信息。</p>
+<p>9.EPC系统的信息网络系统是在全球互联网的基础上，通过 <strong>Savant管理软件系统</strong>  、 <strong>ONS对象名称解析服务</strong> 、 <strong>实体标记语言</strong>  实现全球的实物互联。</p>
+<p>10.EPCIS在EPC网络中的主要作用是提供  <strong>存储管理EPC捕获信息</strong>  的接口。</p>
+<p>11.ONS服务是联系EPC中间件和EPC信息服务的网络枢纽，并且ONS设计与架构都以 <strong>因特网域名解析服务（DNS）</strong>为基础，因此，可以使整个EPC网络以因特网为依托，迅速架构并顺利延伸到世界各地。</p>
+<p>12.EPC信息服务（EPCIS）中框架分为几层，每层的作用是什么？</p>
+<p>EPCIS框架被分成三层：信息模型层，服务层，绑定层。</p>
+<p><strong>信息模型层：</strong>指定了EPCIS中包含什么样的数据，这些数据的抽象结构是什么，以及这些数据代表着什么含义。</p>
+<p><strong>服务层：</strong>指定了EPC网络组件与EPCIS数据进行交互的实际接口。</p>
+<p><strong>绑定层：</strong>定义信息的传输协议，比如SOAP(简单对象访问协议)或HTTP(超文本传输协议)</p>
+<p>13.简述对象名称解析服务的工作流程。</p>
+<p>用户请求发到ONS根服务器上。ONS根服务器进行解析和识别，将请求转发至该本地ONS服务器。本地ONS服务器在本地数据表中解析EPCIS服务器的地址，然后将请求转发至该EPCIS服务器。最后EPCIS服务器根据请求的内容提供搜索结果，将结果返回。</p>
+<h2 id="第十二章-RFID应用实例"><a href="#第十二章-RFID应用实例" class="headerlink" title="第十二章 RFID应用实例"></a>第十二章 RFID应用实例</h2><p>1.属于RFID应用：</p>
+<p><strong>A.物流过程中的货物追踪，信息采集</strong></p>
+<p><strong>B.驯养动物，畜牧牲口，宠物等识别管理</strong></p>
+<p><strong>D.ETC路桥不停车收费系统</strong></p>
+<p>2.在铁路机车车号识别系统中，安装在铁轨中间的是<strong>读写器天线</strong>。</p>
+<p>3.RFID在智能交通领域的应用有 <strong>不停车电子收费系统</strong> 、<strong>智能公交系统</strong>、<strong>铁路机车车号识别系统</strong>。</p>
+<p>4.RFID智能公交系统由 <strong>信息采集网络</strong> （识别基站、识别卡 、显示屏）以及指挥中心组成。</p>
+<hr>
+<blockquote>
+<p>近期更新，敬请期待</p>
+</blockquote>
+
+        </div>
+        
+          
+
+
+  <section class='meta' id="footer-meta">
+    <hr>
+    <div class='new-meta-box'>
+      
+        
+          
+  
+  <div class='new-meta-item category'>
+    <a href='/categories/复习/' rel="nofollow">
+      <i class="fas fa-folder-open" aria-hidden="true"></i>
+      <p>复习</p>
+    </a>
+  </div>
+
+
+        
+      
+        
+          
+  
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/RFID/" rel="nofollow"><i class="fas fa-hashtag" aria-hidden="true"></i>&nbsp;<p>RFID</p></a></div>
+
+
+        
+      
+        
+          
+  <div class="new-meta-item share -mob-share-list">
+  <div class="-mob-share-list share-body">
+    
+      
+        <a class="-mob-share-qq" title="QQ好友" rel="external nofollow noopener noreferrer"
+          
+          href="http://connect.qq.com/widget/shareqq/index.html?url=https://Stefancharles.xyz/2019/12/16/RFIDreview/&title=【RFID】期末复习知识提纲 | Stefan's Blog&pics=https://i.loli.net/2019/08/15/4zEt9A6LvBegWX8.jpg&summary=RFID复习提纲本篇文章按RFID考试题库里的章节进行知识点进行梳理。考试当天将会暂时关闭本博客。请理解。
+
+
+We fight, because we knew we had nothing to lose.
+
+"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/qq.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-qzone" title="QQ空间" rel="external nofollow noopener noreferrer"
+          
+          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://Stefancharles.xyz/2019/12/16/RFIDreview/&title=【RFID】期末复习知识提纲 | Stefan's Blog&pics=https://i.loli.net/2019/08/15/4zEt9A6LvBegWX8.jpg&summary=RFID复习提纲本篇文章按RFID考试题库里的章节进行知识点进行梳理。考试当天将会暂时关闭本博客。请理解。
+
+
+We fight, because we knew we had nothing to lose.
+
+"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/qzone.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-weibo" title="微博" rel="external nofollow noopener noreferrer"
+          
+          href="http://service.weibo.com/share/share.php?url=https://Stefancharles.xyz/2019/12/16/RFIDreview/&title=【RFID】期末复习知识提纲 | Stefan's Blog&pics=https://i.loli.net/2019/08/15/4zEt9A6LvBegWX8.jpg&summary=RFID复习提纲本篇文章按RFID考试题库里的章节进行知识点进行梳理。考试当天将会暂时关闭本博客。请理解。
+
+
+We fight, because we knew we had nothing to lose.
+
+"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/weibo.png">
+          
+        </a>
+      
+    
+  </div>
+</div>
+
+
+
+        
+      
+    </div>
+  </section>
+
+
+        
+        
+            <div class="prev-next">
+                
+                    <section class="prev">
+                        <span class="art-item-left">
+                            <h6><i class="fas fa-chevron-left" aria-hidden="true"></i>&nbsp;上一页</h6>
+                            <h4>
+                                <a href="/2019/12/18/Zigbeereview/" rel="prev" title="【Zigbee】zigbee期末复习知识点">
+                                  
+                                      【Zigbee】zigbee期末复习知识点
+                                  
+                                </a>
+                            </h4>
+                            
+                                
+                                <h6 class="tags">
+                                    <a class="tag" href="/tags/Zigbee/"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i>Zigbee</a>
+                                </h6>
+                            
+                        </span>
+                    </section>
+                
+                
+                    <section class="next">
+                        <span class="art-item-right" aria-hidden="true">
+                            <h6>下一页&nbsp;<i class="fas fa-chevron-right" aria-hidden="true"></i></h6>
+                            <h4>
+                                <a href="/2019/12/12/WSNreview/" rel="prev" title="【WSN】无线传感器网络期末复习知识提纲">
+                                    
+                                        【WSN】无线传感器网络期末复习知识提纲
+                                    
+                                </a>
+                            </h4>
+                            
+                                
+                                <h6 class="tags">
+                                    <a class="tag" href="/tags/WSN/"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i>WSN</a>
+                                </h6>
+                            
+                        </span>
+                    </section>
+                
+            </div>
+        
+      </section>
+    </article>
+  
+
+  
+    <!-- 显示推荐文章和评论 -->
+
+
+
+  <article class="post white-box comments">
+    <section class="article typo">
+      <h4><i class="fas fa-comments fa-fw" aria-hidden="true"></i>&nbsp;评论</h4>
+      
+      
+      
+      
+        <section id="comments">
+          <div id="valine_container" class="valine_thread">
+            <i class="fas fa-spinner fa-spin fa-fw"></i>
+          </div>
+        </section>
+      
+    </section>
+  </article>
+
+
+  
+
+
+
+
+<!-- 根据页面mathjax变量决定是否加载MathJax数学公式js -->
+
+
+
+  <script>
+    window.subData = {
+      title: '【RFID】期末复习知识提纲',
+      tools: true
+    }
+  </script>
+
+
+</div>
+<aside class='l_side'>
+  
+    
+    
+      
+        
+          
+          
+            <section class='widget author'>
+  <div class='content pure'>
+    
+      <div class='avatar'>
+        <img class='avatar' src='https://i.loli.net/2019/08/15/oZF8Hh2dKIJ5V1a.jpg'/>
+      </div>
+    
+    
+    
+      <div class="social-wrapper">
+        
+          
+            <a href="/atom.xml"
+              class="social fas fa-rss flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+          
+            <a href="/stefancharles@vip.qq.com"
+              class="social fas fa-envelope flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+          
+            <a href="https://github.com/Stefancharles"
+              class="social fab fa-github flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+          
+            <a href="https://c.y.qq.com/base/fcgi-bin/u?__=jsQmg4H"
+              class="social fas fa-headphones-alt flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+      </div>
+    
+  </div>
+</section>
+
+          
+        
+      
+        
+          
+          
+            
+  <section class='widget toc-wrapper'>
+    
+<header class='pure'>
+  <div><i class="fas fa-list fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;本文目录</div>
+  
+    <div class='wrapper'><a class="s-toc rightBtn" rel="external nofollow noopener noreferrer" href="javascript:void(0)"><i class="fas fa-thumbtack fa-fw"></i></a></div>
+  
+</header>
+
+    <div class='content pure'>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#RFID复习提纲"><span class="toc-text">RFID复习提纲</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#第一章-传输线理论"><span class="toc-text">第一章 传输线理论</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第二章-谐振电路"><span class="toc-text">第二章 谐振电路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第三章-天线基础"><span class="toc-text">第三章 天线基础</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第四章-RFID系统概论"><span class="toc-text">第四章 RFID系统概论</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第六章-RFID读写器"><span class="toc-text">第六章 RFID读写器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第七章-编码与调制"><span class="toc-text">第七章 编码与调制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第八章-防碰撞技术"><span class="toc-text">第八章 防碰撞技术</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第九章-RFID的安全问题"><span class="toc-text">第九章 RFID的安全问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第十章-物联网架构RFID标准"><span class="toc-text">第十章 物联网架构RFID标准</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第十一章-物联网架构—EPC系统"><span class="toc-text">第十一章 物联网架构—EPC系统</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第十二章-RFID应用实例"><span class="toc-text">第十二章 RFID应用实例</span></a></li></ol></li></ol>
+    </div>
+  </section>
+
+
+          
+        
+      
+        
+          
+          
+            <section class='widget grid'>
+  
+<header class='pure'>
+  <div><i class="fas fa-map-signs fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;站内导航</div>
+  
+</header>
+
+  <div class='content pure'>
+    <ul class="grid navgation">
+      
+        <li><a class="flat-box" title="/" href="/"
+          
+          
+          id="home">
+          
+            <i class="fas fa-clock fa-fw" aria-hidden="true"></i>
+          
+          近期文章
+        </a></li>
+      
+        <li><a class="flat-box" title="/blog/archives/" href="/blog/archives/"
+          
+            rel="nofollow"
+          
+          
+          id="blogarchives">
+          
+            <i class="fas fa-archive fa-fw" aria-hidden="true"></i>
+          
+          文章归档
+        </a></li>
+      
+        <li><a class="flat-box" title="/projects/" href="/projects/"
+          
+          
+          id="projects">
+          
+            <i class="fas fa-code-branch fa-fw" aria-hidden="true"></i>
+          
+          开源项目
+        </a></li>
+      
+        <li><a class="flat-box" title="/friends/" href="/friends/"
+          
+            rel="nofollow"
+          
+          
+          id="friends">
+          
+            <i class="fas fa-link fa-fw" aria-hidden="true"></i>
+          
+          我的友链
+        </a></li>
+      
+        <li><a class="flat-box" title="https://github.com/Stefancharles" href="https://github.com/Stefancharles"
+          
+            rel="nofollow"
+          
+          
+          id="https:github.comStefancharles">
+          
+            <i class="fas fa-book fa-fw" aria-hidden="true"></i>
+          
+          主题文档
+        </a></li>
+      
+        <li><a class="flat-box" title="/about/" href="/about/"
+          
+            rel="nofollow"
+          
+          
+          id="about">
+          
+            <i class="fas fa-info-circle fa-fw" aria-hidden="true"></i>
+          
+          关于小站
+        </a></li>
+      
+    </ul>
+  </div>
+</section>
+
+          
+        
+      
+        
+          
+          
+            
+  <section class='widget category'>
+    
+<header class='pure'>
+  <div><i class="fas fa-folder-open fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;文章分类</div>
+  
+    <a class="rightBtn"
+    
+      rel="nofollow"
+    
+    
+    href="/blog/categories/"
+    title="blog/categories/">
+    <i class="fas fa-expand-arrows-alt fa-fw"></i></a>
+  
+</header>
+
+    <div class='content pure'>
+      <ul class="entry">
+        
+          <li><a class="flat-box" title="/categories/Android/" href="/categories/Android/"><div class='name'>Android</div><div class='badge'>(2)</div></a></li>
+        
+          <li><a class="flat-box child" title="/categories/Android/MVP/" href="/categories/Android/MVP/"><div class='name'>MVP</div><div class='badge'>(1)</div></a></li>
+        
+          <li><a class="flat-box child" title="/categories/Android/OpenCV/" href="/categories/Android/OpenCV/"><div class='name'>OpenCV</div><div class='badge'>(1)</div></a></li>
+        
+          <li><a class="flat-box" title="/categories/C/" href="/categories/C/"><div class='name'>C++</div><div class='badge'>(1)</div></a></li>
+        
+          <li><a class="flat-box child" title="/categories/C/Qt/" href="/categories/C/Qt/"><div class='name'>Qt</div><div class='badge'>(1)</div></a></li>
+        
+          <li><a class="flat-box" title="/categories/复习/" href="/categories/复习/"><div class='name'>复习</div><div class='badge'>(4)</div></a></li>
+        
+          <li><a class="flat-box" title="/categories/教程/" href="/categories/教程/"><div class='name'>教程</div><div class='badge'>(12)</div></a></li>
+        
+          <li><a class="flat-box" title="/categories/笔记/" href="/categories/笔记/"><div class='name'>笔记</div><div class='badge'>(20)</div></a></li>
+        
+          <li><a class="flat-box" title="/categories/随笔/" href="/categories/随笔/"><div class='name'>随笔</div><div class='badge'>(3)</div></a></li>
+        
+      </ul>
+    </div>
+  </section>
+
+
+          
+        
+      
+        
+          
+          
+            
+  <section class='widget tagcloud'>
+    
+<header class='pure'>
+  <div><i class="fas fa-fire fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;热门标签</div>
+  
+    <a class="rightBtn"
+    
+      rel="nofollow"
+    
+    
+    href="/blog/tags/"
+    title="blog/tags/">
+    <i class="fas fa-expand-arrows-alt fa-fw"></i></a>
+  
+</header>
+
+    <div class='content pure'>
+      <a href="/tags/Android/" style="font-size: 24px; color: #555">Android</a> <a href="/tags/C/" style="font-size: 14px; color: #999">C#</a> <a href="/tags/C/" style="font-size: 14px; color: #999">C++</a> <a href="/tags/CNN/" style="font-size: 14px; color: #999">CNN</a> <a href="/tags/Fisher/" style="font-size: 14px; color: #999">Fisher</a> <a href="/tags/Http/" style="font-size: 18px; color: #7e7e7e">Http</a> <a href="/tags/HyperLPR/" style="font-size: 14px; color: #999">HyperLPR</a> <a href="/tags/IAR/" style="font-size: 14px; color: #999">IAR</a> <a href="/tags/Java/" style="font-size: 20px; color: #707070">Java</a> <a href="/tags/Keras/" style="font-size: 14px; color: #999">Keras</a> <a href="/tags/MVP/" style="font-size: 14px; color: #999">MVP</a> <a href="/tags/Maven/" style="font-size: 14px; color: #999">Maven</a> <a href="/tags/Mnist/" style="font-size: 18px; color: #7e7e7e">Mnist</a> <a href="/tags/NetSecurity/" style="font-size: 14px; color: #999">NetSecurity</a> <a href="/tags/Omnetpp/" style="font-size: 14px; color: #999">Omnetpp</a> <a href="/tags/OpenCV/" style="font-size: 18px; color: #7e7e7e">OpenCV</a> <a href="/tags/Qt/" style="font-size: 14px; color: #999">Qt</a> <a href="/tags/RFID/" style="font-size: 14px; color: #999">RFID</a> <a href="/tags/STM32/" style="font-size: 14px; color: #999">STM32</a> <a href="/tags/SVM/" style="font-size: 14px; color: #999">SVM</a> <a href="/tags/SharedPreferences/" style="font-size: 14px; color: #999">SharedPreferences</a> <a href="/tags/Spring/" style="font-size: 14px; color: #999">Spring</a> <a href="/tags/TensorFlow/" style="font-size: 14px; color: #999">TensorFlow</a> <a href="/tags/Thread/" style="font-size: 14px; color: #999">Thread</a> <a href="/tags/Ubuntu/" style="font-size: 16px; color: #8b8b8b">Ubuntu</a> <a href="/tags/WSN/" style="font-size: 14px; color: #999">WSN</a> <a href="/tags/Zigbee/" style="font-size: 22px; color: #636363">Zigbee</a> <a href="/tags/c/" style="font-size: 14px; color: #999">c++</a> <a href="/tags/omnetpp/" style="font-size: 16px; color: #8b8b8b">omnetpp</a>
+    </div>
+  </section>
+
+
+          
+        
+      
+        
+          
+          
+            
+
+
+  <section class='widget music'>
+    
+<header class='pure'>
+  <div><i class="fas fa-compact-disc fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;最近在听</div>
+  
+    <a class="rightBtn"
+    
+      rel="external nofollow noopener noreferrer"
+    
+    
+      target="_blank"
+    
+    href="https://c.y.qq.com/base/fcgi-bin/u?__=jsQmg4H"
+    title="https://c.y.qq.com/base/fcgi-bin/u?__=jsQmg4H">
+    <i class="far fa-heart fa-fw"></i></a>
+  
+</header>
+
+    <div class='content pure'>
+      
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.7.0/dist/APlayer.min.css">
+  <div class="aplayer"
+    data-theme="#1BCDFC"
+    
+    
+    data-mode="circulation"
+    data-server="tencent"
+    data-type="playlist"
+    data-id="4222498938"
+    data-volume="0.7">
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/aplayer@1.7.0/dist/APlayer.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/meting@1.1.0/dist/Meting.min.js"></script>
+
+
+    </div>
+  </section>
+
+
+          
+        
+      
+    
+
+  
+</aside>
+
+<footer id="footer" class="clearfix">
+  
+    <div class="footer">
+      <p>已经到底了，但是精彩继续！</p>
+
+    </div>
+    <br>
+  
+  
+    <div class="social-wrapper">
+      
+        
+          <a href="/atom.xml"
+            class="social fas fa-rss flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="/stefancharles@vip.qq.com"
+            class="social fas fa-envelope flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="https://github.com/Stefancharles"
+            class="social fab fa-github flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="https://c.y.qq.com/base/fcgi-bin/u?__=jsQmg4H"
+            class="social fas fa-headphones-alt flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+    </div>
+  
+  <br>
+  <div><p>博客内容遵循 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</a></p>
+</div>
+  <div>
+
+    
+      
+      总访问量为
+      <span id="busuanzi_value_site_pv"><i class="fas fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span>
+      次
+    
+    。
+  </div>
+</footer>
+<script>setLoadingBarProgress(80);</script>
+
+
+      <script>setLoadingBarProgress(60);</script>
+    </div>
+    <a class="s-top fas fa-arrow-up fa-fw" href='javascript:void(0)'></a>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+
+  <script>
+    var GOOGLE_CUSTOM_SEARCH_API_KEY = "AIzaSyBjTC6INtmeYy3ig7VaKWeU5obyVnyOAuA";
+    var GOOGLE_CUSTOM_SEARCH_ENGINE_ID = "007855274890026858194:3gmzbmgvb-q";
+    var ALGOLIA_API_KEY = "";
+    var ALGOLIA_APP_ID = "";
+    var ALGOLIA_INDEX_NAME = "";
+    var AZURE_SERVICE_NAME = "";
+    var AZURE_INDEX_NAME = "";
+    var AZURE_QUERY_KEY = "";
+    var BAIDU_API_ID = "";
+    var SEARCH_SERVICE = "hexo" || "hexo";
+    var ROOT = "/"||"/";
+    if(!ROOT.endsWith('/'))ROOT += '/';
+  </script>
+
+<script src="//instant.page/1.2.2" type="module" integrity="sha384-2xV8M5griQmzyiY3CDqh1dn4z3llDVqZDqzjzcY+jCBCk/a5fXJmuZ/40JJAPeoU"></script>
+
+
+  <script async src="https://cdn.jsdelivr.net/npm/scrollreveal@4.0.5/dist/scrollreveal.min.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      const $reveal = $('.reveal');
+      if ($reveal.length === 0) return;
+      const sr = ScrollReveal({ distance: 0 });
+      sr.reveal('.reveal');
+    });
+  </script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      Waves.attach('.flat-btn', ['waves-button']);
+      Waves.attach('.float-btn', ['waves-button', 'waves-float']);
+      Waves.attach('.float-btn-light', ['waves-button', 'waves-float', 'waves-light']);
+      Waves.attach('.flat-box', ['waves-block']);
+      Waves.attach('.float-box', ['waves-block', 'waves-float']);
+      Waves.attach('.waves-image');
+      Waves.init();
+    });
+  </script>
+
+
+  <script async src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-busuanzi@2.3/js/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+  
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.0.4/jquery.backstretch.min.js"></script>
+    <script type="text/javascript">
+      $(function(){
+        if ('.cover') {
+          $('.cover').backstretch(
+          ["https://img.vim-cn.com/6d/a0c9e6f9efad8b731cb7376504bd10d79d2053.jpg"],
+          {
+            duration: "6000",
+            fade: "2500"
+          });
+        } else {
+          $.backstretch(
+          ["https://img.vim-cn.com/6d/a0c9e6f9efad8b731cb7376504bd10d79d2053.jpg"],
+          {
+            duration: "6000",
+            fade: "2500"
+          });
+        }
+      });
+    </script>
+  
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+    
+      <script src="https://cdn.jsdelivr.net/gh/xaoxuu/volantis@1.0/js/volantis.min.js"></script>
+    
+  
+  <script>
+  var GUEST_INFO = ['nick','mail','link'];
+  var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+    return GUEST_INFO.indexOf(item) > -1
+  });
+  var notify = 'true' == true;
+  var verify = 'true' == true;
+  var valine = new Valine();
+  valine.init({
+    el: '#valine_container',
+    notify: notify,
+    verify: verify,
+    guest_info: guest_info,
+    
+    appId: "wlBz3oHtoKBEhnTNtpqYUTGX-gzGzoHsz",
+    appKey: "UlbGNoRRKQR1eV0uLcaHwkI1",
+    placeholder: "快来评论吧~",
+    pageSize:'10',
+    avatar:'mp',
+    lang:'zh-cn',
+    highlight:'true'
+  })
+  </script>
+
+
+
+  <script src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-material-x@19.5/js/app.js"></script>
+
+
+  <script src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-material-x@19.5/js/search.js"></script>
+
+
+
+
+<!-- 复制 -->
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+  let COPY_SUCCESS = "复制成功";
+  let COPY_FAILURE = "复制失败";
+  /*页面载入完成后，创建复制按钮*/
+  !function (e, t, a) {
+    /* code */
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '  <i class="fa fa-copy"></i><span>复制</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+
+      clipboard.on('success', function(e) {
+        //您可以加入成功提示
+        console.info('Action:', e.action);
+        console.info('Text:', e.text);
+        console.info('Trigger:', e.trigger);
+        success_prompt(COPY_SUCCESS);
+        e.clearSelection();
+      });
+      clipboard.on('error', function(e) {
+        //您可以加入失败提示
+        console.error('Action:', e.action);
+        console.error('Trigger:', e.trigger);
+        fail_prompt(COPY_FAILURE);
+      });
+    }
+    initCopyCode();
+
+  }(window, document);
+
+  /**
+   * 弹出式提示框，默认1.5秒自动消失
+   * @param message 提示信息
+   * @param style 提示样式，有alert-success、alert-danger、alert-warning、alert-info
+   * @param time 消失时间
+   */
+  var prompt = function (message, style, time)
+  {
+      style = (style === undefined) ? 'alert-success' : style;
+      time = (time === undefined) ? 1500 : time*1000;
+      $('<div>')
+          .appendTo('body')
+          .addClass('alert ' + style)
+          .html(message)
+          .show()
+          .delay(time)
+          .fadeOut();
+  };
+
+  // 成功提示
+  var success_prompt = function(message, time)
+  {
+      prompt(message, 'alert-success', time);
+  };
+
+  // 失败提示
+  var fail_prompt = function(message, time)
+  {
+      prompt(message, 'alert-danger', time);
+  };
+
+  // 提醒
+  var warning_prompt = function(message, time)
+  {
+      prompt(message, 'alert-warning', time);
+  };
+
+  // 信息提示
+  var info_prompt = function(message, time)
+  {
+      prompt(message, 'alert-info', time);
+  };
+
+</script>
+
+
+<!-- fancybox -->
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+<script>
+  let LAZY_LOAD_IMAGE = "";
+  $(".article-entry").find("fancybox").find("img").each(function () {
+      var element = document.createElement("a");
+      $(element).attr("data-fancybox", "gallery");
+      $(element).attr("href", $(this).attr("src"));
+      /* 图片采用懒加载处理时,
+       * 一般图片标签内会有个属性名来存放图片的真实地址，比如 data-original,
+       * 那么此处将原本的属性名src替换为对应属性名data-original,
+       * 修改如下
+       */
+       if (LAZY_LOAD_IMAGE) {
+         $(element).attr("href", $(this).attr("data-original"));
+       }
+      $(this).wrap(element);
+  });
+</script>
+
+
+
+
+
+  <script>setLoadingBarProgress(100);</script>
+</body>
+</html>

@@ -1,0 +1,1300 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+  <title>【ZigBee】数据传输实验及协议栈的启动过程具体实现 | Stefan&#39;s Blog</title>
+  
+  <meta name="keywords" content="Life,Learn.">
+  
+  
+  <meta name="description" content="Record learning tutorials and life insights.">
+  
+
+  
+
+  <meta name="HandheldFriendly" content="True">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <!-- meta -->
+  
+
+  <!-- link -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.css">
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.6.3/css/all.min.css">
+  
+
+  
+  <link rel="shortcut icon" type="image/x-icon" href="https://cdn.jsdelivr.net/gh/xaoxuu/assets@master/favicon/favicon.ico">
+  
+
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-material-x@19.5/css/style.css">
+  
+
+  <script>
+    function setLoadingBarProgress(num) {
+      document.getElementById('loading-bar').style.width=num+"%";
+    }
+  </script>
+
+  
+  
+</head>
+
+<body>
+  
+  
+  <div class="cover-wrapper">
+    <cover class='cover post half'>
+      
+        
+  <h1 class='title'>Stefan's Blog</h1>
+
+
+  <div class="m_search">
+    <form name="searchform" class="form u-search-form">
+      <input type="text" class="input u-search-input" placeholder="" />
+      <i class="icon fas fa-search fa-fw"></i>
+    </form>
+  </div>
+
+<div class='menu navgation'>
+  <ul class='h-list'>
+    
+      
+        <li>
+          <a class="nav home" href="/"
+            
+            
+            id="home">
+            <i class='fas fa-rss fa-fw'></i>&nbsp;博文
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home" href="/projects/"
+            
+            
+            id="projects">
+            <i class='fas fa-code-branch fa-fw'></i>&nbsp;项目
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home" href="/friends/"
+            
+              rel="nofollow"
+            
+            
+            id="friends">
+            <i class='fas fa-link fa-fw'></i>&nbsp;友链
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home" href="/about/"
+            
+              rel="nofollow"
+            
+            
+            id="about">
+            <i class='fas fa-info-circle fa-fw'></i>&nbsp;关于
+          </a>
+        </li>
+      
+    
+  </ul>
+</div>
+
+      
+    </cover>
+    <header class="l_header pure">
+  <div id="loading-bar-wrapper">
+    <div id="loading-bar" class="pure"></div>
+  </div>
+
+	<div class='wrapper'>
+		<div class="nav-main container container--flex">
+      <a class="logo flat-box" href='/' >
+        
+          Stefan's Blog
+        
+      </a>
+			<div class='menu navgation'>
+				<ul class='h-list'>
+          
+  					
+  						<li>
+								<a class="nav flat-box" href="/"
+                  
+                  
+                  id="home">
+									<i class='fas fa-grin fa-fw'></i>&nbsp;示例
+								</a>
+							</li>
+      			
+  						<li>
+								<a class="nav flat-box" href="/blog/categories/"
+                  
+                    rel="nofollow"
+                  
+                  
+                  id="blogcategories">
+									<i class='fas fa-folder-open fa-fw'></i>&nbsp;分类
+								</a>
+							</li>
+      			
+  						<li>
+								<a class="nav flat-box" href="/blog/tags/"
+                  
+                    rel="nofollow"
+                  
+                  
+                  id="blogtags">
+									<i class='fas fa-hashtag fa-fw'></i>&nbsp;标签
+								</a>
+							</li>
+      			
+  						<li>
+								<a class="nav flat-box" href="/blog/archives/"
+                  
+                    rel="nofollow"
+                  
+                  
+                  id="blogarchives">
+									<i class='fas fa-archive fa-fw'></i>&nbsp;归档
+								</a>
+							</li>
+      			
+      		
+				</ul>
+			</div>
+
+			
+				<div class="m_search">
+					<form name="searchform" class="form u-search-form">
+						<input type="text" class="input u-search-input" placeholder="搜索" />
+						<i class="icon fas fa-search fa-fw"></i>
+					</form>
+				</div>
+			
+			<ul class='switcher h-list'>
+				
+					<li class='s-search'><a class="fas fa-search fa-fw" href='javascript:void(0)'></a></li>
+				
+				<li class='s-menu'><a class="fas fa-bars fa-fw" href='javascript:void(0)'></a></li>
+			</ul>
+		</div>
+
+		<div class='nav-sub container container--flex'>
+			<a class="logo flat-box"></a>
+			<ul class='switcher h-list'>
+				<li class='s-comment'><a class="flat-btn fas fa-comments fa-fw" href='javascript:void(0)'></a></li>
+        
+          <li class='s-toc'><a class="flat-btn fas fa-list fa-fw" href='javascript:void(0)'></a></li>
+        
+			</ul>
+		</div>
+	</div>
+</header>
+	<aside class="menu-phone">
+    <header>
+		<nav class="menu navgation">
+      <ul>
+        
+          
+            <li>
+							<a class="nav flat-box" href="/"
+                
+                
+                id="home">
+								<i class='fas fa-clock fa-fw'></i>&nbsp;近期文章
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/blog/archives/"
+                
+                  rel="nofollow"
+                
+                
+                id="blogarchives">
+								<i class='fas fa-archive fa-fw'></i>&nbsp;文章归档
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/projects/"
+                
+                
+                id="projects">
+								<i class='fas fa-code-branch fa-fw'></i>&nbsp;开源项目
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/friends/"
+                
+                  rel="nofollow"
+                
+                
+                id="friends">
+								<i class='fas fa-link fa-fw'></i>&nbsp;我的友链
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="https://github.com/Stefancharles"
+                
+                  rel="nofollow"
+                
+                
+                id="https:github.comStefancharles">
+								<i class='fas fa-book fa-fw'></i>&nbsp;主题文档
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/about/"
+                
+                  rel="nofollow"
+                
+                
+                id="about">
+								<i class='fas fa-info-circle fa-fw'></i>&nbsp;关于小站
+							</a>
+            </li>
+          
+       
+      </ul>
+		</nav>
+    </header>
+	</aside>
+<script>setLoadingBarProgress(40);</script>
+
+  </div>
+
+
+  <div class="l_body">
+    <div class='body-wrapper'>
+      <div class='l_main'>
+  
+
+  
+    <article id="post" class="post white-box article-type-post" itemscope itemprop="blogPost">
+      
+
+
+  <section class='meta'>
+    
+    
+    <div class="meta" id="header-meta">
+      
+        
+  
+    <h1 class="title">
+      <a href="/2019/11/19/zigbeedatasend/">
+        【ZigBee】数据传输实验及协议栈的启动过程具体实现
+      </a>
+    </h1>
+  
+
+
+      
+      <div class='new-meta-box'>
+        
+          
+        
+          
+            
+  <div class='new-meta-item author'>
+    <a href="https://Stefancharles.xyz" rel="nofollow">
+      
+        <img src="https://i.loli.net/2019/08/15/4zEt9A6LvBegWX8.jpg">
+      
+      <p>Stefan</p>
+    </a>
+  </div>
+
+
+          
+        
+          
+            <div class="new-meta-item date" itemprop="dateUpdated" datetime="2019-11-19T20:10:11+08:00">
+  <a class='notlink'>
+    <i class="fas fa-clock" aria-hidden="true"></i>
+    <p>最后更新于 2019年11月19日</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  
+    <div class="new-meta-item browse busuanzi">
+      <a class='notlink'>
+        <i class="fas fa-eye" aria-hidden="true"></i>
+        <p>
+          <span id="busuanzi_value_page_pv">
+            <i class="fas fa-spinner fa-spin fa-fw" aria-hidden="true"></i>
+          </span>
+        </p>
+      </a>
+    </div>
+  
+
+
+          
+        
+      </div>
+      
+        <hr>
+      
+    </div>
+  </section>
+
+
+      <section class="article typo">
+        <div class="article-entry" itemprop="articleBody">
+          <h2 id="实验简介"><a href="#实验简介" class="headerlink" title="实验简介"></a>实验简介</h2><p>感性认识数据传输实验，观察老师提供的代码的实验现象，在此基础上，在实验报告中阐述清楚协议栈的启动过程及数据收发的具体实现。</p>
+<a id="more"></a>
+
+
+<h2 id="实验环境"><a href="#实验环境" class="headerlink" title="实验环境"></a>实验环境</h2><ul>
+<li>Win10 1909</li>
+<li>IAR 10.30</li>
+<li>Z-Stack</li>
+<li>VScode</li>
+</ul>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>一开始我打算使用最新版本的3.0.2协议栈中的SampleLight工程，这里面有协调器按键控制终端节点的LED灯的亮灭，按下Lighting设备的按键，则能对本地的Led进行亮灭控制。</p>
+<p>但是，我看了很久后，发现了一些东西导致我暂时放弃了魔改3.0.2这个版本的想法。</p>
+<p>Zigbee3.0 较先前的版本对设备的行为做了更多的规范，增加了很多功能。代码中通过使用一个3级目录菜单UI来实现对各个功能的。</p>
+<table>
+<thead>
+<tr>
+<th align="center">菜单</th>
+<th align="center">功能描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">A级菜单</td>
+<td align="center">功能菜单</td>
+</tr>
+<tr>
+<td align="center">B级菜单</td>
+<td align="center">commissioning、网络等参数配置菜单</td>
+</tr>
+<tr>
+<td align="center">C级菜单</td>
+<td align="center">installCode配置菜单</td>
+</tr>
+</tbody></table>
+<p>这需要5个按键完成操作：</p>
+<table>
+<thead>
+<tr>
+<th align="center">按键</th>
+<th align="center">功能描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">左/右按键</td>
+<td align="center">菜单切换方向键</td>
+</tr>
+<tr>
+<td align="center">上/下按键</td>
+<td align="center">编辑按键</td>
+</tr>
+<tr>
+<td align="center">中间按键</td>
+<td align="center">确认键，即【OK】</td>
+</tr>
+</tbody></table>
+<p>虽然这很方便，但是一个比较现实的问题是我目前手里的开发板没有LCD屏以及较多的按键。</p>
+<p><img src="https://i.loli.net/2019/11/18/spm5C2iyPGLeNrR.png" alt="20191118234915.png"></p>
+<p>如果有上图这样的设备就可以完美进行这个实验了。</p>
+<p>但是限于实验设备，所以如果要使用3.0.2的协议栈的这个工程的话，需要进行一些魔改。</p>
+<p>后面如果有时间再魔改这个吧。下面就使用老师给的旧版本的进行本次实验。</p>
+<h2 id="实验过程"><a href="#实验过程" class="headerlink" title="实验过程"></a>实验过程</h2><p>首先打开老师给的代码的工程文件，由于IAR版本较新，一开始会弹出很多不兼容的提示，没有关系，一直点OK下去就行。</p>
+<p>然后尝试编译一下，显然是不行的。提示链接出错。</p>
+<p><img src="https://i.loli.net/2019/11/18/owEqDRIf9lBxnyt.png" alt="op.png"></p>
+<p>如上图，点击option，重新配置一下。</p>
+<p><img src="https://i.loli.net/2019/11/18/ya3CGR5B9Hi7DWb.png" alt="linker.png"></p>
+<p>需要配置设备和linker里的内容。配置过程和你第一次新建一个工程是一样的，这里不再赘述。</p>
+<p>配置好后，再编译，就没有错误了。</p>
+<p>接下来的操作就按照老师的注释进行操作即可。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">第一步： 找到下面内容，把appLight();  注释掉，下载到发射模块。</span><br><span class="line">          appSwitch();        //节点为按键S1       P1_2</span><br><span class="line">       // appLight();        //节点为指示灯LED1    P1_0</span><br><span class="line"></span><br><span class="line">第二步：找到相同位置，这次把appSwitch();注释掉，下载到接收模块。 </span><br><span class="line">       //appSwitch();        //节点为按键S1       P0_4</span><br><span class="line">        appLight();         //节点为指示灯LED1   P1_0</span><br></pre></td></tr></table></figure>
+
+<h2 id="加入串口"><a href="#加入串口" class="headerlink" title="加入串口"></a>加入串口</h2><p>稍微不同的是，我加了之前串口的代码。这样连接电脑的串口助手，讲道理是可以查看收到的数据。<br>首先是之前我们写过的串口实验代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">initUART0</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    CLKCONCMD &amp;= ~<span class="number">0x40</span>;<span class="comment">//设置系统时钟源32MHz晶振</span></span><br><span class="line">    <span class="keyword">while</span>(CLKCONSTA&amp;<span class="number">0x40</span>);<span class="comment">//等待晶振稳定</span></span><br><span class="line">    CLKCONCMD&amp;=~<span class="number">0x47</span>;<span class="comment">//设置系统主时钟频率32MHz</span></span><br><span class="line"></span><br><span class="line">    PERCFG= <span class="number">0x00</span>;<span class="comment">//位置1P0口</span></span><br><span class="line">    P0SEL=<span class="number">0x3C</span>;<span class="comment">//P0口是串口</span></span><br><span class="line">    P2DIR&amp;=~<span class="number">0xC0</span>;<span class="comment">//P0优先作为UART0</span></span><br><span class="line">    U0CSR|=<span class="number">0x80</span>;<span class="comment">//串口设置为UART方式</span></span><br><span class="line">    U0GCR|=<span class="number">9</span>;</span><br><span class="line">    U0BAUD|=<span class="number">59</span>;<span class="comment">//波特率19200</span></span><br><span class="line">    UTX0IF=<span class="number">1</span>;<span class="comment">//UART0 TX中断标志初始为1</span></span><br><span class="line">    U0CSR|=<span class="number">0x40</span>;<span class="comment">//允许接受</span></span><br><span class="line">    IEN0|=<span class="number">0x84</span>;<span class="comment">//开总中断，接受中断</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Send_String</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">char</span> *Data, <span class="keyword">int</span> len)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> j;</span><br><span class="line">    <span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;len;j++)</span><br><span class="line">    &#123;</span><br><span class="line">        U0DBUF=*Data++;</span><br><span class="line">        <span class="keyword">while</span> (UTX0IF==<span class="number">0</span>);</span><br><span class="line">        UTX0IF=<span class="number">0</span>;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在appLight函数里添加：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(basicRfReceive(pRxData, APP_PAYLOAD_LENGTH, <span class="literal">NULL</span>)&gt;<span class="number">0</span>)</span><br><span class="line">&#123;</span><br><span class="line">   <span class="keyword">if</span>(pRxData[<span class="number">0</span>] == LIGHT_TOGGLE_CMD) </span><br><span class="line">    &#123;</span><br><span class="line">      Send_String(<span class="string">"Change LED"</span>,<span class="number">10</span>);</span><br><span class="line">      <span class="comment">//Send_String(pRxData,1);</span></span><br><span class="line">      halLedToggle(<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>好了，接下来分别烧录，连接串口助手，按下Switch的开发板按键，串口线接appLight开发板：</p>
+<p><img src="https://i.loli.net/2019/11/19/hwfHO4JejB7VIEl.png" alt="20191118233040.png"></p>
+<blockquote>
+<p>注意：这里想打印出pRxData里的内容的话，需要转换一下类型才可以。</p>
+</blockquote>
+<p>实验现象视频：</p>
+<p><a href="https://v.qq.com/x/page/h3022vb9xqr.html" target="_blank" rel="noopener">点击这里去看实验现象视频</a></p>
+<h2 id="zigbee协议栈"><a href="#zigbee协议栈" class="headerlink" title="zigbee协议栈"></a>zigbee协议栈</h2><h3 id="Zigbee协议栈简介"><a href="#Zigbee协议栈简介" class="headerlink" title="Zigbee协议栈简介"></a>Zigbee协议栈简介</h3><p>协议是一系列的通信标准，通信双方需要按照这一标准进行正常的数据发射和接收。协议栈是协议的具体实现形式，协议栈就是协议和用户之间的一个接口，开发人员通过使用协议栈来使用这个协议，实现无线数据收发。<br>Zigbee协议分为两部分，IEEE 802.15.4定义了PHY（物理层）和MAC（介质访问层）技术规范；Zigbee联盟定义了NWK（网络层）、APS（应用程序支持层）、APL（应用层）技术规范。<br>Zigbee协议栈就是将各个层定义的协议都集合在一起，以函数的形式实现，并给用户提供API（应用层），用户可以直接调用。</p>
+<h3 id="Zigbee协议栈启动过程"><a href="#Zigbee协议栈启动过程" class="headerlink" title="Zigbee协议栈启动过程"></a>Zigbee协议栈启动过程</h3><p>下面我以3.0.2的协议栈为示例，描述协议栈启动过程：</p>
+<p>协议栈由ZMain里的ZMain.c中的main函数开始执行。main函数如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">( <span class="keyword">void</span> )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="comment">// Turn off interrupts</span></span><br><span class="line">  osal_int_disable( INTS_ALL );</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Initialization for board related stuff such as LEDs</span></span><br><span class="line">  HAL_BOARD_INIT();</span><br><span class="line"> </span><br><span class="line">  <span class="comment">// Make sure supply voltage is high enough to run</span></span><br><span class="line">  zmain_vdd_check();</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Initialize board I/O</span></span><br><span class="line">  InitBoard( OB_COLD );</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Initialze HAL drivers</span></span><br><span class="line">  HalDriverInit();</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Initialize NV System</span></span><br><span class="line">  osal_nv_init( <span class="literal">NULL</span> );</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Initialize the MAC</span></span><br><span class="line">  ZMacInit();</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Determine the extended address</span></span><br><span class="line">  zmain_ext_addr();</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> defined ZCL_KEY_ESTABLISH</span></span><br><span class="line">  <span class="comment">// Initialize the Certicom certificate information.</span></span><br><span class="line">  zmain_cert_init();</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// Initialize basic NV items</span></span><br><span class="line">  zgInit();</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> NONWK</span></span><br><span class="line">  <span class="comment">// Since the AF isn't a task, call it's initialization routine</span></span><br><span class="line">  afInit();</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// Initialize the operating system</span></span><br><span class="line">  osal_init_system();</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Allow interrupts</span></span><br><span class="line">  osal_int_enable( INTS_ALL );</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Final board initialization</span></span><br><span class="line">  InitBoard( OB_READY );</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Display information about this device</span></span><br><span class="line">  zmain_dev_info();</span><br><span class="line"></span><br><span class="line">  <span class="comment">/* Display the device info on the LCD */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> LCD_SUPPORTED</span></span><br><span class="line">  zmain_lcd_init();</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> WDT_IN_PM1</span></span><br><span class="line">  <span class="comment">/* If WDT is used, this is a good place to enable it. */</span></span><br><span class="line">  WatchDogEnable( WDTIMX );</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line">  osal_start_system(); <span class="comment">// No Return from here</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;  <span class="comment">// Shouldn't get here.</span></span><br><span class="line">&#125; <span class="comment">// main()</span></span><br></pre></td></tr></table></figure>
+
+<p>main函数共做了两件事：</p>
+<ul>
+<li>1.系统初始化</li>
+<li>执行 osal_start_system()，进行轮询式操作系统。</li>
+</ul>
+<p>在osal_start_system函数之前的那些函数都是对板载硬件以及协议栈进行的初始化。调用“osal_start_system();”函数之后，整个协议栈系统就算是真正运行起来了。这个函数是TI封装的OSAL操作系统抽象层。OSAL(Operating System Abstraction Layer)，译为“操作系统抽象层”，OSAL就是以实现多任务为核心的系统资源管理机制。但OSAL与标准的操作系统还是有很大的区别。这个并不是并不是真正意义上的操作系统。</p>
+<p>对OSAL有兴趣的同学可以<a href="http://processors.wiki.ti.com/images/a/a9/06_-_OSAL_and_HAL.pdf" target="_blank" rel="noopener">点击这里访问TI的OSAL介绍</a>。</p>
+<p>首先，协议栈对任务进行初始化，在上面代码中的osal_init_system()函数里，有osalInitTasks()函数，再进入这个函数，代码如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*********************************************************************</span></span><br><span class="line"><span class="comment"> * @fn      osalInitTasks</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @brief   This function invokes the initialization function for each task.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @param   void</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @return  none</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">osalInitTasks</span><span class="params">( <span class="keyword">void</span> )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  uint8 taskID = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">  tasksEvents = (uint16 *)osal_mem_alloc( <span class="keyword">sizeof</span>( uint16 ) * tasksCnt);</span><br><span class="line">  osal_memset( tasksEvents, <span class="number">0</span>, (<span class="keyword">sizeof</span>( uint16 ) * tasksCnt));</span><br><span class="line"></span><br><span class="line">  macTaskInit( taskID++ );</span><br><span class="line">  nwk_init( taskID++ );</span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> !defined (DISABLE_GREENPOWER_BASIC_PROXY) &amp;&amp; (ZG_BUILD_RTR_TYPE)</span></span><br><span class="line">  gp_Init( taskID++ );</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">  Hal_Init( taskID++ );</span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> defined( MT_TASK )</span></span><br><span class="line">  MT_TaskInit( taskID++ );</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">  APS_Init( taskID++ );</span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> defined ( ZIGBEE_FRAGMENTATION )</span></span><br><span class="line">  APSF_Init( taskID++ );</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">  ZDApp_Init( taskID++ );</span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> defined ( ZIGBEE_FREQ_AGILITY ) || defined ( ZIGBEE_PANID_CONFLICT )</span></span><br><span class="line">  ZDNwkMgr_Init( taskID++ );</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">  <span class="comment">// Added to include TouchLink functionality </span></span><br><span class="line">  <span class="meta">#<span class="meta-keyword">if</span> defined ( INTER_PAN )</span></span><br><span class="line">    StubAPS_Init( taskID++ );</span><br><span class="line">  <span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">  <span class="comment">// Added to include TouchLink initiator functionality </span></span><br><span class="line">  <span class="meta">#<span class="meta-keyword">if</span> defined( BDB_TL_INITIATOR )</span></span><br><span class="line">    touchLinkInitiator_Init( taskID++ );</span><br><span class="line">  <span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">  <span class="comment">// Added to include TouchLink target functionality </span></span><br><span class="line">  <span class="meta">#<span class="meta-keyword">if</span> defined ( BDB_TL_TARGET )</span></span><br><span class="line">    touchLinkTarget_Init( taskID++ );</span><br><span class="line">  <span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">  zcl_Init( taskID++ );</span><br><span class="line">  bdb_Init( taskID++ );</span><br><span class="line">  zclSampleLight_Init( taskID );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>看英文注释：“ This function invokes the initialization function for each task.”</p>
+<p>意思就是说，在任务初始化为每一层分配一个任务ID号，这个ID和事件处理函数是对应的，成映射。<br>每增加一个任务ID++，ID越小表示该任务优先级越高。</p>
+<p>回到osal_start_system函数中：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*********************************************************************</span></span><br><span class="line"><span class="comment"> * @fn      osal_start_system</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @brief</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> *   This function is the main loop function of the task system (if</span></span><br><span class="line"><span class="comment"> *   ZBIT and UBIT are not defined). This Function doesn't return.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @param   void</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @return  none</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">osal_start_system</span><span class="params">( <span class="keyword">void</span> )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> USE_ICALL</span></span><br><span class="line">  <span class="comment">/* Kick off timer service in order to allocate resources upfront.</span></span><br><span class="line"><span class="comment">   * The first timeout is required to schedule next OSAL timer event</span></span><br><span class="line"><span class="comment">   * as well. */</span></span><br><span class="line">  ICall_Errno errno = ICall_setTimer(<span class="number">1</span>, osal_msec_timer_cback,</span><br><span class="line">                                     (<span class="keyword">void</span> *) osal_msec_timer_seq,</span><br><span class="line">                                     &amp;osal_timerid_msec_timer);</span><br><span class="line">  <span class="keyword">if</span> (errno != ICALL_ERRNO_SUCCESS)</span><br><span class="line">  &#123;</span><br><span class="line">    ICall_abort();</span><br><span class="line">  &#125;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">/* USE_ICALL */</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> !defined ( ZBIT ) &amp;&amp; !defined ( UBIT )</span></span><br><span class="line">  <span class="keyword">for</span>(;;)  <span class="comment">// Forever Loop</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">  &#123;</span><br><span class="line">    osal_run_system();</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> USE_ICALL</span></span><br><span class="line">    ICall_wait(ICALL_TIMEOUT_FOREVER);</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">/* USE_ICALL */</span></span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在检查没有错误后，会进入一个Forever Loop，不断调用osal_run_system()函数。</p>
+<p>下面是osal_run_system()函数：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*********************************************************************</span></span><br><span class="line"><span class="comment"> * @fn      osal_run_system</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @brief</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> *   This function will make one pass through the OSAL taskEvents table</span></span><br><span class="line"><span class="comment"> *   and call the task_event_processor() function for the first task that</span></span><br><span class="line"><span class="comment"> *   is found with at least one event pending. If there are no pending</span></span><br><span class="line"><span class="comment"> *   events (all tasks), this function puts the processor into Sleep.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @param   void</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @return  none</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">osal_run_system</span><span class="params">( <span class="keyword">void</span> )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  uint8 idx = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> USE_ICALL</span></span><br><span class="line">  uint32 next_timeout_prior = osal_next_timeout();</span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span> <span class="comment">/* USE_ICALL */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> HAL_BOARD_CC2538</span></span><br><span class="line">  osalTimeUpdate();</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line">  Hal_ProcessPoll();</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">/* USE_ICALL */</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> USE_ICALL</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="comment">/* Update osal timers to the latest before running any OSAL processes</span></span><br><span class="line"><span class="comment">     * regardless of wakeup callback from ICall because OSAL timers are added</span></span><br><span class="line"><span class="comment">     * relative to the current time. */</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> newtimestamp = ICall_getTicks();</span><br><span class="line">    uint32 milliseconds;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (osal_tickperiod == <span class="number">1000</span>)</span><br><span class="line">    &#123;</span><br><span class="line">      milliseconds = newtimestamp - osal_last_timestamp;</span><br><span class="line">      osal_last_timestamp = newtimestamp;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">      <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">long</span> delta = (<span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">long</span>)</span><br><span class="line">        ((newtimestamp - osal_last_timestamp) &amp; <span class="number">0xffffffff</span>ul);</span><br><span class="line">      delta *= osal_tickperiod;</span><br><span class="line">      delta /= <span class="number">1000</span>;</span><br><span class="line">      milliseconds = (uint32) delta;</span><br><span class="line">      osal_last_timestamp += (uint32) (delta * <span class="number">1000</span> / osal_tickperiod);</span><br><span class="line">    &#125;</span><br><span class="line">    osalAdjustTimer(milliseconds);</span><br><span class="line">    <span class="comment">/* Set a value that will never match osal_next_timeout()</span></span><br><span class="line"><span class="comment">     * return value so that the next time can be scheduled.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    next_timeout_prior = <span class="number">0xffffffff</span>ul;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (osal_eventloop_hook)</span><br><span class="line">  &#123;</span><br><span class="line">    osal_eventloop_hook();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (;;)</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">void</span> *msg;</span><br><span class="line">    ICall_EntityID src, dst;</span><br><span class="line">    <span class="keyword">osal_msg_hdr_t</span> *hdr;</span><br><span class="line">    uint8 dest_id;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (ICall_fetchMsg(&amp;src, &amp;dst, &amp;msg) != ICALL_ERRNO_SUCCESS)</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    hdr = (<span class="keyword">osal_msg_hdr_t</span> *) msg - <span class="number">1</span>;</span><br><span class="line">    dest_id = osal_dispatch2id(dst);</span><br><span class="line">    <span class="keyword">if</span> (dest_id == TASK_NO_TASK)</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="comment">/* Something wrong */</span></span><br><span class="line">      ICall_abort();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">      <span class="comment">/* Message towards one of the tasks */</span></span><br><span class="line">      <span class="comment">/* Create a proxy task ID if necessary and</span></span><br><span class="line"><span class="comment">       * queue the message to the OSAL internal queue.</span></span><br><span class="line"><span class="comment">       */</span></span><br><span class="line">      uint8 proxyid = osal_alien2proxy(hdr-&gt;srcentity);</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (hdr-&gt;format == ICALL_MSG_FORMAT_1ST_CHAR_TASK_ID)</span><br><span class="line">      &#123;</span><br><span class="line">        uint8 *bytes = msg;</span><br><span class="line">        *bytes = proxyid;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">else</span> <span class="keyword">if</span> (hdr-&gt;format == ICALL_MSG_FORMAT_3RD_CHAR_TASK_ID)</span><br><span class="line">      &#123;</span><br><span class="line">        uint8 *bytes = msg;</span><br><span class="line">        bytes[<span class="number">2</span>] = proxyid;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="comment">/* now queue the message to the OSAL queue */</span></span><br><span class="line">      osal_msg_send(dest_id, msg);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">/* USE_ICALL */</span></span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">do</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (tasksEvents[idx])  <span class="comment">// Task is highest priority that is ready.</span></span><br><span class="line">    &#123;</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; <span class="keyword">while</span> (++idx &lt; tasksCnt);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (idx &lt; tasksCnt)</span><br><span class="line">  &#123;</span><br><span class="line">    uint16 events;</span><br><span class="line">    halIntState_t intState;</span><br><span class="line"></span><br><span class="line">    HAL_ENTER_CRITICAL_SECTION(intState);</span><br><span class="line">    events = tasksEvents[idx];</span><br><span class="line">    tasksEvents[idx] = <span class="number">0</span>;  <span class="comment">// Clear the Events for this task.</span></span><br><span class="line">    HAL_EXIT_CRITICAL_SECTION(intState);</span><br><span class="line"></span><br><span class="line">    activeTaskID = idx;</span><br><span class="line">    events = (tasksArr[idx])( idx, events );</span><br><span class="line">    activeTaskID = TASK_NO_TASK;</span><br><span class="line"></span><br><span class="line">    HAL_ENTER_CRITICAL_SECTION(intState);</span><br><span class="line">    tasksEvents[idx] |= events;  <span class="comment">// Add back unprocessed events to the current task.</span></span><br><span class="line">    HAL_EXIT_CRITICAL_SECTION(intState);</span><br><span class="line">  &#125;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> defined( POWER_SAVING ) &amp;&amp; !defined(USE_ICALL)</span></span><br><span class="line">  <span class="keyword">else</span>  <span class="comment">// Complete pass through all task events with no activity?</span></span><br><span class="line">  &#123;</span><br><span class="line">    osal_pwrmgr_powerconserve();  <span class="comment">// Put the processor/system into sleep</span></span><br><span class="line">  &#125;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line">  <span class="comment">/* Yield in case cooperative scheduling is being used. */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> defined (configUSE_PREEMPTION) &amp;&amp; (configUSE_PREEMPTION == 0)</span></span><br><span class="line">  &#123;</span><br><span class="line">    osal_task_yield();</span><br><span class="line">  &#125;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> defined USE_ICALL</span></span><br><span class="line">  <span class="comment">/* Note that scheduling wakeup at this point instead of</span></span><br><span class="line"><span class="comment">   * scheduling it upon ever OSAL start timer request,</span></span><br><span class="line"><span class="comment">   * would only work if OSAL start timer call is made</span></span><br><span class="line"><span class="comment">   * from OSAL tasks, but not from either ISR or</span></span><br><span class="line"><span class="comment">   * non-OSAL application thread.</span></span><br><span class="line"><span class="comment">   * In case, OSAL start timer is called from non-OSAL</span></span><br><span class="line"><span class="comment">   * task, the scheduling should be part of OSAL_Timers</span></span><br><span class="line"><span class="comment">   * module.</span></span><br><span class="line"><span class="comment">   * Such a change to OSAL_Timers module was not made</span></span><br><span class="line"><span class="comment">   * in order not to diverge the OSAL implementations</span></span><br><span class="line"><span class="comment">   * too drastically between pure OSAL solution vs.</span></span><br><span class="line"><span class="comment">   * OSAL upon service dispatcher (RTOS).</span></span><br><span class="line"><span class="comment">   * <span class="doctag">TODO:</span> reconsider the above statement.</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  &#123;</span><br><span class="line">    halIntState_t intState;</span><br><span class="line"></span><br><span class="line">    uint32 next_timeout_post = osal_next_timeout();</span><br><span class="line">    <span class="keyword">if</span> (next_timeout_post != next_timeout_prior)</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="comment">/* Next wakeup time has to be scheduled */</span></span><br><span class="line">      <span class="keyword">if</span> (next_timeout_post == <span class="number">0</span>)</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="comment">/* No timer. Set time to the max */</span></span><br><span class="line">        next_timeout_post = OSAL_TIMERS_MAX_TIMEOUT;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span> (next_timeout_post &gt; osal_max_msecs)</span><br><span class="line">      &#123;</span><br><span class="line">        next_timeout_post = osal_max_msecs;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="comment">/* Restart timer */</span></span><br><span class="line">      HAL_ENTER_CRITICAL_SECTION(intState);</span><br><span class="line">      ICall_stopTimer(osal_timerid_msec_timer);</span><br><span class="line">      ICall_setTimerMSecs(next_timeout_post, osal_msec_timer_cback,</span><br><span class="line">                          (<span class="keyword">void</span> *) (++osal_msec_timer_seq),</span><br><span class="line">                          &amp;osal_timerid_msec_timer);</span><br><span class="line">      HAL_EXIT_CRITICAL_SECTION(intState);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">/* USE_ICALL */</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>函数前面的注释大致内容是：这个函数的功能是查询事件表，如果有事件发生，就查找函数表，找到相应的事件处理函数进行处理；<br>如果没有事件发生，系统将进入休眠模式，降低功耗，要进入休眠模式，还需要打开相应的宏开关进而开启低功耗功能。</p>
+<p>触发事件主要有三种情况：</p>
+<ul>
+<li>外部中断</li>
+<li>定时器</li>
+<li>对设备轮询</li>
+</ul>
+<p>前两个不需要干涉，如下图：</p>
+<p><img src="https://i.loli.net/2019/11/19/GoxCvBaXF7neDwO.png" alt="20191119184551.png"></p>
+<p>所以在循环中调用  Hal_ProcessPoll()对串口进行轮询。如果这些设备需要处理，就去tasksEvents[]里找对应的事件处理函数的指针来调用。</p>
+<h3 id="事件和任务的事件处理函数式如何联系起来"><a href="#事件和任务的事件处理函数式如何联系起来" class="headerlink" title="事件和任务的事件处理函数式如何联系起来"></a>事件和任务的事件处理函数式如何联系起来</h3><p>其实这里设计得很巧妙。</p>
+<p>建立一个事件表，保存各个任务对应的事件，建立一个函数表，保存各个任务事件处理函数的地址，建立一个映射关系，有某个事件发生就去调用事件处理函数去处理，</p>
+<p>这个的关键在于tasksArr[] 数组中每个元素的类型是函数指针。执行完事件处理函数之后，再将未处理的事件返回，事件处理函数的返回值保存了未处理的事件，将未处理的事件再次存放到事件表中，下次进行处理。</p>
+<p>执行OSAL的函数就是个大循环，不断取出当前优先级最高的待处理事件进行处理，处理的核心思想在osal_run_task函数内：通过调用一个函数指针来远程调用一个事件处理函数。</p>
+<h2 id="数据收发的具体实现"><a href="#数据收发的具体实现" class="headerlink" title="数据收发的具体实现"></a>数据收发的具体实现</h2><p>当子设备(终端节点或路由器)加入协调器的网络后，它们之间便可以相互通信了。Zigbee设备通信的实质是Zigbee设备端口与另一个Zigbee设备端口之间的通信。只要知道目标设备的网络地址和端口号就可以调用数据发送函数AF_DataRequest() 发送数据给目标设备的端口，再由该端口绑定的任务来处理该数据。</p>
+<p>一般步骤为：</p>
+<ul>
+<li><p>组网：调用协议栈组网函数、加入网络函数，实现网络的建立和节点的加入</p>
+</li>
+<li><p>发送：发送节点调用协议栈的发送函数，实现数据无线发送</p>
+</li>
+<li><p>接收：接收节点调用协议栈的无线接收函数，实现无线数据接收</p>
+</li>
+</ul>
+<h3 id="组网"><a href="#组网" class="headerlink" title="组网"></a>组网</h3><p>这里主要是对网络参数进行设置。</p>
+<ul>
+<li>协议栈规范设置<br>对于协议栈规范，在同一个网络中必须符合同一个协议栈规范。ZigBee协议栈2007定义了两个规范：ZigBee和ZigBee PRO。在默认情况下，Z-Stack的STACK_PROFILE_ID为ZIGBEEPRO_PROFILE,因为ZigBee PRO有较好的通信性能和稳定性，所以默认为此。</li>
+<li>拓扑结构<br>Nwk_globals.h中三个宏定义对应ZigBee网络的三种网络拓扑，选择默认即可。</li>
+<li>逻辑设备类型<br>在Zigbee无线传感器网络中有三种设备类型：协调器、路由器和终端节点。在星状网络拓扑结构中，没有路由器这种逻辑设备类型。</li>
+<li>PANID和信道的选择<br>PANID:16位的网络ID用来标识唯一一个ZigBee网络，主要用于区分同一地区同一信道的网络，使得同一地区可以存在多个ZigBee网络。信道选择在Tools目录下的f8wConfig.cfg中。</li>
+</ul>
+<p><img src="https://i.loli.net/2019/11/19/24siNE9BDgcOW8o.png" alt="xindao.png"></p>
+<h3 id="发送"><a href="#发送" class="headerlink" title="发送"></a>发送</h3><p>在TI官网有给出API文档，关于数据发送有AF_DataRequest()函数，只需要调用这个函数就可以完成数据的发送。<br>每个参数代表什么意思在文档里描述得很详细。参照文档调用即可。</p>
+<p><img src="https://i.loli.net/2019/11/19/azKn9bUu1wkODeG.png" alt="datasend.png"></p>
+<p><img src="https://i.loli.net/2019/11/19/BA3ednkzJmrSEwf.png" alt="datasend2.png"></p>
+<p>在代码的位置如下图：</p>
+<p><img src="https://i.loli.net/2019/11/19/u4DwvFZfnNpBm1L.png" alt="20191119185906.png"></p>
+<p>但是在无线点灯的具体实现中，数据的发送是创建一个buffer，把payload放进去，调用basicRfSendPacket()发送，并查看其返回值。</p>
+<p><img src="https://i.loli.net/2019/11/19/XaIrGPn8YKoBsu1.png" alt="send.png"></p>
+<p>作用是向目的地址发送指定长度的数据，成功时返回SUCCESS，失败时返回FAILED</p>
+<h3 id="接收"><a href="#接收" class="headerlink" title="接收"></a>接收</h3><p>接收这边复杂一点。在示例中，上层通过basicRfPacketIsReady()检测是否收到一个新数据包，如果准备好新数据包时返回TRUE<br>调用basicRfReceive()把收到的数据复制到缓冲区中。</p>
+<p><img src="https://i.loli.net/2019/11/19/JdjVvImXnxHp1KW.png" alt="basicRfPacketIsReady.png"></p>
+<p>uint8 basicRfReceive(uint8* pRxData, uint8 len, int16* pRssi)：<br>函数的作用是接收来自Basic RF层的数据包，并为数据和RSSI分配缓冲区。<br>具体如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**********************************************************************************</span></span><br><span class="line"><span class="comment">* @fn          basicRfReceive</span></span><br><span class="line"><span class="comment">*</span></span><br><span class="line"><span class="comment">* @brief       Copies the payload of the last incoming packet into a buffer</span></span><br><span class="line"><span class="comment">*</span></span><br><span class="line"><span class="comment">* @param       pRxData - pointer to data buffer to fill. This buffer must be</span></span><br><span class="line"><span class="comment">*                        allocated by higher layer.</span></span><br><span class="line"><span class="comment">*              len - Number of bytes to read in to buffer</span></span><br><span class="line"><span class="comment">*              rxi - file scope variable holding the information of the last</span></span><br><span class="line"><span class="comment">*                    incoming packet</span></span><br><span class="line"><span class="comment">*</span></span><br><span class="line"><span class="comment">* @return      uint8 - number of bytes actually copied into buffer</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function">uint8 <span class="title">basicRfReceive</span><span class="params">(uint8* pRxData, uint8 len, int16* pRssi)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// Accessing shared variables -&gt; this is a critical region</span></span><br><span class="line">    <span class="comment">// Critical region start</span></span><br><span class="line">    halIntOff();</span><br><span class="line">    <span class="built_in">memcpy</span>(pRxData, rxi.pPayload, min(rxi.length, len));</span><br><span class="line">    <span class="keyword">if</span>(pRssi != <span class="literal">NULL</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span>(rxi.rssi &lt; <span class="number">128</span>)&#123;</span><br><span class="line">            *pRssi = rxi.rssi - halRfGetRssiOffset();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            *pRssi = (rxi.rssi - <span class="number">256</span>) - halRfGetRssiOffset();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    rxi.isReady = FALSE;</span><br><span class="line">    halIntOn();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Critical region end</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> min(rxi.length, len);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>总体来看：<br>basic_rf.c中打开了RF接收中断，所以接收端可以接收到射频信号后接收数据</p>
+<p>halRfRxInterruptConfig(basicRfRxFrmDoneIsr);</p>
+<p>basicRfRxFrmDoneIsr是接收到RF数据时的中断服务程序</p>
+<p>halRfInit中有使能RF接收中断： halRfEnableRxInterrupt();</p>
+<p>在main中调用了halRfInit()： if(halRfInit()==FAILED) { HAL_ASSERT(FALSE); }</p>
+<p>如果对开发板进行抓板应该是可以抓到数据的，下次有时间再更新这部分内容。</p>
+<blockquote>
+<p>好了，今天就到这里，后面有时间再更新本博客内容吧。有缘再见。</p>
+</blockquote>
+<h2 id="需要联系我？"><a href="#需要联系我？" class="headerlink" title="需要联系我？"></a>需要联系我？</h2><p>如果有疑问或者建议，可以发邮件至<a href="mailto:stefancharles@qq.com" target="_blank" rel="noopener">stefancharles@qq.com</a>与我交流讨论。</p>
+
+        </div>
+        
+          
+
+
+  <section class='meta' id="footer-meta">
+    <hr>
+    <div class='new-meta-box'>
+      
+        
+          
+  
+  <div class='new-meta-item category'>
+    <a href='/categories/笔记/' rel="nofollow">
+      <i class="fas fa-folder-open" aria-hidden="true"></i>
+      <p>笔记</p>
+    </a>
+  </div>
+
+
+        
+      
+        
+          
+  
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/Zigbee/" rel="nofollow"><i class="fas fa-hashtag" aria-hidden="true"></i>&nbsp;<p>Zigbee</p></a></div>
+
+
+        
+      
+        
+          
+  <div class="new-meta-item share -mob-share-list">
+  <div class="-mob-share-list share-body">
+    
+      
+        <a class="-mob-share-qq" title="QQ好友" rel="external nofollow noopener noreferrer"
+          
+          href="http://connect.qq.com/widget/shareqq/index.html?url=https://Stefancharles.xyz/2019/11/19/zigbeedatasend/&title=【ZigBee】数据传输实验及协议栈的启动过程具体实现 | Stefan's Blog&pics=https://i.loli.net/2019/08/15/4zEt9A6LvBegWX8.jpg&summary=实验简介感性认识数据传输实验，观察老师提供的代码的实验现象，在此基础上，在实验报告中阐述清楚协议栈的启动过程及数据收发的具体实现。"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/qq.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-qzone" title="QQ空间" rel="external nofollow noopener noreferrer"
+          
+          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://Stefancharles.xyz/2019/11/19/zigbeedatasend/&title=【ZigBee】数据传输实验及协议栈的启动过程具体实现 | Stefan's Blog&pics=https://i.loli.net/2019/08/15/4zEt9A6LvBegWX8.jpg&summary=实验简介感性认识数据传输实验，观察老师提供的代码的实验现象，在此基础上，在实验报告中阐述清楚协议栈的启动过程及数据收发的具体实现。"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/qzone.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-weibo" title="微博" rel="external nofollow noopener noreferrer"
+          
+          href="http://service.weibo.com/share/share.php?url=https://Stefancharles.xyz/2019/11/19/zigbeedatasend/&title=【ZigBee】数据传输实验及协议栈的启动过程具体实现 | Stefan's Blog&pics=https://i.loli.net/2019/08/15/4zEt9A6LvBegWX8.jpg&summary=实验简介感性认识数据传输实验，观察老师提供的代码的实验现象，在此基础上，在实验报告中阐述清楚协议栈的启动过程及数据收发的具体实现。"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/weibo.png">
+          
+        </a>
+      
+    
+  </div>
+</div>
+
+
+
+        
+      
+    </div>
+  </section>
+
+
+        
+        
+            <div class="prev-next">
+                
+                    <section class="prev">
+                        <span class="art-item-left">
+                            <h6><i class="fas fa-chevron-left" aria-hidden="true"></i>&nbsp;上一页</h6>
+                            <h4>
+                                <a href="/2019/11/20/hyperlpr/" rel="prev" title="HyperLPR字符分割">
+                                  
+                                      HyperLPR字符分割
+                                  
+                                </a>
+                            </h4>
+                            
+                                
+                                <h6 class="tags">
+                                    <a class="tag" href="/tags/HyperLPR/"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i>HyperLPR</a>
+                                </h6>
+                            
+                        </span>
+                    </section>
+                
+                
+                    <section class="next">
+                        <span class="art-item-right" aria-hidden="true">
+                            <h6>下一页&nbsp;<i class="fas fa-chevron-right" aria-hidden="true"></i></h6>
+                            <h4>
+                                <a href="/2019/11/18/mnistinkeras/" rel="prev" title="keras卷积神经网络对MNIST数据集进行操作">
+                                    
+                                        keras卷积神经网络对MNIST数据集进行操作
+                                    
+                                </a>
+                            </h4>
+                            
+                                
+                                <h6 class="tags">
+                                    <a class="tag" href="/tags/Mnist/"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i>Mnist</a> <a class="tag" href="/tags/Keras/"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i>Keras</a>
+                                </h6>
+                            
+                        </span>
+                    </section>
+                
+            </div>
+        
+      </section>
+    </article>
+  
+
+  
+    <!-- 显示推荐文章和评论 -->
+
+
+
+  <article class="post white-box comments">
+    <section class="article typo">
+      <h4><i class="fas fa-comments fa-fw" aria-hidden="true"></i>&nbsp;评论</h4>
+      
+      
+      
+      
+        <section id="comments">
+          <div id="valine_container" class="valine_thread">
+            <i class="fas fa-spinner fa-spin fa-fw"></i>
+          </div>
+        </section>
+      
+    </section>
+  </article>
+
+
+  
+
+
+
+
+<!-- 根据页面mathjax变量决定是否加载MathJax数学公式js -->
+
+
+
+  <script>
+    window.subData = {
+      title: '【ZigBee】数据传输实验及协议栈的启动过程具体实现',
+      tools: true
+    }
+  </script>
+
+
+</div>
+<aside class='l_side'>
+  
+    
+    
+      
+        
+          
+          
+            <section class='widget author'>
+  <div class='content pure'>
+    
+      <div class='avatar'>
+        <img class='avatar' src='https://i.loli.net/2019/08/15/oZF8Hh2dKIJ5V1a.jpg'/>
+      </div>
+    
+    
+    
+      <div class="social-wrapper">
+        
+          
+            <a href="/atom.xml"
+              class="social fas fa-rss flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+          
+            <a href="/stefancharles@vip.qq.com"
+              class="social fas fa-envelope flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+          
+            <a href="https://github.com/Stefancharles"
+              class="social fab fa-github flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+          
+            <a href="https://c.y.qq.com/base/fcgi-bin/u?__=jsQmg4H"
+              class="social fas fa-headphones-alt flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+      </div>
+    
+  </div>
+</section>
+
+          
+        
+      
+        
+          
+          
+            
+  <section class='widget toc-wrapper'>
+    
+<header class='pure'>
+  <div><i class="fas fa-list fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;本文目录</div>
+  
+    <div class='wrapper'><a class="s-toc rightBtn" rel="external nofollow noopener noreferrer" href="javascript:void(0)"><i class="fas fa-thumbtack fa-fw"></i></a></div>
+  
+</header>
+
+    <div class='content pure'>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#实验简介"><span class="toc-text">实验简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验环境"><span class="toc-text">实验环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#准备工作"><span class="toc-text">准备工作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验过程"><span class="toc-text">实验过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#加入串口"><span class="toc-text">加入串口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#zigbee协议栈"><span class="toc-text">zigbee协议栈</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Zigbee协议栈简介"><span class="toc-text">Zigbee协议栈简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Zigbee协议栈启动过程"><span class="toc-text">Zigbee协议栈启动过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#事件和任务的事件处理函数式如何联系起来"><span class="toc-text">事件和任务的事件处理函数式如何联系起来</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据收发的具体实现"><span class="toc-text">数据收发的具体实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#组网"><span class="toc-text">组网</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#发送"><span class="toc-text">发送</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#接收"><span class="toc-text">接收</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#需要联系我？"><span class="toc-text">需要联系我？</span></a></li></ol>
+    </div>
+  </section>
+
+
+          
+        
+      
+        
+          
+          
+            <section class='widget grid'>
+  
+<header class='pure'>
+  <div><i class="fas fa-map-signs fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;站内导航</div>
+  
+</header>
+
+  <div class='content pure'>
+    <ul class="grid navgation">
+      
+        <li><a class="flat-box" title="/" href="/"
+          
+          
+          id="home">
+          
+            <i class="fas fa-clock fa-fw" aria-hidden="true"></i>
+          
+          近期文章
+        </a></li>
+      
+        <li><a class="flat-box" title="/blog/archives/" href="/blog/archives/"
+          
+            rel="nofollow"
+          
+          
+          id="blogarchives">
+          
+            <i class="fas fa-archive fa-fw" aria-hidden="true"></i>
+          
+          文章归档
+        </a></li>
+      
+        <li><a class="flat-box" title="/projects/" href="/projects/"
+          
+          
+          id="projects">
+          
+            <i class="fas fa-code-branch fa-fw" aria-hidden="true"></i>
+          
+          开源项目
+        </a></li>
+      
+        <li><a class="flat-box" title="/friends/" href="/friends/"
+          
+            rel="nofollow"
+          
+          
+          id="friends">
+          
+            <i class="fas fa-link fa-fw" aria-hidden="true"></i>
+          
+          我的友链
+        </a></li>
+      
+        <li><a class="flat-box" title="https://github.com/Stefancharles" href="https://github.com/Stefancharles"
+          
+            rel="nofollow"
+          
+          
+          id="https:github.comStefancharles">
+          
+            <i class="fas fa-book fa-fw" aria-hidden="true"></i>
+          
+          主题文档
+        </a></li>
+      
+        <li><a class="flat-box" title="/about/" href="/about/"
+          
+            rel="nofollow"
+          
+          
+          id="about">
+          
+            <i class="fas fa-info-circle fa-fw" aria-hidden="true"></i>
+          
+          关于小站
+        </a></li>
+      
+    </ul>
+  </div>
+</section>
+
+          
+        
+      
+        
+          
+          
+            
+  <section class='widget category'>
+    
+<header class='pure'>
+  <div><i class="fas fa-folder-open fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;文章分类</div>
+  
+    <a class="rightBtn"
+    
+      rel="nofollow"
+    
+    
+    href="/blog/categories/"
+    title="blog/categories/">
+    <i class="fas fa-expand-arrows-alt fa-fw"></i></a>
+  
+</header>
+
+    <div class='content pure'>
+      <ul class="entry">
+        
+          <li><a class="flat-box" title="/categories/Android/" href="/categories/Android/"><div class='name'>Android</div><div class='badge'>(2)</div></a></li>
+        
+          <li><a class="flat-box child" title="/categories/Android/MVP/" href="/categories/Android/MVP/"><div class='name'>MVP</div><div class='badge'>(1)</div></a></li>
+        
+          <li><a class="flat-box child" title="/categories/Android/OpenCV/" href="/categories/Android/OpenCV/"><div class='name'>OpenCV</div><div class='badge'>(1)</div></a></li>
+        
+          <li><a class="flat-box" title="/categories/C/" href="/categories/C/"><div class='name'>C++</div><div class='badge'>(1)</div></a></li>
+        
+          <li><a class="flat-box child" title="/categories/C/Qt/" href="/categories/C/Qt/"><div class='name'>Qt</div><div class='badge'>(1)</div></a></li>
+        
+          <li><a class="flat-box" title="/categories/复习/" href="/categories/复习/"><div class='name'>复习</div><div class='badge'>(4)</div></a></li>
+        
+          <li><a class="flat-box" title="/categories/教程/" href="/categories/教程/"><div class='name'>教程</div><div class='badge'>(12)</div></a></li>
+        
+          <li><a class="flat-box" title="/categories/笔记/" href="/categories/笔记/"><div class='name'>笔记</div><div class='badge'>(20)</div></a></li>
+        
+          <li><a class="flat-box" title="/categories/随笔/" href="/categories/随笔/"><div class='name'>随笔</div><div class='badge'>(3)</div></a></li>
+        
+      </ul>
+    </div>
+  </section>
+
+
+          
+        
+      
+        
+          
+          
+            
+  <section class='widget tagcloud'>
+    
+<header class='pure'>
+  <div><i class="fas fa-fire fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;热门标签</div>
+  
+    <a class="rightBtn"
+    
+      rel="nofollow"
+    
+    
+    href="/blog/tags/"
+    title="blog/tags/">
+    <i class="fas fa-expand-arrows-alt fa-fw"></i></a>
+  
+</header>
+
+    <div class='content pure'>
+      <a href="/tags/Android/" style="font-size: 24px; color: #555">Android</a> <a href="/tags/C/" style="font-size: 14px; color: #999">C#</a> <a href="/tags/C/" style="font-size: 14px; color: #999">C++</a> <a href="/tags/CNN/" style="font-size: 14px; color: #999">CNN</a> <a href="/tags/Fisher/" style="font-size: 14px; color: #999">Fisher</a> <a href="/tags/Http/" style="font-size: 18px; color: #7e7e7e">Http</a> <a href="/tags/HyperLPR/" style="font-size: 14px; color: #999">HyperLPR</a> <a href="/tags/IAR/" style="font-size: 14px; color: #999">IAR</a> <a href="/tags/Java/" style="font-size: 20px; color: #707070">Java</a> <a href="/tags/Keras/" style="font-size: 14px; color: #999">Keras</a> <a href="/tags/MVP/" style="font-size: 14px; color: #999">MVP</a> <a href="/tags/Maven/" style="font-size: 14px; color: #999">Maven</a> <a href="/tags/Mnist/" style="font-size: 18px; color: #7e7e7e">Mnist</a> <a href="/tags/NetSecurity/" style="font-size: 14px; color: #999">NetSecurity</a> <a href="/tags/Omnetpp/" style="font-size: 14px; color: #999">Omnetpp</a> <a href="/tags/OpenCV/" style="font-size: 18px; color: #7e7e7e">OpenCV</a> <a href="/tags/Qt/" style="font-size: 14px; color: #999">Qt</a> <a href="/tags/RFID/" style="font-size: 14px; color: #999">RFID</a> <a href="/tags/STM32/" style="font-size: 14px; color: #999">STM32</a> <a href="/tags/SVM/" style="font-size: 14px; color: #999">SVM</a> <a href="/tags/SharedPreferences/" style="font-size: 14px; color: #999">SharedPreferences</a> <a href="/tags/Spring/" style="font-size: 14px; color: #999">Spring</a> <a href="/tags/TensorFlow/" style="font-size: 14px; color: #999">TensorFlow</a> <a href="/tags/Thread/" style="font-size: 14px; color: #999">Thread</a> <a href="/tags/Ubuntu/" style="font-size: 16px; color: #8b8b8b">Ubuntu</a> <a href="/tags/WSN/" style="font-size: 14px; color: #999">WSN</a> <a href="/tags/Zigbee/" style="font-size: 22px; color: #636363">Zigbee</a> <a href="/tags/c/" style="font-size: 14px; color: #999">c++</a> <a href="/tags/omnetpp/" style="font-size: 16px; color: #8b8b8b">omnetpp</a>
+    </div>
+  </section>
+
+
+          
+        
+      
+        
+          
+          
+            
+
+
+  <section class='widget music'>
+    
+<header class='pure'>
+  <div><i class="fas fa-compact-disc fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;最近在听</div>
+  
+    <a class="rightBtn"
+    
+      rel="external nofollow noopener noreferrer"
+    
+    
+      target="_blank"
+    
+    href="https://c.y.qq.com/base/fcgi-bin/u?__=jsQmg4H"
+    title="https://c.y.qq.com/base/fcgi-bin/u?__=jsQmg4H">
+    <i class="far fa-heart fa-fw"></i></a>
+  
+</header>
+
+    <div class='content pure'>
+      
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.7.0/dist/APlayer.min.css">
+  <div class="aplayer"
+    data-theme="#1BCDFC"
+    
+    
+    data-mode="circulation"
+    data-server="tencent"
+    data-type="playlist"
+    data-id="4222498938"
+    data-volume="0.7">
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/aplayer@1.7.0/dist/APlayer.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/meting@1.1.0/dist/Meting.min.js"></script>
+
+
+    </div>
+  </section>
+
+
+          
+        
+      
+    
+
+  
+</aside>
+
+<footer id="footer" class="clearfix">
+  
+    <div class="footer">
+      <p>已经到底了，但是精彩继续！</p>
+
+    </div>
+    <br>
+  
+  
+    <div class="social-wrapper">
+      
+        
+          <a href="/atom.xml"
+            class="social fas fa-rss flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="/stefancharles@vip.qq.com"
+            class="social fas fa-envelope flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="https://github.com/Stefancharles"
+            class="social fab fa-github flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="https://c.y.qq.com/base/fcgi-bin/u?__=jsQmg4H"
+            class="social fas fa-headphones-alt flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+    </div>
+  
+  <br>
+  <div><p>博客内容遵循 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</a></p>
+</div>
+  <div>
+
+    
+      
+      总访问量为
+      <span id="busuanzi_value_site_pv"><i class="fas fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span>
+      次
+    
+    。
+  </div>
+</footer>
+<script>setLoadingBarProgress(80);</script>
+
+
+      <script>setLoadingBarProgress(60);</script>
+    </div>
+    <a class="s-top fas fa-arrow-up fa-fw" href='javascript:void(0)'></a>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+
+  <script>
+    var GOOGLE_CUSTOM_SEARCH_API_KEY = "AIzaSyBjTC6INtmeYy3ig7VaKWeU5obyVnyOAuA";
+    var GOOGLE_CUSTOM_SEARCH_ENGINE_ID = "007855274890026858194:3gmzbmgvb-q";
+    var ALGOLIA_API_KEY = "";
+    var ALGOLIA_APP_ID = "";
+    var ALGOLIA_INDEX_NAME = "";
+    var AZURE_SERVICE_NAME = "";
+    var AZURE_INDEX_NAME = "";
+    var AZURE_QUERY_KEY = "";
+    var BAIDU_API_ID = "";
+    var SEARCH_SERVICE = "hexo" || "hexo";
+    var ROOT = "/"||"/";
+    if(!ROOT.endsWith('/'))ROOT += '/';
+  </script>
+
+<script src="//instant.page/1.2.2" type="module" integrity="sha384-2xV8M5griQmzyiY3CDqh1dn4z3llDVqZDqzjzcY+jCBCk/a5fXJmuZ/40JJAPeoU"></script>
+
+
+  <script async src="https://cdn.jsdelivr.net/npm/scrollreveal@4.0.5/dist/scrollreveal.min.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      const $reveal = $('.reveal');
+      if ($reveal.length === 0) return;
+      const sr = ScrollReveal({ distance: 0 });
+      sr.reveal('.reveal');
+    });
+  </script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      Waves.attach('.flat-btn', ['waves-button']);
+      Waves.attach('.float-btn', ['waves-button', 'waves-float']);
+      Waves.attach('.float-btn-light', ['waves-button', 'waves-float', 'waves-light']);
+      Waves.attach('.flat-box', ['waves-block']);
+      Waves.attach('.float-box', ['waves-block', 'waves-float']);
+      Waves.attach('.waves-image');
+      Waves.init();
+    });
+  </script>
+
+
+  <script async src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-busuanzi@2.3/js/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+  
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.0.4/jquery.backstretch.min.js"></script>
+    <script type="text/javascript">
+      $(function(){
+        if ('.cover') {
+          $('.cover').backstretch(
+          ["https://img.vim-cn.com/6d/a0c9e6f9efad8b731cb7376504bd10d79d2053.jpg"],
+          {
+            duration: "6000",
+            fade: "2500"
+          });
+        } else {
+          $.backstretch(
+          ["https://img.vim-cn.com/6d/a0c9e6f9efad8b731cb7376504bd10d79d2053.jpg"],
+          {
+            duration: "6000",
+            fade: "2500"
+          });
+        }
+      });
+    </script>
+  
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+    
+      <script src="https://cdn.jsdelivr.net/gh/xaoxuu/volantis@1.0/js/volantis.min.js"></script>
+    
+  
+  <script>
+  var GUEST_INFO = ['nick','mail','link'];
+  var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+    return GUEST_INFO.indexOf(item) > -1
+  });
+  var notify = 'true' == true;
+  var verify = 'true' == true;
+  var valine = new Valine();
+  valine.init({
+    el: '#valine_container',
+    notify: notify,
+    verify: verify,
+    guest_info: guest_info,
+    
+      path: "/zigbee/",
+    
+    appId: "wlBz3oHtoKBEhnTNtpqYUTGX-gzGzoHsz",
+    appKey: "UlbGNoRRKQR1eV0uLcaHwkI1",
+    placeholder: "快来评论吧~",
+    pageSize:'10',
+    avatar:'mp',
+    lang:'zh-cn',
+    highlight:'true'
+  })
+  </script>
+
+
+
+  <script src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-material-x@19.5/js/app.js"></script>
+
+
+  <script src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-material-x@19.5/js/search.js"></script>
+
+
+
+
+<!-- 复制 -->
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+  let COPY_SUCCESS = "复制成功";
+  let COPY_FAILURE = "复制失败";
+  /*页面载入完成后，创建复制按钮*/
+  !function (e, t, a) {
+    /* code */
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '  <i class="fa fa-copy"></i><span>复制</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+
+      clipboard.on('success', function(e) {
+        //您可以加入成功提示
+        console.info('Action:', e.action);
+        console.info('Text:', e.text);
+        console.info('Trigger:', e.trigger);
+        success_prompt(COPY_SUCCESS);
+        e.clearSelection();
+      });
+      clipboard.on('error', function(e) {
+        //您可以加入失败提示
+        console.error('Action:', e.action);
+        console.error('Trigger:', e.trigger);
+        fail_prompt(COPY_FAILURE);
+      });
+    }
+    initCopyCode();
+
+  }(window, document);
+
+  /**
+   * 弹出式提示框，默认1.5秒自动消失
+   * @param message 提示信息
+   * @param style 提示样式，有alert-success、alert-danger、alert-warning、alert-info
+   * @param time 消失时间
+   */
+  var prompt = function (message, style, time)
+  {
+      style = (style === undefined) ? 'alert-success' : style;
+      time = (time === undefined) ? 1500 : time*1000;
+      $('<div>')
+          .appendTo('body')
+          .addClass('alert ' + style)
+          .html(message)
+          .show()
+          .delay(time)
+          .fadeOut();
+  };
+
+  // 成功提示
+  var success_prompt = function(message, time)
+  {
+      prompt(message, 'alert-success', time);
+  };
+
+  // 失败提示
+  var fail_prompt = function(message, time)
+  {
+      prompt(message, 'alert-danger', time);
+  };
+
+  // 提醒
+  var warning_prompt = function(message, time)
+  {
+      prompt(message, 'alert-warning', time);
+  };
+
+  // 信息提示
+  var info_prompt = function(message, time)
+  {
+      prompt(message, 'alert-info', time);
+  };
+
+</script>
+
+
+<!-- fancybox -->
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+<script>
+  let LAZY_LOAD_IMAGE = "";
+  $(".article-entry").find("fancybox").find("img").each(function () {
+      var element = document.createElement("a");
+      $(element).attr("data-fancybox", "gallery");
+      $(element).attr("href", $(this).attr("src"));
+      /* 图片采用懒加载处理时,
+       * 一般图片标签内会有个属性名来存放图片的真实地址，比如 data-original,
+       * 那么此处将原本的属性名src替换为对应属性名data-original,
+       * 修改如下
+       */
+       if (LAZY_LOAD_IMAGE) {
+         $(element).attr("href", $(this).attr("data-original"));
+       }
+      $(this).wrap(element);
+  });
+</script>
+
+
+
+
+
+  <script>setLoadingBarProgress(100);</script>
+</body>
+</html>

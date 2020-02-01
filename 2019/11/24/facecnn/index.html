@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+  <title>【模式识别与人工智能课设】基于CNN的人脸&amp;猫狗分类 | Stefan&#39;s Blog</title>
+  
+  <meta name="keywords" content="Life,Learn.">
+  
+  
+  <meta name="description" content="Record learning tutorials and life insights.">
+  
+
+  
+
+  <meta name="HandheldFriendly" content="True">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <!-- meta -->
+  
+
+  <!-- link -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.css">
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.6.3/css/all.min.css">
+  
+
+  
+  <link rel="shortcut icon" type="image/x-icon" href="https://cdn.jsdelivr.net/gh/xaoxuu/assets@master/favicon/favicon.ico">
+  
+
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-material-x@19.5/css/style.css">
+  
+
+  <script>
+    function setLoadingBarProgress(num) {
+      document.getElementById('loading-bar').style.width=num+"%";
+    }
+  </script>
+
+  
+  
+</head>
+
+<body>
+  
+  
+  <div class="cover-wrapper">
+    <cover class='cover post half'>
+      
+        
+  <h1 class='title'>Stefan's Blog</h1>
+
+
+  <div class="m_search">
+    <form name="searchform" class="form u-search-form">
+      <input type="text" class="input u-search-input" placeholder="" />
+      <i class="icon fas fa-search fa-fw"></i>
+    </form>
+  </div>
+
+<div class='menu navgation'>
+  <ul class='h-list'>
+    
+      
+        <li>
+          <a class="nav home" href="/"
+            
+            
+            id="home">
+            <i class='fas fa-rss fa-fw'></i>&nbsp;博文
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home" href="/projects/"
+            
+            
+            id="projects">
+            <i class='fas fa-code-branch fa-fw'></i>&nbsp;项目
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home" href="/friends/"
+            
+              rel="nofollow"
+            
+            
+            id="friends">
+            <i class='fas fa-link fa-fw'></i>&nbsp;友链
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home" href="/about/"
+            
+              rel="nofollow"
+            
+            
+            id="about">
+            <i class='fas fa-info-circle fa-fw'></i>&nbsp;关于
+          </a>
+        </li>
+      
+    
+  </ul>
+</div>
+
+      
+    </cover>
+    <header class="l_header pure">
+  <div id="loading-bar-wrapper">
+    <div id="loading-bar" class="pure"></div>
+  </div>
+
+	<div class='wrapper'>
+		<div class="nav-main container container--flex">
+      <a class="logo flat-box" href='/' >
+        
+          Stefan's Blog
+        
+      </a>
+			<div class='menu navgation'>
+				<ul class='h-list'>
+          
+  					
+  						<li>
+								<a class="nav flat-box" href="/"
+                  
+                  
+                  id="home">
+									<i class='fas fa-grin fa-fw'></i>&nbsp;示例
+								</a>
+							</li>
+      			
+  						<li>
+								<a class="nav flat-box" href="/blog/categories/"
+                  
+                    rel="nofollow"
+                  
+                  
+                  id="blogcategories">
+									<i class='fas fa-folder-open fa-fw'></i>&nbsp;分类
+								</a>
+							</li>
+      			
+  						<li>
+								<a class="nav flat-box" href="/blog/tags/"
+                  
+                    rel="nofollow"
+                  
+                  
+                  id="blogtags">
+									<i class='fas fa-hashtag fa-fw'></i>&nbsp;标签
+								</a>
+							</li>
+      			
+  						<li>
+								<a class="nav flat-box" href="/blog/archives/"
+                  
+                    rel="nofollow"
+                  
+                  
+                  id="blogarchives">
+									<i class='fas fa-archive fa-fw'></i>&nbsp;归档
+								</a>
+							</li>
+      			
+      		
+				</ul>
+			</div>
+
+			
+				<div class="m_search">
+					<form name="searchform" class="form u-search-form">
+						<input type="text" class="input u-search-input" placeholder="搜索" />
+						<i class="icon fas fa-search fa-fw"></i>
+					</form>
+				</div>
+			
+			<ul class='switcher h-list'>
+				
+					<li class='s-search'><a class="fas fa-search fa-fw" href='javascript:void(0)'></a></li>
+				
+				<li class='s-menu'><a class="fas fa-bars fa-fw" href='javascript:void(0)'></a></li>
+			</ul>
+		</div>
+
+		<div class='nav-sub container container--flex'>
+			<a class="logo flat-box"></a>
+			<ul class='switcher h-list'>
+				<li class='s-comment'><a class="flat-btn fas fa-comments fa-fw" href='javascript:void(0)'></a></li>
+        
+          <li class='s-toc'><a class="flat-btn fas fa-list fa-fw" href='javascript:void(0)'></a></li>
+        
+			</ul>
+		</div>
+	</div>
+</header>
+	<aside class="menu-phone">
+    <header>
+		<nav class="menu navgation">
+      <ul>
+        
+          
+            <li>
+							<a class="nav flat-box" href="/"
+                
+                
+                id="home">
+								<i class='fas fa-clock fa-fw'></i>&nbsp;近期文章
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/blog/archives/"
+                
+                  rel="nofollow"
+                
+                
+                id="blogarchives">
+								<i class='fas fa-archive fa-fw'></i>&nbsp;文章归档
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/projects/"
+                
+                
+                id="projects">
+								<i class='fas fa-code-branch fa-fw'></i>&nbsp;开源项目
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/friends/"
+                
+                  rel="nofollow"
+                
+                
+                id="friends">
+								<i class='fas fa-link fa-fw'></i>&nbsp;我的友链
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="https://github.com/Stefancharles"
+                
+                  rel="nofollow"
+                
+                
+                id="https:github.comStefancharles">
+								<i class='fas fa-book fa-fw'></i>&nbsp;主题文档
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="/about/"
+                
+                  rel="nofollow"
+                
+                
+                id="about">
+								<i class='fas fa-info-circle fa-fw'></i>&nbsp;关于小站
+							</a>
+            </li>
+          
+       
+      </ul>
+		</nav>
+    </header>
+	</aside>
+<script>setLoadingBarProgress(40);</script>
+
+  </div>
+
+
+  <div class="l_body">
+    <div class='body-wrapper'>
+      <div class='l_main'>
+  
+
+  
+    <article id="post" class="post white-box article-type-post" itemscope itemprop="blogPost">
+      
+
+
+  <section class='meta'>
+    
+    
+    <div class="meta" id="header-meta">
+      
+        
+  
+    <h1 class="title">
+      <a href="/2019/11/24/facecnn/">
+        【模式识别与人工智能课设】基于CNN的人脸&猫狗分类
+      </a>
+    </h1>
+  
+
+
+      
+      <div class='new-meta-box'>
+        
+          
+        
+          
+            
+  <div class='new-meta-item author'>
+    <a href="https://Stefancharles.xyz" rel="nofollow">
+      
+        <img src="https://i.loli.net/2019/08/15/4zEt9A6LvBegWX8.jpg">
+      
+      <p>Stefan</p>
+    </a>
+  </div>
+
+
+          
+        
+          
+            <div class="new-meta-item date" itemprop="dateUpdated" datetime="2019-11-27T19:57:11+08:00">
+  <a class='notlink'>
+    <i class="fas fa-clock" aria-hidden="true"></i>
+    <p>最后更新于 2019年11月27日</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  
+    <div class="new-meta-item browse busuanzi">
+      <a class='notlink'>
+        <i class="fas fa-eye" aria-hidden="true"></i>
+        <p>
+          <span id="busuanzi_value_page_pv">
+            <i class="fas fa-spinner fa-spin fa-fw" aria-hidden="true"></i>
+          </span>
+        </p>
+      </a>
+    </div>
+  
+
+
+          
+        
+      </div>
+      
+        <hr>
+      
+    </div>
+  </section>
+
+
+      <section class="article typo">
+        <div class="article-entry" itemprop="articleBody">
+          <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>传统方法依赖于人工设计的特征（比如边和纹理描述量）与机器学习技术（比如主成分分析、线性判别分析或支持向量机）的组合。人工设计在无约束环境中对不同变化情况稳健的特征是很困难的，这使得过去的研究者侧重研究针对每种变化类型的专用方法，比如能应对不同年龄的方法不能应对不同姿势的方法，或者不能应对不同光照条件的方法等。深度学习方法的主要优势是它们可用非常大型的数据集进行训练，从而学习到表征这些数据的最佳特征。基于CNN 的人脸识别方法能够学到人脸图像中稳健的特征，从而能够应对在训练过程中使用的人脸图像所呈现出的真实世界变化情况。</p>
+<p>虽然说python已经存在很多的cnn框架和api可以调用，这大大简化了我们上手的难度，但是配置环境是令人头疼的问题之一。</p>
+<p>下面我做一个简单的入门 python&amp;pycharm 教程。</p>
+<a id="more"></a>
+
+
+<h2 id="安装工具"><a href="#安装工具" class="headerlink" title="安装工具"></a>安装工具</h2><h3 id="1-Pycharm"><a href="#1-Pycharm" class="headerlink" title="1.Pycharm"></a>1.Pycharm</h3><p>首先我们需要去下载一个ToolBox,它是JB公司官方的软件全家桶管理软件。就是一个下载器。用来下载Pycharm等其他软件非常方便。</p>
+<p><a href="https://www.jetbrains.com/toolbox-app/" target="_blank" rel="noopener">点击这里去翻墙下载</a></p>
+<p>如果你打不开上面的网址，那么可以点击下面的链接下载我已经下载好的：</p>
+<ul>
+<li>下载:<a href="https://www.lanzous.com/i7k3m4b" target="_blank" rel="noopener">https://www.lanzous.com/i7k3m4b</a> </li>
+<li>密码:1024</li>
+</ul>
+<p>下载之后，安装。这里不多说。</p>
+<p>安装好之后打开。</p>
+<p><img src="https://i.loli.net/2019/11/24/1LblQ9dCZpDzhwc.png" alt="install.png"></p>
+<p>如上图所示，找到Pycharm Community（社区版，也就是免费版），点击Install。由于上图我已经安装了，所以就没有install显示了。</p>
+<p>当然，你也可以选择安装专业版，不过需要收费激活。事实上我们个人进行开发社区版就足够。</p>
+<h3 id="2-Python-3-7"><a href="#2-Python-3-7" class="headerlink" title="2.Python 3.7"></a>2.Python 3.7</h3><p>最新的版本是3.8。但是我实际使用的时候有很多不稳定的地方。所以这里安装3.7比较合适。</p>
+<p><a href="https://www.python.org/downloads/" target="_blank" rel="noopener">点击这里去下载python</a></p>
+<p>网页上可以找到3.7.请选择64位版本。</p>
+<p>我这里已经下载了3.7的Windows版本。点击下面的链接就可以下载。如果你的操作系统是其他的话，需要去官网下载。</p>
+<ul>
+<li>下载:<a href="https://www.lanzous.com/i7k439i" target="_blank" rel="noopener">https://www.lanzous.com/i7k439i</a> </li>
+<li>密码:1024</li>
+</ul>
+<p>下载后双击安装。</p>
+<blockquote>
+<p>注意：安装的时候请勾选”Add to PATH”！这可以避免你后面自己配置环境变量。</p>
+</blockquote>
+<h2 id="新建一个工程"><a href="#新建一个工程" class="headerlink" title="新建一个工程"></a>新建一个工程</h2><p>打开安装好的Pycharm。在做左上角点击File。</p>
+<p><img src="https://i.loli.net/2019/11/24/ZSqdvhcYH23BGLz.png" alt="new.png"></p>
+<p><img src="https://i.loli.net/2019/11/24/2tEzuQiCsMHmgR9.png" alt="create.png"></p>
+<blockquote>
+<p>需要注意的是，每个工程项目都可以选择不同的Interpreter。</p>
+</blockquote>
+<p>按下<strong>Ctrl+Alt+s</strong>快捷组合键打开Interpreter配置界面。</p>
+<p><img src="https://i.loli.net/2019/11/24/dcIxmtazsHkNOQe.png" alt="env.png"></p>
+<p>我选择的都是第一个。这个看个人喜好。如果你用Anaconda的话，也是在这里选择。</p>
+<h2 id="导包"><a href="#导包" class="headerlink" title="导包"></a>导包</h2><p>在界面左上角，File==&gt;New，选择第5个，新建一个python File.</p>
+<p>例如我们输入如下代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br></pre></td></tr></table></figure>
+
+<p>这里就需要导入numpy，否则后面就无法使用np.array 等函数。</p>
+<p>按下<strong>Ctrl+Alt+s</strong>快捷组合键打开设置，然后选择Project:XXXX==&gt;Project Interpreter配置界面。</p>
+<p><img src="https://i.loli.net/2019/11/24/HYqthumKZL87SbF.png" alt="add.png"></p>
+<p>点击+号。</p>
+<p>因为默认的源是python官方的网址源，实际下载的时候速度可能不理想。所以最好加入国内的清华源或者阿里源。</p>
+<p>点击manage repository。修改源。</p>
+<p><img src="https://i.loli.net/2019/11/24/A83jgfCid27zq9k.png" alt="repo.png"></p>
+<p><img src="https://i.loli.net/2019/11/25/stTpj8iwXSyuYOd.png" alt="yuan.png"></p>
+<p>点击右边的+号，分别添加下面的链接。只添加其中一个也可以，也可以都添加。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">http://mirrors.aliyun.com/pypi/simple/</span><br><span class="line">https://pypi.tuna.tsinghua.edu.cn/simple/</span><br></pre></td></tr></table></figure>
+
+<p>还有一种导包的方式的就是在代码界面，鼠标移动到pycharm划红线提示的地方，会有提示你install这个package，点击那里也可以安装，但是那个是使用默认的python源，即使你上一步换了源也没用。<br><img src="https://i.loli.net/2019/11/25/PFzQTKvVgXZxw6W.png" alt="ppp.png"></p>
+<p>多数情况下，在Interpreter里就可以安装你所需要的包了。</p>
+<h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><p>python很多语法都比C/C++，java等简单很多。具体语法我这里也写不完。个人认为在你入手代码前，去了解一下python的列表和元组。</p>
+<p><a href="https://docs.python.org/zh-cn/3.7/tutorial/index.html" target="_blank" rel="noopener">更多官方教程点击这里</a></p>
+<p>另外，一行python语句结尾不要求分号结尾，换行就行。这很方便，但也导致python对缩进要求较为严格，如果后面你自己对着参考代码写着，结果你的编辑器提示报错，请检查你的代码缩进有没有错误。</p>
+<h2 id="基于CNN的人脸分类"><a href="#基于CNN的人脸分类" class="headerlink" title="基于CNN的人脸分类"></a>基于CNN的人脸分类</h2><p>下面就开始上手，实际上网络上已经有很多实现CNN人脸识别的代码，代码都不是唯一的，实现方式有很多，下面的代码也<strong>仅供参考</strong>。更多的是思路。</p>
+<h3 id="读取图片"><a href="#读取图片" class="headerlink" title="读取图片"></a>读取图片</h3><p>想要对人脸进行分类，首先得读取人脸图片。</p>
+<p>将你要分类的人脸图片放置在你的新建的项目的文件夹下。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">read_file</span><span class="params">(path)</span>:</span></span><br><span class="line">    img_list = []</span><br><span class="line">    label_list = []</span><br><span class="line">    dir_counter = <span class="number">0</span></span><br><span class="line">    IMG_SIZE = <span class="number">100</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 对路径下的所有子文件夹中的所有jpg文件进行读取并存入到一个list中</span></span><br><span class="line">    <span class="keyword">for</span> child_dir <span class="keyword">in</span> os.listdir(path):</span><br><span class="line">        child_path = os.path.join(path, child_dir)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> dir_image <span class="keyword">in</span> os.listdir(child_path):</span><br><span class="line">            <span class="keyword">if</span> endwith(dir_image, <span class="string">'jpg'</span>):</span><br><span class="line">                img = cv2.imread(os.path.join(child_path, dir_image))</span><br><span class="line">                resized_img = cv2.resize(img, (IMG_SIZE, IMG_SIZE))</span><br><span class="line">                recolored_img = cv2.cvtColor(resized_img, cv2.COLOR_BGR2GRAY)</span><br><span class="line">                img_list.append(recolored_img)</span><br><span class="line">                label_list.append(dir_counter)</span><br><span class="line"></span><br><span class="line">        dir_counter += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 返回的img_list转成了 np.array的格式</span></span><br><span class="line">    img_list = np.array(img_list)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> img_list, label_list, dir_counter</span><br></pre></td></tr></table></figure>
+
+<p>这里相当于C++里的函数。函数内容很好理解。输入一个文件路径，对其下的每个文件夹下的图片读取，并对每个文件夹给一个不同的Label。返回一个img的list,返回一个对应label的list,返回一下有几种label。</p>
+<p>这里我用到了cv和os的函数，所以需要导入相关的包。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br></pre></td></tr></table></figure>
+
+<p>没有正确导包的话，就没法使用os.listdir等函数。</p>
+<p>其中endwith是另外的函数。作用是输入一个字符串一个标签，对这个字符串的后续和标签进行匹配</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">endwith</span><span class="params">(s, *endstring)</span>:</span></span><br><span class="line">    resultArray = map(s.endswith, endstring)</span><br><span class="line">    <span class="keyword">if</span> <span class="literal">True</span> <span class="keyword">in</span> resultArray:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br></pre></td></tr></table></figure>
+
+<p>好了，现在来验证一下能不能正确的读取图片。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    img_list, label_lsit, counter = read_file(<span class="string">'D:\\py\\DeepLeaning\\train_imgs'</span>)</span><br><span class="line">    print(counter)</span><br><span class="line">    print(img_list[<span class="number">1</span>])</span><br><span class="line">    print(label_lsit[<span class="number">1</span>])</span><br></pre></td></tr></table></figure>
+
+<p>当然，python可以不需要一个main函数，可以按照顺序执行。如果写了if <strong>name</strong> == ‘<strong>main</strong>‘，那么就从这里开始执行。</p>
+<p>路径请输入你的图片的文件夹的绝对路径。</p>
+<p>接下来运行。</p>
+<p><img src="https://i.loli.net/2019/11/25/2ZN8uE314kMHpLo.png" alt="20191125105503.png"></p>
+<p>点击main函数的左边的播放图标。或者鼠标右击任意空白区域。或者快捷键。</p>
+<p><img src="https://i.loli.net/2019/11/25/1lE3ZOBQaGxjS79.png" alt="20191125105552.png"></p>
+<p>输出结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">D:\py\DeepLeaning\venv\Scripts\python.exe D:/py/DeepLeaning/read_data.py</span><br><span class="line"><span class="number">3</span></span><br><span class="line">[[ <span class="number">70</span>  <span class="number">66</span>  <span class="number">61</span> ... <span class="number">122</span> <span class="number">122</span> <span class="number">122</span>]</span><br><span class="line"> [ <span class="number">71</span>  <span class="number">66</span>  <span class="number">60</span> ... <span class="number">122</span> <span class="number">122</span> <span class="number">122</span>]</span><br><span class="line"> [ <span class="number">69</span>  <span class="number">64</span>  <span class="number">59</span> ... <span class="number">122</span> <span class="number">122</span> <span class="number">122</span>]</span><br><span class="line"> ...</span><br><span class="line"> [ <span class="number">24</span>  <span class="number">30</span>  <span class="number">34</span> ... <span class="number">169</span> <span class="number">169</span> <span class="number">169</span>]</span><br><span class="line"> [ <span class="number">24</span>  <span class="number">30</span>  <span class="number">34</span> ... <span class="number">170</span> <span class="number">170</span> <span class="number">170</span>]</span><br><span class="line"> [ <span class="number">24</span>  <span class="number">30</span>  <span class="number">34</span> ... <span class="number">171</span> <span class="number">171</span> <span class="number">171</span>]]</span><br><span class="line"><span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+<p>差不多的话就是上面这样，没有报错说明成功了第一步。</p>
+<p>然后下一步处理一下数据集。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">process_data</span><span class="params">(self, path)</span>:</span></span><br><span class="line">    <span class="comment"># 根据指定路径读取出图片、标签和类别数</span></span><br><span class="line">    imgs, labels, counter = read_file(path)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 随机分组</span></span><br><span class="line">    X_train, X_test, y_train, y_test = train_test_split(imgs, labels, test_size=<span class="number">0.2</span>,</span><br><span class="line">                                                        random_state=random.randint(<span class="number">0</span>, <span class="number">100</span>))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 归一化处理</span></span><br><span class="line">    X_train = X_train.reshape(X_train.shape[<span class="number">0</span>], <span class="number">1</span>, self.img_size, self.img_size) / <span class="number">255.0</span></span><br><span class="line">    X_test = X_test.reshape(X_test.shape[<span class="number">0</span>], <span class="number">1</span>, self.img_size, self.img_size) / <span class="number">255.0</span></span><br><span class="line"></span><br><span class="line">    X_train = X_train.astype(<span class="string">'float32'</span>)</span><br><span class="line">    X_test = X_test.astype(<span class="string">'float32'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 转化labels</span></span><br><span class="line">    Y_train = np_utils.to_categorical(y_train, num_classes=counter)</span><br><span class="line">    Y_test = np_utils.to_categorical(y_test, num_classes=counter)</span><br></pre></td></tr></table></figure>
+
+<h3 id="建立模型"><a href="#建立模型" class="headerlink" title="建立模型"></a>建立模型</h3><p>为了方便后面操作。我们把上面处理数据集的process_data函数写到一个DataSet类里。在这个类初始化的过程中读取path下的训练数据。<br>那么我们下次实例化这个类的时候就已经完成了数据读取的工作。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DataSet</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, path)</span>:</span></span><br><span class="line">        self.num_classes = <span class="literal">None</span></span><br><span class="line">        self.X_train = <span class="literal">None</span></span><br><span class="line">        self.X_test = <span class="literal">None</span></span><br><span class="line">        self.Y_train = <span class="literal">None</span></span><br><span class="line">        self.Y_test = <span class="literal">None</span></span><br><span class="line">        self.img_size = <span class="number">100</span></span><br><span class="line">        self.process_data(path) </span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">process_data</span><span class="params">(self, path)</span>:</span></span><br><span class="line">        <span class="comment"># 根据指定路径读取出图片、标签和类别数</span></span><br><span class="line">        imgs, labels, counter = read_file(path)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 随机分组</span></span><br><span class="line">        X_train, X_test, y_train, y_test = train_test_split(imgs, labels, test_size=<span class="number">0.2</span>,</span><br><span class="line">                                                            random_state=random.randint(<span class="number">0</span>, <span class="number">100</span>))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        X_train = X_train.reshape(X_train.shape[<span class="number">0</span>], <span class="number">1</span>, self.img_size, self.img_size) / <span class="number">255.0</span></span><br><span class="line">        X_test = X_test.reshape(X_test.shape[<span class="number">0</span>], <span class="number">1</span>, self.img_size, self.img_size) / <span class="number">255.0</span></span><br><span class="line"></span><br><span class="line">        X_train = X_train.astype(<span class="string">'float32'</span>)</span><br><span class="line">        X_test = X_test.astype(<span class="string">'float32'</span>)</span><br><span class="line"></span><br><span class="line">        Y_train = np_utils.to_categorical(y_train, num_classes=counter)</span><br><span class="line">        Y_test = np_utils.to_categorical(y_test, num_classes=counter)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        self.X_train = X_train</span><br><span class="line">        self.X_test = X_test</span><br><span class="line">        self.Y_train = Y_train</span><br><span class="line">        self.Y_test = Y_test</span><br><span class="line">        self.num_classes = counter</span><br></pre></td></tr></table></figure>
+
+<p>同样的，我们可以写一个FaceModel类，在类里建立模型，主函数里实例化后使用.来访问成员函数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FaceModel</span><span class="params">(object)</span>:</span></span><br><span class="line">    FILE_PATH = <span class="string">"D:\py\DeepLeaning\modelcat.h5"</span> </span><br><span class="line">    IMAGE_SIZE = <span class="number">100</span>  <span class="comment"># 模型接受的人脸图片</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.model = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 读取实例化后的DataSet类作为进行训练的数据源</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">read_trainData</span><span class="params">(self, dataset)</span>:</span></span><br><span class="line">        self.dataset = dataset</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 建立CNN模型</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">build_model</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.model = Sequential()</span><br><span class="line">        self.model.add(</span><br><span class="line">            Convolution2D(</span><br><span class="line">                filters=<span class="number">64</span>,</span><br><span class="line">                kernel_size=(<span class="number">5</span>, <span class="number">5</span>),</span><br><span class="line">                padding=<span class="string">'same'</span>,</span><br><span class="line">                dim_ordering=<span class="string">'th'</span>,</span><br><span class="line">                input_shape=self.dataset.X_train.shape[<span class="number">1</span>:]</span><br><span class="line">            )</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">        self.model.add(Activation(<span class="string">'relu'</span>))</span><br><span class="line">        self.model.add(</span><br><span class="line">            MaxPooling2D(</span><br><span class="line">                pool_size=(<span class="number">2</span>, <span class="number">2</span>),</span><br><span class="line">                strides=(<span class="number">2</span>, <span class="number">2</span>),</span><br><span class="line">                padding=<span class="string">'same'</span></span><br><span class="line">            )</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">        self.model.add(Convolution2D(filters=<span class="number">128</span>, kernel_size=(<span class="number">5</span>, <span class="number">5</span>), padding=<span class="string">'same'</span>))</span><br><span class="line">        self.model.add(Activation(<span class="string">'relu'</span>))</span><br><span class="line">        self.model.add(MaxPooling2D(pool_size=(<span class="number">2</span>, <span class="number">2</span>), strides=(<span class="number">2</span>, <span class="number">2</span>), padding=<span class="string">'same'</span>))</span><br><span class="line"></span><br><span class="line">        self.model.add(Flatten())</span><br><span class="line">        self.model.add(Dense(<span class="number">512</span>))</span><br><span class="line">        self.model.add(Activation(<span class="string">'relu'</span>))</span><br><span class="line"></span><br><span class="line">        self.model.add(Dense(self.dataset.num_classes))</span><br><span class="line">        self.model.add(Activation(<span class="string">'sigmoid'</span>))  <span class="comment"># or softmax</span></span><br><span class="line">        self.model.summary()</span><br></pre></td></tr></table></figure>
+
+<p>ok,这里就已经完成了模型的建立，上面很多参数可以根据实际情况进行调整。多调整几次，试一试最后哪一种最合适。</p>
+<h3 id="开始训练"><a href="#开始训练" class="headerlink" title="开始训练"></a>开始训练</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">train_model</span><span class="params">(self)</span>:</span></span><br><span class="line">     self.model.compile(</span><br><span class="line">         optimizer=<span class="string">'RMSprop'</span>, </span><br><span class="line">         loss=<span class="string">'categorical_crossentropy'</span>, </span><br><span class="line">         metrics=[<span class="string">'accuracy'</span>])</span><br><span class="line">     self.model.fit(self.dataset.X_train, self.dataset.Y_train, epochs=<span class="number">15</span>, batch_size=<span class="number">50</span>)</span><br></pre></td></tr></table></figure>
+
+<p>optimizer还有RMSprop, Adagrad等可以选择，loss也可以调整。<br>epochs为训练多少轮、batch_size为每次训练多少个样本。这里也不是说一定epochs越大越好，有可能过拟合，数据样本太小的情况下，会有出现后面100%的测试准确率，那就没什么意义。</p>
+<h3 id="评估模型"><a href="#评估模型" class="headerlink" title="评估模型"></a>评估模型</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">evaluate_model</span><span class="params">(self)</span>:</span></span><br><span class="line">    print(<span class="string">'\nEvaluate model...'</span>)</span><br><span class="line">    loss, accuracy = self.model.evaluate(self.dataset.X_test, self.dataset.Y_test)</span><br><span class="line"></span><br><span class="line">    print(<span class="string">'Evaluate loss;'</span>, loss)</span><br><span class="line">    print(<span class="string">'Evaluate accuracy:'</span>, accuracy)</span><br></pre></td></tr></table></figure>
+
+<h2 id="保存和读取模型"><a href="#保存和读取模型" class="headerlink" title="保存和读取模型"></a>保存和读取模型</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">save</span><span class="params">(self, file_path=FILE_PATH)</span>:</span></span><br><span class="line">    print(<span class="string">'Saving...'</span>)</span><br><span class="line">    self.model.save(file_path)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">load</span><span class="params">(self, file_path=FILE_PATH)</span>:</span></span><br><span class="line">    print(<span class="string">'Loading...'</span>)</span><br><span class="line">    self.model = load_model(file_path)</span><br></pre></td></tr></table></figure>
+
+<h2 id="测试模型"><a href="#测试模型" class="headerlink" title="测试模型"></a>测试模型</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">result = self.model.predict_proba(img)</span><br></pre></td></tr></table></figure>
+
+<p>这里返回的是img属于某个label的概率。在这里写一个for循环遍历测试集的图片即可。最后可以用正确预测的数目除以总的测试集数量得出准确率。</p>
+<h2 id="主函数"><a href="#主函数" class="headerlink" title="主函数"></a>主函数</h2><p>首先实例化dataset。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    datasets = DataSet(<span class="string">'D:\\py\\DeepLeaning\\data\\train'</span>)</span><br></pre></td></tr></table></figure>
+
+<p>此时已经根据绝对路径读取了img和label列表。</p>
+<p>然后实例化FaceModel类。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">model = FaceModel()</span><br><span class="line">model.read_trainData(datasets)</span><br></pre></td></tr></table></figure>
+
+<p>这里读取实例化后的DataSet类datasets作为进行训练的数据来源。</p>
+<p>然后分别调用上面写好的函数即可。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">model.build_model()</span><br><span class="line">model.train_model()</span><br><span class="line">model.evaluate_model()</span><br></pre></td></tr></table></figure>
+
+<h2 id="人脸分类结果"><a href="#人脸分类结果" class="headerlink" title="人脸分类结果"></a>人脸分类结果</h2><p><img src="https://i.loli.net/2019/11/25/BRkFPNp92b65Igc.png" alt="111.png"></p>
+<h2 id="猫狗分类结果"><a href="#猫狗分类结果" class="headerlink" title="猫狗分类结果"></a>猫狗分类结果</h2><p><img src="https://i.loli.net/2019/11/26/Q6TZ5enfLscASDV.png" alt="dog20191126104653.png"></p>
+<blockquote>
+<p>有时间将不定期更新本文</p>
+</blockquote>
+<h2 id="需要联系我？"><a href="#需要联系我？" class="headerlink" title="需要联系我？"></a>需要联系我？</h2><p>请发邮件</p>
+<p>我的邮箱：<a href="mailto:stefancharles@vip.qq.com" target="_blank" rel="noopener">stefancharles@vip.qq.com</a></p>
+
+        </div>
+        
+          
+
+
+  <section class='meta' id="footer-meta">
+    <hr>
+    <div class='new-meta-box'>
+      
+        
+          
+  
+  <div class='new-meta-item category'>
+    <a href='/categories/教程/' rel="nofollow">
+      <i class="fas fa-folder-open" aria-hidden="true"></i>
+      <p>教程</p>
+    </a>
+  </div>
+
+
+        
+      
+        
+          
+  
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/CNN/" rel="nofollow"><i class="fas fa-hashtag" aria-hidden="true"></i>&nbsp;<p>CNN</p></a></div>
+
+
+        
+      
+        
+          
+  <div class="new-meta-item share -mob-share-list">
+  <div class="-mob-share-list share-body">
+    
+      
+        <a class="-mob-share-qq" title="QQ好友" rel="external nofollow noopener noreferrer"
+          
+          href="http://connect.qq.com/widget/shareqq/index.html?url=https://Stefancharles.xyz/2019/11/24/facecnn/&title=【模式识别与人工智能课设】基于CNN的人脸&猫狗分类 | Stefan's Blog&pics=https://i.loli.net/2019/08/15/4zEt9A6LvBegWX8.jpg&summary=简介传统方法依赖于人工设计的特征（比如边和纹理描述量）与机器学习技术（比如主成分分析、线性判别分析或支持向量机）的组合。人工设计在无约束环境中对不同变化情况稳健的特征是很困难的，这使得过去的研究者侧重研究针对每种变化类型的专用方法，比如能应对不同年龄的方法不能应对不同姿势的方法，或者不能应对不同光照条件的方法等。深度学习方法的主要优势是它们可用非常大型的数据集进行训练，从而学习到表征这些数据的最佳特征。基于CNN 的人脸识别方法能够学到人脸图像中稳健的特征，从而能够应对在训练过程中使用的人脸图像所呈现出的真实世界变化情况。
+虽然说python已经存在很多的cnn框架和api可以调用，这大大简化了我们上手的难度，但是配置环境是令人头疼的问题之一。
+下面我做一个简单的入门 python&amp;pycharm 教程。"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/qq.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-qzone" title="QQ空间" rel="external nofollow noopener noreferrer"
+          
+          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://Stefancharles.xyz/2019/11/24/facecnn/&title=【模式识别与人工智能课设】基于CNN的人脸&猫狗分类 | Stefan's Blog&pics=https://i.loli.net/2019/08/15/4zEt9A6LvBegWX8.jpg&summary=简介传统方法依赖于人工设计的特征（比如边和纹理描述量）与机器学习技术（比如主成分分析、线性判别分析或支持向量机）的组合。人工设计在无约束环境中对不同变化情况稳健的特征是很困难的，这使得过去的研究者侧重研究针对每种变化类型的专用方法，比如能应对不同年龄的方法不能应对不同姿势的方法，或者不能应对不同光照条件的方法等。深度学习方法的主要优势是它们可用非常大型的数据集进行训练，从而学习到表征这些数据的最佳特征。基于CNN 的人脸识别方法能够学到人脸图像中稳健的特征，从而能够应对在训练过程中使用的人脸图像所呈现出的真实世界变化情况。
+虽然说python已经存在很多的cnn框架和api可以调用，这大大简化了我们上手的难度，但是配置环境是令人头疼的问题之一。
+下面我做一个简单的入门 python&amp;pycharm 教程。"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/qzone.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-weibo" title="微博" rel="external nofollow noopener noreferrer"
+          
+          href="http://service.weibo.com/share/share.php?url=https://Stefancharles.xyz/2019/11/24/facecnn/&title=【模式识别与人工智能课设】基于CNN的人脸&猫狗分类 | Stefan's Blog&pics=https://i.loli.net/2019/08/15/4zEt9A6LvBegWX8.jpg&summary=简介传统方法依赖于人工设计的特征（比如边和纹理描述量）与机器学习技术（比如主成分分析、线性判别分析或支持向量机）的组合。人工设计在无约束环境中对不同变化情况稳健的特征是很困难的，这使得过去的研究者侧重研究针对每种变化类型的专用方法，比如能应对不同年龄的方法不能应对不同姿势的方法，或者不能应对不同光照条件的方法等。深度学习方法的主要优势是它们可用非常大型的数据集进行训练，从而学习到表征这些数据的最佳特征。基于CNN 的人脸识别方法能够学到人脸图像中稳健的特征，从而能够应对在训练过程中使用的人脸图像所呈现出的真实世界变化情况。
+虽然说python已经存在很多的cnn框架和api可以调用，这大大简化了我们上手的难度，但是配置环境是令人头疼的问题之一。
+下面我做一个简单的入门 python&amp;pycharm 教程。"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/weibo.png">
+          
+        </a>
+      
+    
+  </div>
+</div>
+
+
+
+        
+      
+    </div>
+  </section>
+
+
+        
+        
+            <div class="prev-next">
+                
+                    <section class="prev">
+                        <span class="art-item-left">
+                            <h6><i class="fas fa-chevron-left" aria-hidden="true"></i>&nbsp;上一页</h6>
+                            <h4>
+                                <a href="/2019/11/25/zigbeetasksix/" rel="prev" title="【ZigBee】协调器广播&amp;终端节点单播">
+                                  
+                                      【ZigBee】协调器广播&amp;终端节点单播
+                                  
+                                </a>
+                            </h4>
+                            
+                                
+                                <h6 class="tags">
+                                    <a class="tag" href="/tags/Zigbee/"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i>Zigbee</a>
+                                </h6>
+                            
+                        </span>
+                    </section>
+                
+                
+                    <section class="next">
+                        <span class="art-item-right" aria-hidden="true">
+                            <h6>下一页&nbsp;<i class="fas fa-chevron-right" aria-hidden="true"></i></h6>
+                            <h4>
+                                <a href="/2019/11/23/UarttoPC/" rel="prev" title="【Zigbee】终端节点采集温度与协调器通信实验">
+                                    
+                                        【Zigbee】终端节点采集温度与协调器通信实验
+                                    
+                                </a>
+                            </h4>
+                            
+                                
+                                <h6 class="tags">
+                                    <a class="tag" href="/tags/Zigbee/"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i>Zigbee</a>
+                                </h6>
+                            
+                        </span>
+                    </section>
+                
+            </div>
+        
+      </section>
+    </article>
+  
+
+  
+    <!-- 显示推荐文章和评论 -->
+
+
+
+  <article class="post white-box comments">
+    <section class="article typo">
+      <h4><i class="fas fa-comments fa-fw" aria-hidden="true"></i>&nbsp;评论</h4>
+      
+      
+      
+      
+        <section id="comments">
+          <div id="valine_container" class="valine_thread">
+            <i class="fas fa-spinner fa-spin fa-fw"></i>
+          </div>
+        </section>
+      
+    </section>
+  </article>
+
+
+  
+
+
+
+
+<!-- 根据页面mathjax变量决定是否加载MathJax数学公式js -->
+
+
+
+  <script>
+    window.subData = {
+      title: '【模式识别与人工智能课设】基于CNN的人脸&猫狗分类',
+      tools: true
+    }
+  </script>
+
+
+</div>
+<aside class='l_side'>
+  
+    
+    
+      
+        
+          
+          
+            <section class='widget author'>
+  <div class='content pure'>
+    
+      <div class='avatar'>
+        <img class='avatar' src='https://i.loli.net/2019/08/15/oZF8Hh2dKIJ5V1a.jpg'/>
+      </div>
+    
+    
+    
+      <div class="social-wrapper">
+        
+          
+            <a href="/atom.xml"
+              class="social fas fa-rss flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+          
+            <a href="/stefancharles@vip.qq.com"
+              class="social fas fa-envelope flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+          
+            <a href="https://github.com/Stefancharles"
+              class="social fab fa-github flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+          
+            <a href="https://c.y.qq.com/base/fcgi-bin/u?__=jsQmg4H"
+              class="social fas fa-headphones-alt flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+      </div>
+    
+  </div>
+</section>
+
+          
+        
+      
+        
+          
+          
+            
+  <section class='widget toc-wrapper'>
+    
+<header class='pure'>
+  <div><i class="fas fa-list fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;本文目录</div>
+  
+    <div class='wrapper'><a class="s-toc rightBtn" rel="external nofollow noopener noreferrer" href="javascript:void(0)"><i class="fas fa-thumbtack fa-fw"></i></a></div>
+  
+</header>
+
+    <div class='content pure'>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#简介"><span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装工具"><span class="toc-text">安装工具</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Pycharm"><span class="toc-text">1.Pycharm</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Python-3-7"><span class="toc-text">2.Python 3.7</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#新建一个工程"><span class="toc-text">新建一个工程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#导包"><span class="toc-text">导包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#语法"><span class="toc-text">语法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基于CNN的人脸分类"><span class="toc-text">基于CNN的人脸分类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#读取图片"><span class="toc-text">读取图片</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#建立模型"><span class="toc-text">建立模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#开始训练"><span class="toc-text">开始训练</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#评估模型"><span class="toc-text">评估模型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#保存和读取模型"><span class="toc-text">保存和读取模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#测试模型"><span class="toc-text">测试模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#主函数"><span class="toc-text">主函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#人脸分类结果"><span class="toc-text">人脸分类结果</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#猫狗分类结果"><span class="toc-text">猫狗分类结果</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#需要联系我？"><span class="toc-text">需要联系我？</span></a></li></ol>
+    </div>
+  </section>
+
+
+          
+        
+      
+        
+          
+          
+            <section class='widget grid'>
+  
+<header class='pure'>
+  <div><i class="fas fa-map-signs fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;站内导航</div>
+  
+</header>
+
+  <div class='content pure'>
+    <ul class="grid navgation">
+      
+        <li><a class="flat-box" title="/" href="/"
+          
+          
+          id="home">
+          
+            <i class="fas fa-clock fa-fw" aria-hidden="true"></i>
+          
+          近期文章
+        </a></li>
+      
+        <li><a class="flat-box" title="/blog/archives/" href="/blog/archives/"
+          
+            rel="nofollow"
+          
+          
+          id="blogarchives">
+          
+            <i class="fas fa-archive fa-fw" aria-hidden="true"></i>
+          
+          文章归档
+        </a></li>
+      
+        <li><a class="flat-box" title="/projects/" href="/projects/"
+          
+          
+          id="projects">
+          
+            <i class="fas fa-code-branch fa-fw" aria-hidden="true"></i>
+          
+          开源项目
+        </a></li>
+      
+        <li><a class="flat-box" title="/friends/" href="/friends/"
+          
+            rel="nofollow"
+          
+          
+          id="friends">
+          
+            <i class="fas fa-link fa-fw" aria-hidden="true"></i>
+          
+          我的友链
+        </a></li>
+      
+        <li><a class="flat-box" title="https://github.com/Stefancharles" href="https://github.com/Stefancharles"
+          
+            rel="nofollow"
+          
+          
+          id="https:github.comStefancharles">
+          
+            <i class="fas fa-book fa-fw" aria-hidden="true"></i>
+          
+          主题文档
+        </a></li>
+      
+        <li><a class="flat-box" title="/about/" href="/about/"
+          
+            rel="nofollow"
+          
+          
+          id="about">
+          
+            <i class="fas fa-info-circle fa-fw" aria-hidden="true"></i>
+          
+          关于小站
+        </a></li>
+      
+    </ul>
+  </div>
+</section>
+
+          
+        
+      
+        
+          
+          
+            
+  <section class='widget category'>
+    
+<header class='pure'>
+  <div><i class="fas fa-folder-open fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;文章分类</div>
+  
+    <a class="rightBtn"
+    
+      rel="nofollow"
+    
+    
+    href="/blog/categories/"
+    title="blog/categories/">
+    <i class="fas fa-expand-arrows-alt fa-fw"></i></a>
+  
+</header>
+
+    <div class='content pure'>
+      <ul class="entry">
+        
+          <li><a class="flat-box" title="/categories/Android/" href="/categories/Android/"><div class='name'>Android</div><div class='badge'>(2)</div></a></li>
+        
+          <li><a class="flat-box child" title="/categories/Android/MVP/" href="/categories/Android/MVP/"><div class='name'>MVP</div><div class='badge'>(1)</div></a></li>
+        
+          <li><a class="flat-box child" title="/categories/Android/OpenCV/" href="/categories/Android/OpenCV/"><div class='name'>OpenCV</div><div class='badge'>(1)</div></a></li>
+        
+          <li><a class="flat-box" title="/categories/C/" href="/categories/C/"><div class='name'>C++</div><div class='badge'>(1)</div></a></li>
+        
+          <li><a class="flat-box child" title="/categories/C/Qt/" href="/categories/C/Qt/"><div class='name'>Qt</div><div class='badge'>(1)</div></a></li>
+        
+          <li><a class="flat-box" title="/categories/复习/" href="/categories/复习/"><div class='name'>复习</div><div class='badge'>(4)</div></a></li>
+        
+          <li><a class="flat-box" title="/categories/教程/" href="/categories/教程/"><div class='name'>教程</div><div class='badge'>(12)</div></a></li>
+        
+          <li><a class="flat-box" title="/categories/笔记/" href="/categories/笔记/"><div class='name'>笔记</div><div class='badge'>(20)</div></a></li>
+        
+          <li><a class="flat-box" title="/categories/随笔/" href="/categories/随笔/"><div class='name'>随笔</div><div class='badge'>(3)</div></a></li>
+        
+      </ul>
+    </div>
+  </section>
+
+
+          
+        
+      
+        
+          
+          
+            
+  <section class='widget tagcloud'>
+    
+<header class='pure'>
+  <div><i class="fas fa-fire fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;热门标签</div>
+  
+    <a class="rightBtn"
+    
+      rel="nofollow"
+    
+    
+    href="/blog/tags/"
+    title="blog/tags/">
+    <i class="fas fa-expand-arrows-alt fa-fw"></i></a>
+  
+</header>
+
+    <div class='content pure'>
+      <a href="/tags/Android/" style="font-size: 24px; color: #555">Android</a> <a href="/tags/C/" style="font-size: 14px; color: #999">C#</a> <a href="/tags/C/" style="font-size: 14px; color: #999">C++</a> <a href="/tags/CNN/" style="font-size: 14px; color: #999">CNN</a> <a href="/tags/Fisher/" style="font-size: 14px; color: #999">Fisher</a> <a href="/tags/Http/" style="font-size: 18px; color: #7e7e7e">Http</a> <a href="/tags/HyperLPR/" style="font-size: 14px; color: #999">HyperLPR</a> <a href="/tags/IAR/" style="font-size: 14px; color: #999">IAR</a> <a href="/tags/Java/" style="font-size: 20px; color: #707070">Java</a> <a href="/tags/Keras/" style="font-size: 14px; color: #999">Keras</a> <a href="/tags/MVP/" style="font-size: 14px; color: #999">MVP</a> <a href="/tags/Maven/" style="font-size: 14px; color: #999">Maven</a> <a href="/tags/Mnist/" style="font-size: 18px; color: #7e7e7e">Mnist</a> <a href="/tags/NetSecurity/" style="font-size: 14px; color: #999">NetSecurity</a> <a href="/tags/Omnetpp/" style="font-size: 14px; color: #999">Omnetpp</a> <a href="/tags/OpenCV/" style="font-size: 18px; color: #7e7e7e">OpenCV</a> <a href="/tags/Qt/" style="font-size: 14px; color: #999">Qt</a> <a href="/tags/RFID/" style="font-size: 14px; color: #999">RFID</a> <a href="/tags/STM32/" style="font-size: 14px; color: #999">STM32</a> <a href="/tags/SVM/" style="font-size: 14px; color: #999">SVM</a> <a href="/tags/SharedPreferences/" style="font-size: 14px; color: #999">SharedPreferences</a> <a href="/tags/Spring/" style="font-size: 14px; color: #999">Spring</a> <a href="/tags/TensorFlow/" style="font-size: 14px; color: #999">TensorFlow</a> <a href="/tags/Thread/" style="font-size: 14px; color: #999">Thread</a> <a href="/tags/Ubuntu/" style="font-size: 16px; color: #8b8b8b">Ubuntu</a> <a href="/tags/WSN/" style="font-size: 14px; color: #999">WSN</a> <a href="/tags/Zigbee/" style="font-size: 22px; color: #636363">Zigbee</a> <a href="/tags/c/" style="font-size: 14px; color: #999">c++</a> <a href="/tags/omnetpp/" style="font-size: 16px; color: #8b8b8b">omnetpp</a>
+    </div>
+  </section>
+
+
+          
+        
+      
+        
+          
+          
+            
+
+
+  <section class='widget music'>
+    
+<header class='pure'>
+  <div><i class="fas fa-compact-disc fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;最近在听</div>
+  
+    <a class="rightBtn"
+    
+      rel="external nofollow noopener noreferrer"
+    
+    
+      target="_blank"
+    
+    href="https://c.y.qq.com/base/fcgi-bin/u?__=jsQmg4H"
+    title="https://c.y.qq.com/base/fcgi-bin/u?__=jsQmg4H">
+    <i class="far fa-heart fa-fw"></i></a>
+  
+</header>
+
+    <div class='content pure'>
+      
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.7.0/dist/APlayer.min.css">
+  <div class="aplayer"
+    data-theme="#1BCDFC"
+    
+    
+    data-mode="circulation"
+    data-server="tencent"
+    data-type="playlist"
+    data-id="4222498938"
+    data-volume="0.7">
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/aplayer@1.7.0/dist/APlayer.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/meting@1.1.0/dist/Meting.min.js"></script>
+
+
+    </div>
+  </section>
+
+
+          
+        
+      
+    
+
+  
+</aside>
+
+<footer id="footer" class="clearfix">
+  
+    <div class="footer">
+      <p>已经到底了，但是精彩继续！</p>
+
+    </div>
+    <br>
+  
+  
+    <div class="social-wrapper">
+      
+        
+          <a href="/atom.xml"
+            class="social fas fa-rss flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="/stefancharles@vip.qq.com"
+            class="social fas fa-envelope flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="https://github.com/Stefancharles"
+            class="social fab fa-github flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="https://c.y.qq.com/base/fcgi-bin/u?__=jsQmg4H"
+            class="social fas fa-headphones-alt flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+    </div>
+  
+  <br>
+  <div><p>博客内容遵循 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</a></p>
+</div>
+  <div>
+
+    
+      
+      总访问量为
+      <span id="busuanzi_value_site_pv"><i class="fas fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span>
+      次
+    
+    。
+  </div>
+</footer>
+<script>setLoadingBarProgress(80);</script>
+
+
+      <script>setLoadingBarProgress(60);</script>
+    </div>
+    <a class="s-top fas fa-arrow-up fa-fw" href='javascript:void(0)'></a>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+
+  <script>
+    var GOOGLE_CUSTOM_SEARCH_API_KEY = "AIzaSyBjTC6INtmeYy3ig7VaKWeU5obyVnyOAuA";
+    var GOOGLE_CUSTOM_SEARCH_ENGINE_ID = "007855274890026858194:3gmzbmgvb-q";
+    var ALGOLIA_API_KEY = "";
+    var ALGOLIA_APP_ID = "";
+    var ALGOLIA_INDEX_NAME = "";
+    var AZURE_SERVICE_NAME = "";
+    var AZURE_INDEX_NAME = "";
+    var AZURE_QUERY_KEY = "";
+    var BAIDU_API_ID = "";
+    var SEARCH_SERVICE = "hexo" || "hexo";
+    var ROOT = "/"||"/";
+    if(!ROOT.endsWith('/'))ROOT += '/';
+  </script>
+
+<script src="//instant.page/1.2.2" type="module" integrity="sha384-2xV8M5griQmzyiY3CDqh1dn4z3llDVqZDqzjzcY+jCBCk/a5fXJmuZ/40JJAPeoU"></script>
+
+
+  <script async src="https://cdn.jsdelivr.net/npm/scrollreveal@4.0.5/dist/scrollreveal.min.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      const $reveal = $('.reveal');
+      if ($reveal.length === 0) return;
+      const sr = ScrollReveal({ distance: 0 });
+      sr.reveal('.reveal');
+    });
+  </script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      Waves.attach('.flat-btn', ['waves-button']);
+      Waves.attach('.float-btn', ['waves-button', 'waves-float']);
+      Waves.attach('.float-btn-light', ['waves-button', 'waves-float', 'waves-light']);
+      Waves.attach('.flat-box', ['waves-block']);
+      Waves.attach('.float-box', ['waves-block', 'waves-float']);
+      Waves.attach('.waves-image');
+      Waves.init();
+    });
+  </script>
+
+
+  <script async src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-busuanzi@2.3/js/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+  
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.0.4/jquery.backstretch.min.js"></script>
+    <script type="text/javascript">
+      $(function(){
+        if ('.cover') {
+          $('.cover').backstretch(
+          ["https://img.vim-cn.com/6d/a0c9e6f9efad8b731cb7376504bd10d79d2053.jpg"],
+          {
+            duration: "6000",
+            fade: "2500"
+          });
+        } else {
+          $.backstretch(
+          ["https://img.vim-cn.com/6d/a0c9e6f9efad8b731cb7376504bd10d79d2053.jpg"],
+          {
+            duration: "6000",
+            fade: "2500"
+          });
+        }
+      });
+    </script>
+  
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+    
+      <script src="https://cdn.jsdelivr.net/gh/xaoxuu/volantis@1.0/js/volantis.min.js"></script>
+    
+  
+  <script>
+  var GUEST_INFO = ['nick','mail','link'];
+  var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+    return GUEST_INFO.indexOf(item) > -1
+  });
+  var notify = 'true' == true;
+  var verify = 'true' == true;
+  var valine = new Valine();
+  valine.init({
+    el: '#valine_container',
+    notify: notify,
+    verify: verify,
+    guest_info: guest_info,
+    
+      path: "/cnn/",
+    
+    appId: "wlBz3oHtoKBEhnTNtpqYUTGX-gzGzoHsz",
+    appKey: "UlbGNoRRKQR1eV0uLcaHwkI1",
+    placeholder: "快来评论吧~",
+    pageSize:'10',
+    avatar:'mp',
+    lang:'zh-cn',
+    highlight:'true'
+  })
+  </script>
+
+
+
+  <script src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-material-x@19.5/js/app.js"></script>
+
+
+  <script src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-material-x@19.5/js/search.js"></script>
+
+
+
+
+<!-- 复制 -->
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+  let COPY_SUCCESS = "复制成功";
+  let COPY_FAILURE = "复制失败";
+  /*页面载入完成后，创建复制按钮*/
+  !function (e, t, a) {
+    /* code */
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '  <i class="fa fa-copy"></i><span>复制</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+
+      clipboard.on('success', function(e) {
+        //您可以加入成功提示
+        console.info('Action:', e.action);
+        console.info('Text:', e.text);
+        console.info('Trigger:', e.trigger);
+        success_prompt(COPY_SUCCESS);
+        e.clearSelection();
+      });
+      clipboard.on('error', function(e) {
+        //您可以加入失败提示
+        console.error('Action:', e.action);
+        console.error('Trigger:', e.trigger);
+        fail_prompt(COPY_FAILURE);
+      });
+    }
+    initCopyCode();
+
+  }(window, document);
+
+  /**
+   * 弹出式提示框，默认1.5秒自动消失
+   * @param message 提示信息
+   * @param style 提示样式，有alert-success、alert-danger、alert-warning、alert-info
+   * @param time 消失时间
+   */
+  var prompt = function (message, style, time)
+  {
+      style = (style === undefined) ? 'alert-success' : style;
+      time = (time === undefined) ? 1500 : time*1000;
+      $('<div>')
+          .appendTo('body')
+          .addClass('alert ' + style)
+          .html(message)
+          .show()
+          .delay(time)
+          .fadeOut();
+  };
+
+  // 成功提示
+  var success_prompt = function(message, time)
+  {
+      prompt(message, 'alert-success', time);
+  };
+
+  // 失败提示
+  var fail_prompt = function(message, time)
+  {
+      prompt(message, 'alert-danger', time);
+  };
+
+  // 提醒
+  var warning_prompt = function(message, time)
+  {
+      prompt(message, 'alert-warning', time);
+  };
+
+  // 信息提示
+  var info_prompt = function(message, time)
+  {
+      prompt(message, 'alert-info', time);
+  };
+
+</script>
+
+
+<!-- fancybox -->
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+<script>
+  let LAZY_LOAD_IMAGE = "";
+  $(".article-entry").find("fancybox").find("img").each(function () {
+      var element = document.createElement("a");
+      $(element).attr("data-fancybox", "gallery");
+      $(element).attr("href", $(this).attr("src"));
+      /* 图片采用懒加载处理时,
+       * 一般图片标签内会有个属性名来存放图片的真实地址，比如 data-original,
+       * 那么此处将原本的属性名src替换为对应属性名data-original,
+       * 修改如下
+       */
+       if (LAZY_LOAD_IMAGE) {
+         $(element).attr("href", $(this).attr("data-original"));
+       }
+      $(this).wrap(element);
+  });
+</script>
+
+
+
+
+
+  <script>setLoadingBarProgress(100);</script>
+</body>
+</html>
