@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   
-  <title>【Zigbee】温湿度采集实验 | Stefan&#39;s Blog</title>
+  <title>【前端】初识JavaScript | Stefan&#39;s Blog</title>
   
   <meta name="keywords" content="Life,Learn.">
   
@@ -298,8 +298,8 @@
         
   
     <h1 class="title">
-      <a href="/2019/10/27/getTemperature/">
-        【Zigbee】温湿度采集实验
+      <a href="/2020/02/05/getStartWithJS/">
+        【前端】初识JavaScript
       </a>
     </h1>
   
@@ -325,10 +325,10 @@
           
         
           
-            <div class="new-meta-item date" itemprop="dateUpdated" datetime="2019-10-30T10:51:01+08:00">
+            <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-02-05T21:18:07+08:00">
   <a class='notlink'>
     <i class="fas fa-clock" aria-hidden="true"></i>
-    <p>最后更新于 2019年10月30日</p>
+    <p>最后更新于 2020年2月5日</p>
   </a>
 </div>
 
@@ -362,51 +362,83 @@
 
       <section class="article typo">
         <div class="article-entry" itemprop="articleBody">
-          <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>最近学习通上老师布置温湿度采集实验作业的实验。实验过程中，在不同的开发板上烧录同一份代码最后结果不一样，有的甚至通过串口助手返回的是乱码。所以建立本博客，记录问题。</p>
+          <h1 id="初识JavaScript"><a href="#初识JavaScript" class="headerlink" title="初识JavaScript"></a>初识JavaScript</h1><p>在上个世纪的1995年，当时的网景公司正凭借其Navigator浏览器成为Web时代开启时最著名的第一代互联网公司。</p>
+<p>由于网景公司希望能在静态HTML页面上添加一些动态效果，于是叫Brendan Eich这哥们仅花了<strong>十天</strong>时间就把JavaScript的原型设计出来了。</p>
+<p>JavaScript的最初命名为Mocha，1995年9月在Netscape Navigator 2.0的Beta版中改名为LiveScript，同年12月，Netscape Navigator 2.0 Beta 3中被重命名为JavaScript。</p>
 <a id="more"></a>
 
-
-<h2 id="实验要求"><a href="#实验要求" class="headerlink" title="实验要求"></a>实验要求</h2><p> 温湿度采集实验（可以采集芯片内温感器也可以是芯片外的DHT11的温湿度传感器的数据，然后通过串口送出来，通过串口助手可以看到采集到数据）</p>
-<h2 id="实验环境"><a href="#实验环境" class="headerlink" title="实验环境"></a>实验环境</h2><ul>
-<li>IAR v10.30.1</li>
-<li>Win10 1903</li>
-<li>串口调试助手 v4.13.3</li>
-</ul>
-<h2 id="ADC温度代码"><a href="#ADC温度代码" class="headerlink" title="ADC温度代码"></a>ADC温度代码</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ioCC2530.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">initUART0</span><span class="params">(<span class="keyword">void</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Send_String</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">char</span> *Data, <span class="keyword">int</span> len)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">int</span> <span class="title">getTemperature</span><span class="params">(<span class="keyword">void</span>)</span></span>;</span><br><span class="line"><span class="keyword">unsigned</span> <span class="keyword">char</span> str1[<span class="number">40</span>]=<span class="string">"Please wait for a moment"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">unsigned</span> <span class="keyword">int</span> AvgTemp;</span><br><span class="line"></span><br><span class="line"><span class="comment">/********************************************************************</span></span><br><span class="line"><span class="comment">* 函数名  :initUART0(void)</span></span><br><span class="line"><span class="comment">* 函数功能:初始化串口0函数</span></span><br><span class="line"><span class="comment">* 输入    : void</span></span><br><span class="line"><span class="comment">* 输出    : 无</span></span><br><span class="line"><span class="comment">********************************************************************/</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">initUART0</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    CLKCONCMD &amp;= ~<span class="number">0x40</span>;<span class="comment">//设置系统时钟源32MHz晶振</span></span><br><span class="line">    <span class="keyword">while</span>(CLKCONSTA&amp;<span class="number">0x40</span>);<span class="comment">//等待晶振稳定</span></span><br><span class="line">    CLKCONCMD&amp;=~<span class="number">0x47</span>;<span class="comment">//设置系统主时钟频率32MHz</span></span><br><span class="line"></span><br><span class="line">    PERCFG= <span class="number">0x00</span>;<span class="comment">//位置1P0口</span></span><br><span class="line">    P0SEL=<span class="number">0x3C</span>;<span class="comment">//P0口是串口</span></span><br><span class="line">    P2DIR&amp;=~<span class="number">0xC0</span>;<span class="comment">//P0优先作为UART0</span></span><br><span class="line">    U0CSR|=<span class="number">0x80</span>;<span class="comment">//串口设置为UART方式</span></span><br><span class="line">    U0GCR|=<span class="number">9</span>;</span><br><span class="line">    U0BAUD|=<span class="number">59</span>;<span class="comment">//波特率19200</span></span><br><span class="line">    UTX0IF=<span class="number">1</span>;<span class="comment">//UART0 TX中断标志初始为1</span></span><br><span class="line">    U0CSR|=<span class="number">0x40</span>;<span class="comment">//允许接受</span></span><br><span class="line">    IEN0|=<span class="number">0x84</span>;<span class="comment">//开总中断，接受中断</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/********************************************************************</span></span><br><span class="line"><span class="comment">* 函数名  : getTemperature(void)</span></span><br><span class="line"><span class="comment">* 函数功能:获取片内温度</span></span><br><span class="line"><span class="comment">* 输入    : void</span></span><br><span class="line"><span class="comment">* 输出    : unsigned int </span></span><br><span class="line"><span class="comment">********************************************************************/</span></span><br><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">int</span> <span class="title">getTemperature</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">char</span> i;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> AdcValue;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> value;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">4</span>;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        ADCCON3|=<span class="number">0x3E</span>;</span><br><span class="line">        ADCCON1|=<span class="number">0x40</span>;<span class="comment">//使用1.25V内部电压</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (!(ADCCON1&amp;<span class="number">0x80</span>));</span><br><span class="line">        value=ADCL&gt;&gt;<span class="number">2</span>;</span><br><span class="line">        value|=((<span class="keyword">unsigned</span> <span class="keyword">int</span> )ADCH&lt;&lt;<span class="number">6</span>);</span><br><span class="line">        AdcValue+=value;   </span><br><span class="line">    &#125;</span><br><span class="line">    value=AdcValue&gt;&gt;<span class="number">2</span>;</span><br><span class="line">    <span class="keyword">return</span> value*<span class="number">0.0629</span><span class="number">-303.3</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/********************************************************************</span></span><br><span class="line"><span class="comment">* 函数名  :Send_String(unsigned char *Data, int len)</span></span><br><span class="line"><span class="comment">* 函数功能:串口发送字符串函数</span></span><br><span class="line"><span class="comment">* 输入    : void</span></span><br><span class="line"><span class="comment">* 输出    : 无</span></span><br><span class="line"><span class="comment">********************************************************************/</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Send_String</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">char</span> *Data, <span class="keyword">int</span> len)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> j;</span><br><span class="line">    <span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;len;j++)</span><br><span class="line">    &#123;</span><br><span class="line">        U0DBUF=*Data++;</span><br><span class="line">        <span class="keyword">while</span> (UTX0IF==<span class="number">0</span>);</span><br><span class="line">        UTX0IF=<span class="number">0</span>;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/********************************************************************</span></span><br><span class="line"><span class="comment">* 函数名  :MAIN</span></span><br><span class="line"><span class="comment">* 函数功能:主函数</span></span><br><span class="line"><span class="comment">* 输入    : void</span></span><br><span class="line"><span class="comment">* 输出    : 无</span></span><br><span class="line"><span class="comment">********************************************************************/</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    P1DIR=<span class="number">0x03</span>;<span class="comment">//LED开</span></span><br><span class="line">    initUART0();</span><br><span class="line">    Send_String(str1,<span class="number">40</span>);</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> strtemp[<span class="number">3</span>];</span><br><span class="line"></span><br><span class="line">    AvgTemp=<span class="number">0</span>;</span><br><span class="line">    AvgTemp=getTemperature();</span><br><span class="line">    strtemp[<span class="number">0</span>]=( <span class="keyword">unsigned</span> <span class="keyword">char</span> )AvgTemp/<span class="number">10</span>+<span class="number">0x30</span>;</span><br><span class="line">    strtemp[<span class="number">1</span>]=( <span class="keyword">unsigned</span> <span class="keyword">char</span> )AvgTemp%<span class="number">10</span>+<span class="number">0x30</span>;</span><br><span class="line"></span><br><span class="line">    strtemp[<span class="number">2</span>]=<span class="string">'\0'</span>;</span><br><span class="line">    </span><br><span class="line">    Send_String(strtemp,<span class="number">3</span>);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> vector=URX0_VECTOR</span></span><br><span class="line">__<span class="function">interrupt <span class="keyword">void</span> <span class="title">UART0_ISR</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    URX0IF=<span class="number">0</span>;<span class="comment">//清中断标志</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h2><p>getTemperature()这个函数是本次的重点。<br>ADCCON3|=0x3E;<br><img src="https://i.loli.net/2019/10/27/WBLw1tiHIZqeC9Q.png" alt="123456.png"><br>0011 1110：使用内部参考电压，12位分辨率，片内温度传感器<br><img src="https://i.loli.net/2019/10/27/e6iEjsa75dzApB8.png" alt="111.png"><br>ADCCON1|=0x40;<br>0100 0000：启动AD转化<br>while (!(ADCCON1&amp;0x80))：等待 AD 转换完成。<br>value=ADCL&gt;&gt;2;<br>value|=((unsigned int )ADCH&lt;&lt;6);<br><img src="https://i.loli.net/2019/10/27/pW6CDKFLecJZS8f.png" alt="666666.png"><br>ADCL寄存器低两位无效。For循环4次累加后再求平均值。</p>
-<h2 id="烧录代码"><a href="#烧录代码" class="headerlink" title="烧录代码"></a>烧录代码</h2><p><img src="https://i.loli.net/2019/10/27/w4pGVZQbvOX9Hxm.png" alt="temp.png"></p>
-<p>后面的17是得出的温度数值。单位摄氏度。</p>
-<h2 id="待解决的问题"><a href="#待解决的问题" class="headerlink" title="待解决的问题"></a>待解决的问题</h2><p>用同一个代码在不同的开发板上进行烧录测试时结果会不同。甚至有的串口助手里还返回了乱码。return value*0.0629-303.3;这里公式是参考教材上的，但是不知道如何的来的，也不知道正确性。</p>
-<h3 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h3><p>关于温度计算公式，大致是AD值与温度之间有个函数关系。这里可以参考TI公司的文档。</p>
-<p><a href="http://www.ti.com/lit/an/swra101a/swra101a.pdf" target="_blank" rel="noopener">点击这里访问文档</a></p>
-<p>后面再试试用芯片外的DHT11的温湿度传感器。</p>
-<h2 id="DHT11温湿度传感器"><a href="#DHT11温湿度传感器" class="headerlink" title="DHT11温湿度传感器"></a>DHT11温湿度传感器</h2><h3 id="DHT11的工作原理"><a href="#DHT11的工作原理" class="headerlink" title="DHT11的工作原理"></a>DHT11的工作原理</h3><p>DHT11使用单一总线通信，DATA引脚和开发板单一相连接。<br><img src="https://i.loli.net/2019/10/30/QvkWZ1RECj8zfPd.png" alt="213.png"><br>如图所示，这是我所用的开发板原理图。DATA引脚在P0口的第4位。<br>其总线总处于<strong>通信状态</strong>或者<strong>空闲状态</strong>。</p>
+<h2 id="ECMAScript"><a href="#ECMAScript" class="headerlink" title="ECMAScript"></a>ECMAScript</h2><p>因为网景开发了JavaScript，一年后微软又模仿JavaScript开发了JScript，为了让JavaScript成为全球标准，几个公司联合ECMA（European Computer Manufacturers Association）组织定制了JavaScript语言的标准，被称为ECMAScript标准。</p>
+<p>所以说，ECMAScript是一种语言标准，而JavaScript是网景公司对ECMAScript标准的一种实现。</p>
+<p>1996年11月，网景正式向ECMA（欧洲计算机制造商协会）提交语言标准。</p>
+<p>1997年6月，ECMA以JavaScript语言为基础制定了ECMAScript标准规范ECMA-262。JavaScript成为了ECMAScript最著名的实现之一。除此之外，ActionScript和JScript也都是ECMAScript规范的实现语言。</p>
+<hr>
+<h2 id="JavaScript概论"><a href="#JavaScript概论" class="headerlink" title="JavaScript概论"></a>JavaScript概论</h2><p>1.一般来说，完整的JavaScript包括以下<strong>3个部分</strong>：</p>
 <ul>
-<li>当开发板没有和DHT11进行通信时，总线处于空闲状态，在上拉电阻的作用下，处于高电平状态；</li>
-<li>当开发板和DHT11正在通信时，总线处于通信状态</li>
+<li>ECMAScript，描述了该语言的语法和基本对象</li>
+<li>文档对象模型（<a href="https://zh.wikipedia.org/wiki/DOM" target="_blank" rel="noopener">DOM</a>），描述处理<strong>网页内容</strong>的方法和接口</li>
+<li>浏览器对象模型（<a href="https://zh.wikipedia.org/wiki/浏览器对象模型" target="_blank" rel="noopener">BOM</a>），描述与<strong>浏览器</strong>进行交互的方法和接口</li>
 </ul>
-<p>一次完整的通信过程如下：</p>
+<p>2.JavaScript的<strong>基本特点</strong>如下：</p>
 <ul>
-<li>1.开发板把驱动总线IO配置为输出模式，准备向DHT11发送数据。</li>
-<li>2.开发板将总线拉低至少18ms，以此来发送起始信号。再将总线拉高并延时20~40us，以此来代表起始信号结束。</li>
-<li>3.开发板将驱动总线的IO配置为输入模式，准备接收DHT11回传的数据。</li>
-<li>4.当DHT11检测倒单片机发送的起始信号后，就开始应答，回传采集到的传感器数据。DHT11先将总线拉低80us作为对单片机的应答（ACK），然后接着将总线拉高80us，准备回传采集到的温湿度数据。温湿度数据以固定的帧格式发送。</li>
-<li>5.当一帧数据传输完成后，DHT11释放总线，总线在上拉电阻的作用下再次恢复到高电平状态。 </li>
+<li>是一种解释性脚本语言（代码不进行预编译）。</li>
+<li>主要用来向HTML页面添加<strong>交互行为</strong>。</li>
+<li>可以直接嵌入HTML页面，但写成单独的js文件有利于结构和行为的分离。</li>
 </ul>
-<p>固定的帧格式格式如下图：<br><img src="https://i.loli.net/2019/10/30/rXoIancwhDtJfHL.png" alt="123.png"></p>
-<p>总过程如下图：<br><img src="https://i.loli.net/2019/10/30/Kq7z2HsDxMnS4li.png" alt="666.png"></p>
-<p>可以发现一帧为40个bit，而每一个bit的传输时序逻辑为：每一个bit都以50us的低电平（DHT11将总线拉低）为先导，然后紧接着DHT11拉高总线，如果这个高电平持续时间为26~28us，则代表逻辑0，如果持续70us则代表逻辑1。</p>
-<h3 id="关于DHT11需要注意"><a href="#关于DHT11需要注意" class="headerlink" title="关于DHT11需要注意"></a>关于DHT11需要注意</h3><ul>
-<li>1.DHT11上电后，要等待 1秒 以越过不稳定状态，在此期间不能发送任何指令。</li>
-<li>2.DHT11属于低速传感器，两次通信请求之间的间隔时间不能太短，一般来说要不能低于1秒。</li>
-<li>3.当前DHT11通信帧的小数部分默认都是0，厂商预留给以后实现。所以一般只读取整数值部分即可。校验和定义为：前4个Byte的总和的低8位。</li>
+<p>3.JavaScript常用来完成以下<strong>任务</strong>：</p>
+<ul>
+<li>嵌入动态文本于HTML页面</li>
+<li>对浏览器事件作出响应</li>
+<li>读写HTML元素</li>
+<li>在数据被提交到服务器之前验证数据</li>
+<li>检测访客的浏览器信息</li>
+<li>控制cookies，包括创建和修改等</li>
 </ul>
-<h2 id="DHT11实现代码"><a href="#DHT11实现代码" class="headerlink" title="DHT11实现代码"></a>DHT11实现代码</h2><blockquote>
-<p>后面有时间再更新，目前我需要跟上opencv进度</p>
-</blockquote>
-<h2 id="需要联系我？"><a href="#需要联系我？" class="headerlink" title="需要联系我？"></a>需要联系我？</h2><p>请发邮件</p>
-<p>我的邮箱：<a href="mailto:stefancharles@vip.qq.com" target="_blank" rel="noopener">stefancharles@vip.qq.com</a></p>
+<hr>
+<h2 id="JavaScript快速入门"><a href="#JavaScript快速入门" class="headerlink" title="JavaScript快速入门"></a>JavaScript快速入门</h2><p>JavaScript代码可以直接嵌在网页的任何地方，不过通常我们都把JavaScript代码放到<code>head</code>中：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>StudyCode<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line">        alert("Hello!Stefan");</span><br><span class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>预览如下：</p>
+<p><img src="https://i.loli.net/2020/02/05/25JaxfcI7q1igUw.png" alt="image.png"></p>
+<p>由<code>&lt;script&gt;...&lt;/script&gt;</code>包含的代码是JavaScript代码，它将直接被浏览器执行。一旦引入外部JS文件，该script则内部的JS代码不会被执行。</p>
+<p>第二种方法是把JavaScript代码放到一个单独的<code>.js</code>文件，然后在HTML中通过<code>&lt;script src=&quot;...&quot;&gt;&lt;/script&gt;</code>引入这个文件。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>StudyCode<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"helloJS.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line">        document.write("Document Test");</span><br><span class="line">        console.log("Console Test")</span><br><span class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>把JavaScript代码放入一个单独的<code>.js</code>文件中更利于维护代码，并且多个页面可以各自引用同一份<code>.js</code>文件。</p>
+<p>可以在同一个页面中引入多个<code>.js</code>文件。</p>
+<hr>
+<h2 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h2><h3 id="Number"><a href="#Number" class="headerlink" title="Number"></a>Number</h3><p>JavaScript不区分整数和浮点数，统一用Number表示，以下都是合法的Number类型：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">123</span>; <span class="comment">// 整数123</span></span><br><span class="line"><span class="number">0.456</span>; <span class="comment">// 浮点数0.456</span></span><br><span class="line"><span class="number">1.2345e3</span>; <span class="comment">// 科学计数法表示1.2345x1000，等同于1234.5</span></span><br><span class="line"><span class="number">-99</span>; <span class="comment">// 负数</span></span><br><span class="line"><span class="literal">NaN</span>; <span class="comment">// NaN表示Not a Number，当无法计算结果时用NaN表示</span></span><br><span class="line"><span class="literal">Infinity</span>; <span class="comment">// Infinity表示无限大，当数值超过了JavaScript的Number所能表示的最大值时，就表示为Infinity</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="比较运算符"><a href="#比较运算符" class="headerlink" title="比较运算符"></a>比较运算符</h3><p>当对Number做比较时，可以通过比较运算符得到一个布尔值。JavaScript允许对任意数据类型做比较。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="literal">false</span> == <span class="number">0</span>; <span class="comment">// true</span></span><br><span class="line"><span class="literal">false</span> === <span class="number">0</span>; <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+
+<p>JavaScript在设计时，有两种比较运算符：</p>
+<p>第一种是<code>==</code>比较，它会自动转换数据类型再比较，很多时候，会得到非常诡异的结果；</p>
+<p>第二种是<code>===</code>比较，它不会自动转换数据类型，如果数据类型不一致，返回<code>false</code>，如果一致，再比较。</p>
+<p>由于JavaScript这个设计缺陷，<em>不要</em>使用<code>==</code>比较，始终坚持使用<code>===</code>比较。</p>
+<p>另一个例外是<code>NaN</code>这个特殊的Number与所有其他值都不相等，包括它自己：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="literal">NaN</span> === <span class="literal">NaN</span>; <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+
+<p>唯一能判断<code>NaN</code>的方法是通过<code>isNaN()</code>函数：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">isNaN</span>(<span class="literal">NaN</span>); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><p>JavaScript的数组可以包括任意数据类型。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3.14</span>, <span class="string">'Hello'</span>, <span class="literal">null</span>, <span class="literal">true</span>];</span><br><span class="line">arr[<span class="number">0</span>]; <span class="comment">// 返回索引为0的元素，即1</span></span><br><span class="line">arr[<span class="number">5</span>]; <span class="comment">// 返回索引为5的元素，即true</span></span><br><span class="line">arr[<span class="number">6</span>]; <span class="comment">// 索引超出了范围，返回undefined</span></span><br></pre></td></tr></table></figure>
+
+<p>直接给<code>Array</code>的<code>length</code>赋一个新的值会导致<code>Array</code>大小的变化：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line">arr.length; <span class="comment">// 3</span></span><br><span class="line">arr.length = <span class="number">6</span>;</span><br><span class="line">arr; <span class="comment">// arr变为[1, 2, 3, undefined, undefined, undefined]</span></span><br><span class="line">arr.length = <span class="number">2</span>;</span><br><span class="line">arr; <span class="comment">// arr变为[1, 2]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h3><p>变量在JavaScript中就是用一个变量名表示，变量名是大小写英文、数字、<code>$</code>和<code>_</code>的组合，且不能用数字开头。变量名也不能是JavaScript的关键字。</p>
+<p>与其他编程语言相比，这里JS申明一个变量用<code>var</code>即可。这种变量本身类型不固定的语言称之为动态语言。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a; <span class="comment">// 申明了变量a，此时a的值为undefined</span></span><br><span class="line"><span class="keyword">var</span> $b = <span class="number">1</span>; <span class="comment">// 申明了变量$b，同时给$b赋值，此时$b的值为1</span></span><br><span class="line"><span class="keyword">var</span> s_007 = <span class="string">'007'</span>; <span class="comment">// s_007是一个字符串,用双引号也行，引号不可嵌套</span></span><br><span class="line"><span class="keyword">var</span> Answer = <span class="literal">true</span>; <span class="comment">// Answer是一个布尔值true</span></span><br><span class="line"><span class="keyword">var</span> t = <span class="literal">null</span>; <span class="comment">// t的值是null</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h3><p>JavaScript的对象是一组由键-值组成的无序集合。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> person = &#123;</span><br><span class="line">    name: <span class="string">'Stefan'</span>,</span><br><span class="line">    age: <span class="number">21</span>,</span><br><span class="line">    tags: [<span class="string">'js'</span>, <span class="string">'C'</span>, <span class="string">'Android'</span>],</span><br><span class="line">	GF:Null</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>JavaScript对象的键都是字符串类型，值可以是任意数据类型。上述<code>person</code>对象一共定义了4个键值对，其中每个键又称为对象的属性，例如，<code>person</code>的<code>name</code>属性为<code>&#39;Stefan&#39;</code>，<code>GF</code>属性为<code>null</code>。</p>
+<p>和其他编程语言相似，要获取一个对象的属性，用<code>对象变量.属性名</code>的方式：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">person.name; <span class="comment">// 'Stefan'</span></span><br><span class="line">person.GF; <span class="comment">// null</span></span><br></pre></td></tr></table></figure>
+
 
         </div>
         
@@ -433,7 +465,7 @@
         
           
   
-  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/Zigbee/" rel="nofollow"><i class="fas fa-hashtag" aria-hidden="true"></i>&nbsp;<p>Zigbee</p></a></div>
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/JavaScript/" rel="nofollow"><i class="fas fa-hashtag" aria-hidden="true"></i>&nbsp;<p>JavaScript</p></a></div>
 
 
         
@@ -446,7 +478,9 @@
       
         <a class="-mob-share-qq" title="QQ好友" rel="external nofollow noopener noreferrer"
           
-          href="http://connect.qq.com/widget/shareqq/index.html?url=https://Stefancharles.xyz/2019/10/27/getTemperature/&title=【Zigbee】温湿度采集实验 | Stefan's Blog&pics=https://i.loli.net/2019/08/15/4zEt9A6LvBegWX8.jpg&summary=简介最近学习通上老师布置温湿度采集实验作业的实验。实验过程中，在不同的开发板上烧录同一份代码最后结果不一样，有的甚至通过串口助手返回的是乱码。所以建立本博客，记录问题。"
+          href="http://connect.qq.com/widget/shareqq/index.html?url=https://Stefancharles.xyz/2020/02/05/getStartWithJS/&title=【前端】初识JavaScript | Stefan's Blog&pics=https://i.loli.net/2019/08/15/4zEt9A6LvBegWX8.jpg&summary=初识JavaScript在上个世纪的1995年，当时的网景公司正凭借其Navigator浏览器成为Web时代开启时最著名的第一代互联网公司。
+由于网景公司希望能在静态HTML页面上添加一些动态效果，于是叫Brendan Eich这哥们仅花了十天时间就把JavaScript的原型设计出来了。
+JavaScript的最初命名为Mocha，1995年9月在Netscape Navigator 2.0的Beta版中改名为LiveScript，同年12月，Netscape Navigator 2.0 Beta 3中被重命名为JavaScript。"
           
           >
           
@@ -458,7 +492,9 @@
       
         <a class="-mob-share-qzone" title="QQ空间" rel="external nofollow noopener noreferrer"
           
-          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://Stefancharles.xyz/2019/10/27/getTemperature/&title=【Zigbee】温湿度采集实验 | Stefan's Blog&pics=https://i.loli.net/2019/08/15/4zEt9A6LvBegWX8.jpg&summary=简介最近学习通上老师布置温湿度采集实验作业的实验。实验过程中，在不同的开发板上烧录同一份代码最后结果不一样，有的甚至通过串口助手返回的是乱码。所以建立本博客，记录问题。"
+          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://Stefancharles.xyz/2020/02/05/getStartWithJS/&title=【前端】初识JavaScript | Stefan's Blog&pics=https://i.loli.net/2019/08/15/4zEt9A6LvBegWX8.jpg&summary=初识JavaScript在上个世纪的1995年，当时的网景公司正凭借其Navigator浏览器成为Web时代开启时最著名的第一代互联网公司。
+由于网景公司希望能在静态HTML页面上添加一些动态效果，于是叫Brendan Eich这哥们仅花了十天时间就把JavaScript的原型设计出来了。
+JavaScript的最初命名为Mocha，1995年9月在Netscape Navigator 2.0的Beta版中改名为LiveScript，同年12月，Netscape Navigator 2.0 Beta 3中被重命名为JavaScript。"
           
           >
           
@@ -470,7 +506,9 @@
       
         <a class="-mob-share-weibo" title="微博" rel="external nofollow noopener noreferrer"
           
-          href="http://service.weibo.com/share/share.php?url=https://Stefancharles.xyz/2019/10/27/getTemperature/&title=【Zigbee】温湿度采集实验 | Stefan's Blog&pics=https://i.loli.net/2019/08/15/4zEt9A6LvBegWX8.jpg&summary=简介最近学习通上老师布置温湿度采集实验作业的实验。实验过程中，在不同的开发板上烧录同一份代码最后结果不一样，有的甚至通过串口助手返回的是乱码。所以建立本博客，记录问题。"
+          href="http://service.weibo.com/share/share.php?url=https://Stefancharles.xyz/2020/02/05/getStartWithJS/&title=【前端】初识JavaScript | Stefan's Blog&pics=https://i.loli.net/2019/08/15/4zEt9A6LvBegWX8.jpg&summary=初识JavaScript在上个世纪的1995年，当时的网景公司正凭借其Navigator浏览器成为Web时代开启时最著名的第一代互联网公司。
+由于网景公司希望能在静态HTML页面上添加一些动态效果，于是叫Brendan Eich这哥们仅花了十天时间就把JavaScript的原型设计出来了。
+JavaScript的最初命名为Mocha，1995年9月在Netscape Navigator 2.0的Beta版中改名为LiveScript，同年12月，Netscape Navigator 2.0 Beta 3中被重命名为JavaScript。"
           
           >
           
@@ -494,35 +532,21 @@
         
             <div class="prev-next">
                 
-                    <section class="prev">
-                        <span class="art-item-left">
-                            <h6><i class="fas fa-chevron-left" aria-hidden="true"></i>&nbsp;上一页</h6>
-                            <h4>
-                                <a href="/2019/11/01/AboutTime/" rel="prev" title="关于时间">
-                                  
-                                      关于时间
-                                  
-                                </a>
-                            </h4>
-                            
-                        </span>
-                    </section>
-                
                 
                     <section class="next">
                         <span class="art-item-right" aria-hidden="true">
                             <h6>下一页&nbsp;<i class="fas fa-chevron-right" aria-hidden="true"></i></h6>
                             <h4>
-                                <a href="/2019/10/26/UART/" rel="prev" title="【Zigbee】串口收发实验">
+                                <a href="/2020/02/01/gitproblems/" rel="prev" title="【Git】相关问题">
                                     
-                                        【Zigbee】串口收发实验
+                                        【Git】相关问题
                                     
                                 </a>
                             </h4>
                             
                                 
                                 <h6 class="tags">
-                                    <a class="tag" href="/tags/Zigbee/"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i>Zigbee</a>
+                                    <a class="tag" href="/tags/Git/"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i>Git</a>
                                 </h6>
                             
                         </span>
@@ -567,7 +591,7 @@
 
   <script>
     window.subData = {
-      title: '【Zigbee】温湿度采集实验',
+      title: '【前端】初识JavaScript',
       tools: true
     }
   </script>
@@ -647,7 +671,7 @@
 </header>
 
     <div class='content pure'>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#简介"><span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验要求"><span class="toc-text">实验要求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验环境"><span class="toc-text">实验环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ADC温度代码"><span class="toc-text">ADC温度代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解析"><span class="toc-text">解析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#烧录代码"><span class="toc-text">烧录代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#待解决的问题"><span class="toc-text">待解决的问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#补充"><span class="toc-text">补充</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DHT11温湿度传感器"><span class="toc-text">DHT11温湿度传感器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DHT11的工作原理"><span class="toc-text">DHT11的工作原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#关于DHT11需要注意"><span class="toc-text">关于DHT11需要注意</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DHT11实现代码"><span class="toc-text">DHT11实现代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#需要联系我？"><span class="toc-text">需要联系我？</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#初识JavaScript"><span class="toc-text">初识JavaScript</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#ECMAScript"><span class="toc-text">ECMAScript</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JavaScript概论"><span class="toc-text">JavaScript概论</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JavaScript快速入门"><span class="toc-text">JavaScript快速入门</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据类型"><span class="toc-text">数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Number"><span class="toc-text">Number</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#比较运算符"><span class="toc-text">比较运算符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数组"><span class="toc-text">数组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#变量"><span class="toc-text">变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#对象"><span class="toc-text">对象</span></a></li></ol></li></ol></li></ol>
     </div>
   </section>
 
@@ -1042,8 +1066,6 @@
     notify: notify,
     verify: verify,
     guest_info: guest_info,
-    
-      path: "/UART/",
     
     appId: "wlBz3oHtoKBEhnTNtpqYUTGX-gzGzoHsz",
     appKey: "UlbGNoRRKQR1eV0uLcaHwkI1",
