@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   
-  <title>Tag: omnetpp | Stefan&#39;s Blog</title>
+  <title>Tag: Omnetpp | Stefan&#39;s Blog</title>
   
   <meta name="keywords" content="Life,Learn.">
   
@@ -293,8 +293,6 @@
         
           
         
-          
-        
       
     
     
@@ -312,8 +310,8 @@
       
         
   <h2 class="title">
-    <a href="/2019/12/10/omnettasktwo/">
-      基于OMNET++仿真平台的4维超立方体网络仿真
+    <a href="/2019/11/08/omnetpp/">
+      OMNET++入门教程
     </a>
   </h2>
 
@@ -338,10 +336,10 @@
           
         
           
-            <div class="new-meta-item date" itemprop="dateUpdated" datetime="2019-12-12T19:46:43+08:00">
+            <div class="new-meta-item date" itemprop="dateUpdated" datetime="2019-11-13T17:31:38+08:00">
   <a class='notlink'>
     <i class="fas fa-clock" aria-hidden="true"></i>
-    <p>最后更新于 2019年12月12日</p>
+    <p>最后更新于 2019年11月13日</p>
   </a>
 </div>
 
@@ -362,14 +360,10 @@
 
   <section class="article typo">
     <div class="article-entry" itemprop="articleBody">
-      <h2 id="实验要求"><a href="#实验要求" class="headerlink" title="实验要求"></a>实验要求</h2><p>编程实现一个4维的立方体网络仿真，网络节点按照如下方式运行，<br>实验要求：</p>
-<ul>
-<li>1.网络节点按照默认的顺序，如节点标识0，1，…，15从小到大的顺序依次产生一个数据包。</li>
-<li>2.节点产生（或接收到）一个数据包后，随机选择一个相邻节点发送数据包，依此规则重复执行，直至产生数据包的节点接收到自己的数据包后，直接删除该数据包。</li>
-</ul>
+      <h2 id="OMNETPP简介"><a href="#OMNETPP简介" class="headerlink" title="OMNETPP简介"></a>OMNETPP简介</h2><p>OMNeT++ (Objective Modular Network Testbed in C++) is a modular, component-based C++ simulation library and framework, primarily for building network simulators.<br>OMNeT++是一个免费的、开源的多协议网络仿真软件，在网络仿真领域中占有十分重要的地位。OMNeT++英文全称是Objective Modular Network Testbed in C++，是近年来在科学和工业领域里逐渐流行的一种基于组件的模块化的开放的网络仿真平台。<br>OMNeT++作为离散事件仿真器，具备强大完善的图形界面接口。</p>
       
         <div class="readmore">
-          <a href="/2019/12/10/omnettasktwo/" class="flat-box">
+          <a href="/2019/11/08/omnetpp/" class="flat-box">
             <i class="fas fa-book-open fa-fw" aria-hidden="true"></i>
             阅读全文
           </a>
@@ -379,95 +373,7 @@
     
       <div class="full-width auto-padding tags">
         
-          <a href="/tags/omnetpp/" rel="nofollow"><i class="fas fa-hashtag fa-fw"></i>omnetpp</a>
-        
-          <a href="/tags/c/" rel="nofollow"><i class="fas fa-hashtag fa-fw"></i>c++</a>
-        
-      </div>
-    
-  </section>
-</article>
-
-          </div>
-        
-      
-        
-          <div class='post-wrapper'>
-            <article class="post reveal ">
-  
-
-
-  <section class='meta'>
-    
-    
-    <div class="meta" id="header-meta">
-      
-        
-  <h2 class="title">
-    <a href="/2019/11/30/omnettaskone/">
-      基于OMNET++仿真平台的正方形网络仿真
-    </a>
-  </h2>
-
-
-      
-      <div class='new-meta-box'>
-        
-          
-        
-          
-            
-  <div class='new-meta-item author'>
-    <a href="https://Stefancharles.xyz" rel="nofollow">
-      
-        <img src="https://i.loli.net/2019/08/15/4zEt9A6LvBegWX8.jpg">
-      
-      <p>Stefan</p>
-    </a>
-  </div>
-
-
-          
-        
-          
-            <div class="new-meta-item date" itemprop="dateUpdated" datetime="2019-12-01T17:09:53+08:00">
-  <a class='notlink'>
-    <i class="fas fa-clock" aria-hidden="true"></i>
-    <p>最后更新于 2019年12月1日</p>
-  </a>
-</div>
-
-          
-        
-          
-            
-
-          
-        
-      </div>
-      
-        <hr>
-      
-    </div>
-  </section>
-
-
-  <section class="article typo">
-    <div class="article-entry" itemprop="articleBody">
-      <h2 id="实验要求"><a href="#实验要求" class="headerlink" title="实验要求"></a>实验要求</h2><p>以讲解的tictoc网络模型为例，建立一个TicToc正方形网络模型，如下图所示，网络节点是正方形的四个节点，均为Tic模块的实例，节点周期性的产生数据包，数据包通过输出门发送到相连的邻接点，<br>当节点产生的数据包又回到发送节点时，删除该数据包。<strong>当某个节点产生的数据包个数等于100时，结束网络仿真过程</strong>，统计各节点产生、发送、接受的数据包个数。</p>
-      
-        <div class="readmore">
-          <a href="/2019/11/30/omnettaskone/" class="flat-box">
-            <i class="fas fa-book-open fa-fw" aria-hidden="true"></i>
-            阅读全文
-          </a>
-        </div>
-      
-    </div>
-    
-      <div class="full-width auto-padding tags">
-        
-          <a href="/tags/omnetpp/" rel="nofollow"><i class="fas fa-hashtag fa-fw"></i>omnetpp</a>
+          <a href="/tags/Omnetpp/" rel="nofollow"><i class="fas fa-hashtag fa-fw"></i>Omnetpp</a>
         
       </div>
     
@@ -683,7 +589,7 @@
         
           <li><a class="flat-box" title="/categories/教程/" href="/categories/教程/"><div class='name'>教程</div><div class='badge'>(12)</div></a></li>
         
-          <li><a class="flat-box" title="/categories/笔记/" href="/categories/笔记/"><div class='name'>笔记</div><div class='badge'>(21)</div></a></li>
+          <li><a class="flat-box" title="/categories/笔记/" href="/categories/笔记/"><div class='name'>笔记</div><div class='badge'>(22)</div></a></li>
         
           <li><a class="flat-box" title="/categories/随笔/" href="/categories/随笔/"><div class='name'>随笔</div><div class='badge'>(3)</div></a></li>
         
@@ -716,7 +622,7 @@
 </header>
 
     <div class='content pure'>
-      <a href="/tags/Android/" style="font-size: 24px; color: #555">Android</a> <a href="/tags/C/" style="font-size: 14px; color: #999">C#</a> <a href="/tags/C/" style="font-size: 14px; color: #999">C++</a> <a href="/tags/CNN/" style="font-size: 14px; color: #999">CNN</a> <a href="/tags/Fisher/" style="font-size: 14px; color: #999">Fisher</a> <a href="/tags/Git/" style="font-size: 14px; color: #999">Git</a> <a href="/tags/Http/" style="font-size: 16.5px; color: #888">Http</a> <a href="/tags/HyperLPR/" style="font-size: 14px; color: #999">HyperLPR</a> <a href="/tags/IAR/" style="font-size: 14px; color: #999">IAR</a> <a href="/tags/Java/" style="font-size: 21.5px; color: #666">Java</a> <a href="/tags/JavaScript/" style="font-size: 14px; color: #999">JavaScript</a> <a href="/tags/Keras/" style="font-size: 14px; color: #999">Keras</a> <a href="/tags/MVP/" style="font-size: 14px; color: #999">MVP</a> <a href="/tags/Maven/" style="font-size: 14px; color: #999">Maven</a> <a href="/tags/Mnist/" style="font-size: 19px; color: #777">Mnist</a> <a href="/tags/NetSecurity/" style="font-size: 14px; color: #999">NetSecurity</a> <a href="/tags/Omnetpp/" style="font-size: 14px; color: #999">Omnetpp</a> <a href="/tags/OpenCV/" style="font-size: 19px; color: #777">OpenCV</a> <a href="/tags/Qt/" style="font-size: 14px; color: #999">Qt</a> <a href="/tags/RFID/" style="font-size: 14px; color: #999">RFID</a> <a href="/tags/STM32/" style="font-size: 14px; color: #999">STM32</a> <a href="/tags/SVM/" style="font-size: 14px; color: #999">SVM</a> <a href="/tags/SharedPreferences/" style="font-size: 14px; color: #999">SharedPreferences</a> <a href="/tags/Spring/" style="font-size: 14px; color: #999">Spring</a> <a href="/tags/TensorFlow/" style="font-size: 14px; color: #999">TensorFlow</a> <a href="/tags/Thread/" style="font-size: 14px; color: #999">Thread</a> <a href="/tags/Ubuntu/" style="font-size: 16.5px; color: #888">Ubuntu</a> <a href="/tags/WSN/" style="font-size: 14px; color: #999">WSN</a> <a href="/tags/Zigbee/" style="font-size: 24px; color: #555">Zigbee</a> <a href="/tags/c/" style="font-size: 14px; color: #999">c++</a> <a href="/tags/omnetpp/" style="font-size: 16.5px; color: #888">omnetpp</a>
+      <a href="/tags/Android/" style="font-size: 24px; color: #555">Android</a> <a href="/tags/C/" style="font-size: 14px; color: #999">C#</a> <a href="/tags/C/" style="font-size: 14px; color: #999">C++</a> <a href="/tags/CNN/" style="font-size: 14px; color: #999">CNN</a> <a href="/tags/Fisher/" style="font-size: 14px; color: #999">Fisher</a> <a href="/tags/Git/" style="font-size: 14px; color: #999">Git</a> <a href="/tags/Http/" style="font-size: 16.5px; color: #888">Http</a> <a href="/tags/HyperLPR/" style="font-size: 14px; color: #999">HyperLPR</a> <a href="/tags/IAR/" style="font-size: 14px; color: #999">IAR</a> <a href="/tags/Java/" style="font-size: 21.5px; color: #666">Java</a> <a href="/tags/JavaScript/" style="font-size: 14px; color: #999">JavaScript</a> <a href="/tags/Keras/" style="font-size: 14px; color: #999">Keras</a> <a href="/tags/MVP/" style="font-size: 14px; color: #999">MVP</a> <a href="/tags/Maven/" style="font-size: 14px; color: #999">Maven</a> <a href="/tags/Mnist/" style="font-size: 19px; color: #777">Mnist</a> <a href="/tags/NetSecurity/" style="font-size: 14px; color: #999">NetSecurity</a> <a href="/tags/Omnetpp/" style="font-size: 14px; color: #999">Omnetpp</a> <a href="/tags/OpenCV/" style="font-size: 19px; color: #777">OpenCV</a> <a href="/tags/Qt/" style="font-size: 14px; color: #999">Qt</a> <a href="/tags/RFID/" style="font-size: 14px; color: #999">RFID</a> <a href="/tags/RoboMaster/" style="font-size: 14px; color: #999">RoboMaster</a> <a href="/tags/STM32/" style="font-size: 14px; color: #999">STM32</a> <a href="/tags/SVM/" style="font-size: 14px; color: #999">SVM</a> <a href="/tags/SharedPreferences/" style="font-size: 14px; color: #999">SharedPreferences</a> <a href="/tags/Spring/" style="font-size: 14px; color: #999">Spring</a> <a href="/tags/TensorFlow/" style="font-size: 14px; color: #999">TensorFlow</a> <a href="/tags/Thread/" style="font-size: 14px; color: #999">Thread</a> <a href="/tags/Ubuntu/" style="font-size: 16.5px; color: #888">Ubuntu</a> <a href="/tags/WSN/" style="font-size: 14px; color: #999">WSN</a> <a href="/tags/Zigbee/" style="font-size: 24px; color: #555">Zigbee</a> <a href="/tags/c/" style="font-size: 14px; color: #999">c++</a> <a href="/tags/omnetpp/" style="font-size: 16.5px; color: #888">omnetpp</a>
     </div>
   </section>
 
@@ -960,6 +866,95 @@
         //您可以加入成功提示
         console.info('Action:', e.action);
         console.info('Text:', e.text);
+        console.info('Trigger:', e.trigger);
+        success_prompt(COPY_SUCCESS);
+        e.clearSelection();
+      });
+      clipboard.on('error', function(e) {
+        //您可以加入失败提示
+        console.error('Action:', e.action);
+        console.error('Trigger:', e.trigger);
+        fail_prompt(COPY_FAILURE);
+      });
+    }
+    initCopyCode();
+
+  }(window, document);
+
+  /**
+   * 弹出式提示框，默认1.5秒自动消失
+   * @param message 提示信息
+   * @param style 提示样式，有alert-success、alert-danger、alert-warning、alert-info
+   * @param time 消失时间
+   */
+  var prompt = function (message, style, time)
+  {
+      style = (style === undefined) ? 'alert-success' : style;
+      time = (time === undefined) ? 1500 : time*1000;
+      $('<div>')
+          .appendTo('body')
+          .addClass('alert ' + style)
+          .html(message)
+          .show()
+          .delay(time)
+          .fadeOut();
+  };
+
+  // 成功提示
+  var success_prompt = function(message, time)
+  {
+      prompt(message, 'alert-success', time);
+  };
+
+  // 失败提示
+  var fail_prompt = function(message, time)
+  {
+      prompt(message, 'alert-danger', time);
+  };
+
+  // 提醒
+  var warning_prompt = function(message, time)
+  {
+      prompt(message, 'alert-warning', time);
+  };
+
+  // 信息提示
+  var info_prompt = function(message, time)
+  {
+      prompt(message, 'alert-info', time);
+  };
+
+</script>
+
+
+<!-- fancybox -->
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+<script>
+  let LAZY_LOAD_IMAGE = "";
+  $(".article-entry").find("fancybox").find("img").each(function () {
+      var element = document.createElement("a");
+      $(element).attr("data-fancybox", "gallery");
+      $(element).attr("href", $(this).attr("src"));
+      /* 图片采用懒加载处理时,
+       * 一般图片标签内会有个属性名来存放图片的真实地址，比如 data-original,
+       * 那么此处将原本的属性名src替换为对应属性名data-original,
+       * 修改如下
+       */
+       if (LAZY_LOAD_IMAGE) {
+         $(element).attr("href", $(this).attr("data-original"));
+       }
+      $(this).wrap(element);
+  });
+</script>
+
+
+
+
+
+  <script>setLoadingBarProgress(100);</script>
+</body>
+</html>
+fo('Text:', e.text);
         console.info('Trigger:', e.trigger);
         success_prompt(COPY_SUCCESS);
         e.clearSelection();

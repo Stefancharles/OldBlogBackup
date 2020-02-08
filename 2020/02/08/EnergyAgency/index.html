@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   
-  <title>【Git】相关问题 | Stefan&#39;s Blog</title>
+  <title>【RoboMaster】识别能量机关 | Stefan&#39;s Blog</title>
   
   <meta name="keywords" content="Life,Learn.">
   
@@ -298,8 +298,8 @@
         
   
     <h1 class="title">
-      <a href="/2020/02/01/gitproblems/">
-        【Git】相关问题
+      <a href="/2020/02/08/EnergyAgency/">
+        【RoboMaster】识别能量机关
       </a>
     </h1>
   
@@ -325,10 +325,10 @@
           
         
           
-            <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-02-01T21:15:19+08:00">
+            <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-02-08T15:16:56+08:00">
   <a class='notlink'>
     <i class="fas fa-clock" aria-hidden="true"></i>
-    <p>最后更新于 2020年2月1日</p>
+    <p>最后更新于 2020年2月8日</p>
   </a>
 </div>
 
@@ -362,45 +362,52 @@
 
       <section class="article typo">
         <div class="article-entry" itemprop="articleBody">
-          <h1 id="Git提交问题"><a href="#Git提交问题" class="headerlink" title="Git提交问题"></a>Git提交问题</h1><p>今天提交Git时本地提示提交上去，但是github上没有记录。之前我使用的是HTTPS的方式提交，今天改为SSH提交。</p>
+          <h1 id="识别能量机关"><a href="#识别能量机关" class="headerlink" title="识别能量机关"></a>识别能量机关</h1><p>这个寒假，我负责处理能量机关（大小神符）的处理。因为RoboMaster网上开源代码很多，本着不重复造轮子的理念，另外如果我自己写全部的代码能不能成功识别还是个问题。所以本次代码和思想借鉴了很多论坛和网址，我会在文末附上链接。</p>
 <a id="more"></a>
 
-<h2 id="生成-SSH-密钥"><a href="#生成-SSH-密钥" class="headerlink" title="生成 SSH 密钥"></a>生成 SSH 密钥</h2><p>打开Git Bash，输出以下命令。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/.ssh</span><br></pre></td></tr></table></figure>
+<h2 id="操作环境"><a href="#操作环境" class="headerlink" title="操作环境"></a>操作环境</h2><ul>
+<li>Windows 10 2004预览版</li>
+<li>Visual Studio 2019</li>
+<li>OpenCV 3.4.5</li>
+</ul>
+<p>后面考虑移植问题，这里先暂不考虑。</p>
+<h2 id="预处理图像"><a href="#预处理图像" class="headerlink" title="预处理图像"></a>预处理图像</h2><p>和之前车牌识别中的颜色识别一样，首先我们去除一些对我们识别没用的颜色，保留我们需要的颜色。这一步通过红蓝颜色通道互减可以方便的得到符合条件的灰度图。然后在灰度图上进行二值化。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//分割颜色通道</span></span><br><span class="line"><span class="built_in">vector</span>&lt;Mat&gt; imgChannels;</span><br><span class="line">split(srcImage, imgChannels);</span><br><span class="line"><span class="comment">//获得目标颜色图像的灰度图</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> RED</span></span><br><span class="line">Mat midImage2 = imgChannels.at(<span class="number">2</span>) - imgChannels.at(<span class="number">0</span>);</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> RED</span></span><br><span class="line">Mat midImage2 = imgChannels.at(<span class="number">0</span>) - imgChannels.at(<span class="number">2</span>);</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">threshold(midImage2, midImage2, <span class="number">100</span>, <span class="number">255</span>, CV_THRESH_BINARY);</span><br></pre></td></tr></table></figure>
 
-<p>这是用来检查有没有已经存在的密钥。</p>
-<p>如果提示不存在目录。就使用 <code>ssh-keygen</code> 生成密钥：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C <span class="string">"your_email@example.com"</span></span><br><span class="line"><span class="comment"># Creates a new ssh key using the provided email</span></span><br><span class="line">Generating public/private rsa key pair.</span><br><span class="line">Enter file <span class="keyword">in</span> <span class="built_in">which</span> to save the key (/home/you/.ssh/id_rsa):</span><br><span class="line">Enter passphrase (empty <span class="keyword">for</span> no passphrase): [Type a passphrase]</span><br><span class="line">Enter same passphrase again: [Type passphrase again]</span><br></pre></td></tr></table></figure>
+<p><code>#ifdef RED</code>是一个技巧，当你在代码的开头写了<code>#define RED</code>，那么就会执行<code>ifdef RED</code>到<code>#endif</code>其中的代码，当你注释<code>#define RED</code>就执行<code>ifndef RED</code>后的代码，这样比较方便调试代码。</p>
+<p><img src="https://i.loli.net/2020/02/08/CzN6jWrgyZ3dXfk.png" alt="image.png"></p>
+<p>二值化后的待击打的扇叶如上图所示，可以看到箭头与箭头之间有很大空隙，如果直接进行轮廓查找的话会得到许多小轮廓，而不能把整个作为一个轮廓，所以需要对图片进行膨胀操作。腐蚀和膨胀都是针对于白色区域而言的，腐蚀就是白色区域减少，膨胀就是白色区域增加。再闭运算，消除扇叶上可能存在的小洞。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> structElementSize = <span class="number">2</span>;</span><br><span class="line">Mat element = getStructuringElement(MORPH_RECT, Size(<span class="number">2</span> * structElementSize + <span class="number">1</span>, <span class="number">2</span> * structElementSize + <span class="number">1</span>), Point(structElementSize, structElementSize));</span><br><span class="line">dilate(midImage2, midImage2, element);</span><br><span class="line">structElementSize = <span class="number">3</span>;</span><br><span class="line">element = getStructuringElement(MORPH_RECT, Size(<span class="number">2</span> * structElementSize + <span class="number">1</span>, <span class="number">2</span> * structElementSize + <span class="number">1</span>), Point(structElementSize, structElementSize));</span><br><span class="line">morphologyEx(midImage2, midImage2, MORPH_CLOSE, element);</span><br></pre></td></tr></table></figure>
 
-<p>第一次回车确认路径，第二次回车输入passphrase，这个可以是空。第三次回车确认passphrase。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Your identification has been saved <span class="keyword">in</span> /home/you/.ssh/id_rsa.</span><br><span class="line">Your public key has been saved <span class="keyword">in</span> /home/you/.ssh/id_rsa.pub.</span><br><span class="line">The key fingerprint is:</span><br><span class="line">…………………此处是密钥内容…………………… your_email@example.com</span><br></pre></td></tr></table></figure>
+<p>经过上面代码的操作，图片大概如下：</p>
+<p><img src="https://i.loli.net/2020/02/08/FchelaVDYBQSqRm.png" alt="image.png"></p>
+<h2 id="查找扇叶"><a href="#查找扇叶" class="headerlink" title="查找扇叶"></a>查找扇叶</h2><p>首先查找轮廓：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//查找轮廓</span></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;Point&gt;&gt; contours2;</span><br><span class="line"><span class="built_in">vector</span>&lt;Vec4i&gt; hierarchy2;</span><br><span class="line">findContours(midImage2, contours2, hierarchy2, CV_RETR_TREE, CHAIN_APPROX_SIMPLE);</span><br><span class="line">RotatedRect rect_tmp2;</span><br><span class="line"><span class="keyword">bool</span> findTarget = <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
 
-<hr>
-<h2 id="绑定Deploy-keys"><a href="#绑定Deploy-keys" class="headerlink" title="绑定Deploy keys"></a>绑定Deploy keys</h2><p>找到刚刚路径下生成的<code>id_rsa.pub</code>文件，用vscode打开，复制全部公钥。然后去github对应的仓库的设置里绑定<strong>Deploy keys</strong>。（<strong>Settings –&gt; Deploy keys –&gt; Add deploy key</strong>）</p>
-<p>测试配置是否成功：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
+<p>然后遍历轮廓，通过面积进行筛选。当轮廓为空时停止筛选。可以用<code>hierarchy.size()</code>来判断。</p>
+<p>因为后面for遍历轮廓时需要条件，这里补充有关hierarchy的点。</p>
+<blockquote>
+<p>hierarchy Optional output vector (e.g. std::vector<a href="cv::Vec4i" target="_blank" rel="noopener">cv::Vec4i</a>), containing information about the image topology. It has as many elements as the number of contours. For each i-th contour contours[i], the elements hierarchy[i][0] , hierarchy[i][1] , hierarchy[i][2] , and hierarchy[i][3] are set to 0-based indices in contours of the next and previous contours at the same hierarchical level, the first child contour and the parent contour, respectively. If for the contour i there are no next, previous,parent, or nested contours, the corresponding elements of hierarchy[i] will be negative.</p>
+</blockquote>
+<p>大概意思就是说，hierarchy包含了轮廓的拓扑结构，<code>hierarchy[i][0]~hierarchy[i][3]</code> 中，<strong>0代表与当前轮廓平级的后一个轮廓的的索引编号</strong>、<strong>1代表与当前轮廓平级的前一个轮廓的索引编号</strong>、<strong>2代表当前轮廓的子轮廓的索引编号</strong>、<strong>3代表当前轮廓的父轮廓的索引编号</strong>。</p>
+<p>所以遍历轮廓的语句会写成<code>for(int i=0;i&gt;=0;i=hierarchy[i][0])</code></p>
+<p>在这个遍历中进行一系列操作。首先对每个轮廓的宽高进行处理使宽大于高，统一宽为长度长的一边。然后求得矩形的面积把小轮廓筛除。再应用透视变换，矫正成规则矩形。</p>
+<blockquote>
+<p>仿射变换后平行四边形的各边仍操持平行，透视变换结果允许是梯形等四边形，所以仿射变换是透视变换的子集。</p>
+</blockquote>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (hierarchy2.size())</span><br><span class="line">           <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &gt;= <span class="number">0</span>; i = hierarchy2[i][<span class="number">0</span>])</span><br><span class="line">           &#123;</span><br><span class="line">               <span class="comment">//找出轮廓的最小外接矩形</span></span><br><span class="line">               rect_tmp2 = minAreaRect(contours2[i]);</span><br><span class="line">               <span class="comment">//将矩形的四个点保存在P中</span></span><br><span class="line">               Point2f P[<span class="number">4</span>];</span><br><span class="line">               rect_tmp2.points(P);</span><br><span class="line"></span><br><span class="line">               <span class="comment">//为透视变换做准备</span></span><br><span class="line">               Point2f srcRect[<span class="number">4</span>];</span><br><span class="line">               Point2f dstRect[<span class="number">4</span>];</span><br><span class="line"></span><br><span class="line">               <span class="keyword">double</span> width;</span><br><span class="line">               <span class="keyword">double</span> height;</span><br><span class="line"></span><br><span class="line">               <span class="comment">//矫正提取的叶片的宽高</span></span><br><span class="line">               width = getDistance(P[<span class="number">0</span>], P[<span class="number">1</span>]);</span><br><span class="line">               height = getDistance(P[<span class="number">1</span>], P[<span class="number">2</span>]);</span><br><span class="line">               <span class="keyword">if</span> (width &gt; height)</span><br><span class="line">               &#123;</span><br><span class="line">                   srcRect[<span class="number">0</span>] = P[<span class="number">0</span>];</span><br><span class="line">                   srcRect[<span class="number">1</span>] = P[<span class="number">1</span>];</span><br><span class="line">                   srcRect[<span class="number">2</span>] = P[<span class="number">2</span>];</span><br><span class="line">                   srcRect[<span class="number">3</span>] = P[<span class="number">3</span>];</span><br><span class="line">               &#125;</span><br><span class="line">               <span class="keyword">else</span></span><br><span class="line">               &#123;</span><br><span class="line">                   swap(width, height);</span><br><span class="line">                   srcRect[<span class="number">0</span>] = P[<span class="number">1</span>];</span><br><span class="line">                   srcRect[<span class="number">1</span>] = P[<span class="number">2</span>];</span><br><span class="line">                   srcRect[<span class="number">2</span>] = P[<span class="number">3</span>];</span><br><span class="line">                   srcRect[<span class="number">3</span>] = P[<span class="number">0</span>];</span><br><span class="line">               &#125;</span><br><span class="line">               <span class="comment">//通过面积筛选</span></span><br><span class="line">               <span class="keyword">double</span> area = height * width;</span><br><span class="line">               <span class="keyword">if</span> (area &gt; <span class="number">5000</span>) &#123;</span><br><span class="line">                   <span class="built_in">cout</span> &lt;&lt; hierarchy2[i] &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">                   <span class="comment">//求得矩形的面积把小轮廓筛除</span></span><br><span class="line">                   dstRect[<span class="number">0</span>] = Point2f(<span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">                   dstRect[<span class="number">1</span>] = Point2f(width, <span class="number">0</span>);</span><br><span class="line">                   dstRect[<span class="number">2</span>] = Point2f(width, height);</span><br><span class="line">                   dstRect[<span class="number">3</span>] = Point2f(<span class="number">0</span>, height);</span><br><span class="line">                   <span class="comment">// 应用透视变换，矫正成规则矩形</span></span><br><span class="line">                   Mat transform = getPerspectiveTransform(srcRect, dstRect);</span><br><span class="line">                   Mat perspectMat;</span><br><span class="line">                   warpPerspective(midImage2, perspectMat, transform, midImage2.size());</span><br><span class="line">                   imshow(<span class="string">"warpdst"</span>, perspectMat);</span><br><span class="line">                   <span class="comment">// 提取扇叶图片</span></span><br><span class="line">                   Mat testim;</span><br><span class="line">                   testim = perspectMat(Rect(<span class="number">0</span>, <span class="number">0</span>, width, height));</span><br><span class="line">           &#125;</span><br></pre></td></tr></table></figure>
 
-<h3 id="权限过大问题"><a href="#权限过大问题" class="headerlink" title="权限过大问题"></a>权限过大问题</h3><p>我在win10 20 04的版本上到这一步测试时报错：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@</span><br><span class="line">@         WARNING: UNPROTECTED PRIVATE KEY FILE!          @</span><br><span class="line">@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@</span><br><span class="line">Permissions 0644 <span class="keyword">for</span> <span class="string">'/Users/sailfish/.ssh/id_rsa'</span> are too open.</span><br><span class="line">It is required that your private key files are NOT accessible by others.</span><br><span class="line">This private key will be ignored.</span><br><span class="line">Load key <span class="string">"/Users/sailfish/.ssh/id_rsa"</span>: bad permissions</span><br><span class="line">git@ip<span class="string">'s password:</span></span><br><span class="line"><span class="string">Permission denied, please try again.</span></span><br></pre></td></tr></table></figure>
+<p>经过上面的处理，最终分出两种图像。一种是需要击打的扇叶。像个锤子。</p>
+<p><img src="https://i.loli.net/2020/02/08/tHel5FJiPhGbzU8.png" alt="image.png"></p>
+<p>另一种是已经击打过的扇叶：</p>
+<p><img src="https://i.loli.net/2020/02/08/2tWEUYxLMkGrneO.png" alt="image.png"></p>
+<p>接下来就是对这两种图像二分类。方法有很多，我看到过还有人用yolo什么的。这里我使用车牌识别里简单的字符相减或者SVM。</p>
+<p>字符相减（模板匹配）代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">double</span> value;</span><br><span class="line">Mat tmp1;</span><br><span class="line">resize(testim, tmp1, Size(<span class="number">42</span>, <span class="number">20</span>));</span><br><span class="line"><span class="comment">//imshow("temp1", tmp1);</span></span><br><span class="line"><span class="comment">//用于保存匹配得分</span></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; Vvalue1; <span class="comment">//识别待打击的扇叶</span></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; Vvalue2; <span class="comment">//识别已经打击过的扇叶</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= <span class="number">6</span>; j++)</span><br><span class="line">&#123;</span><br><span class="line">value = TemplateMatch(tmp1, templ[j], matchLoc, CV_TM_CCOEFF_NORMED);</span><br><span class="line">Vvalue1.push_back(value);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">7</span>; j &lt;= <span class="number">8</span>; j++)</span><br><span class="line">&#123;</span><br><span class="line">value = TemplateMatch(tmp1, templ[j], matchLoc, CV_TM_CCOEFF_NORMED);</span><br><span class="line">Vvalue2.push_back(value);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">int</span> maxv1 = <span class="number">0</span>, maxv2 = <span class="number">0</span>;</span><br><span class="line"><span class="comment">//找出匹配值最大的序号</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> t1 = <span class="number">0</span>; t1 &lt; <span class="number">6</span>; t1++)</span><br><span class="line">&#123;</span><br><span class="line">   <span class="keyword">if</span> (Vvalue1[t1] &gt; Vvalue1[maxv1])</span><br><span class="line">    &#123;</span><br><span class="line">       maxv1 = t1;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> t2 = <span class="number">0</span>; t2 &lt; <span class="number">2</span>; t2++)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (Vvalue2[t2] &gt; Vvalue2[maxv2])</span><br><span class="line">    &#123;</span><br><span class="line">       maxv2 = t2;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>看样子应该是权限过大问题。网上搜索得到了一个解决的命令：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/.ssh</span><br><span class="line">chmod 700 id_rsa</span><br></pre></td></tr></table></figure>
-
-<p>再次测试，发现并没有用。估计在linux下才管用吧。</p>
-<p>经过探索，我在win下需要设置.ssh文件夹的访问权限。下图所示。</p>
-<p><img src="https://i.loli.net/2020/02/01/c174UIBNTQ8fgkD.png" alt="image.png"></p>
-<p>设置好上面的后，再测试配置。正常提示如下</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hi stefan! You have successfully authenticated, but GitHub does not provide shell access.</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="提交博客"><a href="#提交博客" class="headerlink" title="提交博客"></a>提交博客</h2><p>到提交博客时报错如下：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Please tell me who you are.</span><br><span class="line">Run</span><br><span class="line"></span><br><span class="line">git config --global user.email <span class="string">"you@example.com"</span></span><br><span class="line">git config --global user.name <span class="string">"Your Name"</span></span><br><span class="line"></span><br><span class="line">to <span class="built_in">set</span> your account<span class="string">'s default identity.</span></span><br><span class="line"><span class="string">Omit --global to set the identity only in this repository.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">fatal: unable to auto-detect email address (got '</span>name@stefan.(none)<span class="string">')</span></span><br></pre></td></tr></table></figure>
-
-<p>首先按照提示来设置全局的git 配置，发现没有用。</p>
-<p>于是剑走偏锋，直接设置博客目录下的.git目录下的config文件。在该文件后面加几行：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[user]</span><br><span class="line">email=your email</span><br><span class="line">name=your name</span><br></pre></td></tr></table></figure>
-
-<p>再次Deploy，终于解决问题了。</p>
+<blockquote>
+<p>后期更新本博客</p>
+</blockquote>
 
         </div>
         
@@ -427,7 +434,7 @@
         
           
   
-  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/Git/" rel="nofollow"><i class="fas fa-hashtag" aria-hidden="true"></i>&nbsp;<p>Git</p></a></div>
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/RoboMaster/" rel="nofollow"><i class="fas fa-hashtag" aria-hidden="true"></i>&nbsp;<p>RoboMaster</p></a></div>
 
 
         
@@ -440,7 +447,7 @@
       
         <a class="-mob-share-qq" title="QQ好友" rel="external nofollow noopener noreferrer"
           
-          href="http://connect.qq.com/widget/shareqq/index.html?url=https://Stefancharles.xyz/2020/02/01/gitproblems/&title=【Git】相关问题 | Stefan's Blog&pics=https://i.loli.net/2019/08/15/4zEt9A6LvBegWX8.jpg&summary=Git提交问题今天提交Git时本地提示提交上去，但是github上没有记录。之前我使用的是HTTPS的方式提交，今天改为SSH提交。"
+          href="http://connect.qq.com/widget/shareqq/index.html?url=https://Stefancharles.xyz/2020/02/08/EnergyAgency/&title=【RoboMaster】识别能量机关 | Stefan's Blog&pics=https://i.loli.net/2019/08/15/4zEt9A6LvBegWX8.jpg&summary=识别能量机关这个寒假，我负责处理能量机关（大小神符）的处理。因为RoboMaster网上开源代码很多，本着不重复造轮子的理念，另外如果我自己写全部的代码能不能成功识别还是个问题。所以本次代码和思想借鉴了很多论坛和网址，我会在文末附上链接。"
           
           >
           
@@ -452,7 +459,7 @@
       
         <a class="-mob-share-qzone" title="QQ空间" rel="external nofollow noopener noreferrer"
           
-          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://Stefancharles.xyz/2020/02/01/gitproblems/&title=【Git】相关问题 | Stefan's Blog&pics=https://i.loli.net/2019/08/15/4zEt9A6LvBegWX8.jpg&summary=Git提交问题今天提交Git时本地提示提交上去，但是github上没有记录。之前我使用的是HTTPS的方式提交，今天改为SSH提交。"
+          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://Stefancharles.xyz/2020/02/08/EnergyAgency/&title=【RoboMaster】识别能量机关 | Stefan's Blog&pics=https://i.loli.net/2019/08/15/4zEt9A6LvBegWX8.jpg&summary=识别能量机关这个寒假，我负责处理能量机关（大小神符）的处理。因为RoboMaster网上开源代码很多，本着不重复造轮子的理念，另外如果我自己写全部的代码能不能成功识别还是个问题。所以本次代码和思想借鉴了很多论坛和网址，我会在文末附上链接。"
           
           >
           
@@ -464,7 +471,7 @@
       
         <a class="-mob-share-weibo" title="微博" rel="external nofollow noopener noreferrer"
           
-          href="http://service.weibo.com/share/share.php?url=https://Stefancharles.xyz/2020/02/01/gitproblems/&title=【Git】相关问题 | Stefan's Blog&pics=https://i.loli.net/2019/08/15/4zEt9A6LvBegWX8.jpg&summary=Git提交问题今天提交Git时本地提示提交上去，但是github上没有记录。之前我使用的是HTTPS的方式提交，今天改为SSH提交。"
+          href="http://service.weibo.com/share/share.php?url=https://Stefancharles.xyz/2020/02/08/EnergyAgency/&title=【RoboMaster】识别能量机关 | Stefan's Blog&pics=https://i.loli.net/2019/08/15/4zEt9A6LvBegWX8.jpg&summary=识别能量机关这个寒假，我负责处理能量机关（大小神符）的处理。因为RoboMaster网上开源代码很多，本着不重复造轮子的理念，另外如果我自己写全部的代码能不能成功识别还是个问题。所以本次代码和思想借鉴了很多论坛和网址，我会在文末附上链接。"
           
           >
           
@@ -488,40 +495,21 @@
         
             <div class="prev-next">
                 
-                    <section class="prev">
-                        <span class="art-item-left">
-                            <h6><i class="fas fa-chevron-left" aria-hidden="true"></i>&nbsp;上一页</h6>
+                
+                    <section class="next">
+                        <span class="art-item-right" aria-hidden="true">
+                            <h6>下一页&nbsp;<i class="fas fa-chevron-right" aria-hidden="true"></i></h6>
                             <h4>
                                 <a href="/2020/02/05/getStartWithJS/" rel="prev" title="【前端】初识JavaScript">
-                                  
-                                      【前端】初识JavaScript
-                                  
+                                    
+                                        【前端】初识JavaScript
+                                    
                                 </a>
                             </h4>
                             
                                 
                                 <h6 class="tags">
                                     <a class="tag" href="/tags/JavaScript/"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i>JavaScript</a>
-                                </h6>
-                            
-                        </span>
-                    </section>
-                
-                
-                    <section class="next">
-                        <span class="art-item-right" aria-hidden="true">
-                            <h6>下一页&nbsp;<i class="fas fa-chevron-right" aria-hidden="true"></i></h6>
-                            <h4>
-                                <a href="/2020/01/21/http/" rel="prev" title="【HTTP协议】安卓网络编程基础">
-                                    
-                                        【HTTP协议】安卓网络编程基础
-                                    
-                                </a>
-                            </h4>
-                            
-                                
-                                <h6 class="tags">
-                                    <a class="tag" href="/tags/Android/"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i>Android</a> <a class="tag" href="/tags/Http/"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i>Http</a>
                                 </h6>
                             
                         </span>
@@ -566,7 +554,7 @@
 
   <script>
     window.subData = {
-      title: '【Git】相关问题',
+      title: '【RoboMaster】识别能量机关',
       tools: true
     }
   </script>
@@ -646,7 +634,7 @@
 </header>
 
     <div class='content pure'>
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Git提交问题"><span class="toc-text">Git提交问题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#生成-SSH-密钥"><span class="toc-text">生成 SSH 密钥</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#绑定Deploy-keys"><span class="toc-text">绑定Deploy keys</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#权限过大问题"><span class="toc-text">权限过大问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#提交博客"><span class="toc-text">提交博客</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#识别能量机关"><span class="toc-text">识别能量机关</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#操作环境"><span class="toc-text">操作环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#预处理图像"><span class="toc-text">预处理图像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查找扇叶"><span class="toc-text">查找扇叶</span></a></li></ol></li></ol>
     </div>
   </section>
 
